@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[53]:
+# In[6]:
 
 """TypeUsage python bing_related_queries -s seed_word -t threshold -f factor -o overlap_method
 Where threshold and factor are fractions less than 1.00, overlap_method
@@ -17,7 +17,7 @@ import sys
 import csv
 
 
-# In[45]:
+# In[7]:
 
 def get_apikey(k=None):
     while True:
@@ -26,7 +26,7 @@ def get_apikey(k=None):
             return key
 
 
-# In[46]:
+# In[8]:
 
 url = "https://ssl.bing.com/webmaster/api.svc/pox/GetRelatedKeywords"
 params = {'startDate': '2015-09-01', 
@@ -36,7 +36,7 @@ params = {'startDate': '2015-09-01',
 stop = stopwords.words('english')
 
 
-# In[47]:
+# In[9]:
 
 # Structure to hold search queries by the length of their ngram. This is
 # find a faster lookup for determining overlap values quickly.
@@ -53,7 +53,7 @@ rejected_queries = OrderedDict()
 junk_related_keywords = set()
 
 
-# In[32]:
+# In[5]:
 
 """A method that cleans the list of obtained queries by removing stopwords
 from every query and return the cleaned queries as a list"""
@@ -66,14 +66,15 @@ def clean_obtained_queries(queries):
     return clean_related_queries
 
 
-# In[67]:
+# In[3]:
 
 """A method that calculates overlap between a list of related 
 queries and the global set of already approved queries."""
 def get_overlap(related_queries, method):
-    if len(approved_ngrams)==0 or len(approved_queries) == 0:
+    global approved_queries, approved_ngrams
+    if len(approved_ngrams) == 0 or len(approved_queries) == 0:
         return 1
-    if len(related_queries)==0:
+    if len(related_queries) == 0:
         return 0
     count = 0.0
     for item in related_queries:
@@ -95,11 +96,11 @@ def get_overlap(related_queries, method):
     return count/control_size
 
 
-# In[68]:
+# In[11]:
 
 def save_related_queries(seed, threshold, factor, method):
-    a_name = './data/' + seed + '_' + threshold + '_' + factor + '_' + method + '_' + 'approved.csv'
-    r_name = './data/' + seed + '_' + threshold + '_' + factor + '_' + method + '_' + 'rejected.csv'
+    a_name = './data/' + seed.replace(' ', '_') + '_' + threshold + '_' + factor + '_' + method + '_' + 'approved.csv'
+    r_name = './data/' + seed.replace(' ', '_') + '_' + threshold + '_' + factor + '_' + method + '_' + 'rejected.csv'
         
     with open(a_name, 'w') as f:
         csv_writer = csv.writer(f, lineterminator='\n')
@@ -112,14 +113,15 @@ def save_related_queries(seed, threshold, factor, method):
             csv_writer.writerow([k, v])    
 
 
-# In[65]:
+# In[1]:
 
 def main():
+    global approved_queries, approved_ngrams, rejected_queries, junk_related_keywords
     ap = argparse.ArgumentParser(description='Argument parser for bing api get related search queries script')
     ap.add_argument('-s', '-seed', help='Seed word', required=True)
     ap.add_argument('-t', '-threshold', help='Overlapping threshold', default=0.25)
     ap.add_argument('-f', '-factor', help='Selection factor of approved related keywords', default=1.00)
-    ap.add_argument('-o', '-overlap', help='Overlapping measurement method', default='n')
+    ap.add_argument('-o', '-overlap', help='Overlapping measurement method (n)gram or (s)tring', default='n')
     args = ap.parse_args()
     
     # Default values
