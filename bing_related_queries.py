@@ -97,11 +97,12 @@ def get_overlap(related_queries, method):
     return count/control_size
 
 
-# In[11]:
+# In[14]:
 
 def save_related_queries(seed, threshold, factor, method):
-    a_name = './data/' + seed.replace(' ', '_') + '_' + threshold + '_' + factor + '_' + method + '_' + 'approved.csv'
-    r_name = './data/' + seed.replace(' ', '_') + '_' + threshold + '_' + factor + '_' + method + '_' + 'rejected.csv'
+    name_suffix = './data/' + seed.replace(' ', '_') + '_' + str(threshold) + '_' + str(factor) + '_' + method + '_'
+    a_name =  name_suffix + 'approved.csv'
+    r_name = name_suffix + 'rejected.csv'
         
     with open(a_name, 'w') as f:
         csv_writer = csv.writer(f, lineterminator='\n')
@@ -114,7 +115,7 @@ def save_related_queries(seed, threshold, factor, method):
             csv_writer.writerow([k, v])    
 
 
-# In[1]:
+# In[15]:
 
 def main():
     global approved_queries, approved_ngrams, rejected_queries, junk_related_keywords
@@ -127,8 +128,8 @@ def main():
     
     # Default values
     seed_word = args.s
-    threshold = args.t
-    selection_factor = args.f
+    threshold = float(args.t)
+    selection_factor = float(args.f)
     overlap_method = args.o
     
     newset = [seed_word]
@@ -173,7 +174,7 @@ def main():
 
             # Get overlap value
             overlap_value = get_overlap(related_keywords, overlap_method)
-
+            
             if overlap_value >= threshold:
                 # Overlap value is beyond threshold. Save the new 
                 # query's overlap value and add it to the approved
@@ -195,7 +196,7 @@ def main():
                 # If the overlap value is zero, then add them to junk queries.
                 if overlap_value == 0:
                     junk_related_keywords |= set(related_keywords)
-
+                    
         except Exception as e:
             print 'Error processing request ' + str(e)
             continue
