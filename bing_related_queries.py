@@ -1,12 +1,13 @@
 
 # coding: utf-8
 
-# In[6]:
+# In[12]:
 
 """TypeUsage python bing_related_queries -s seed_word -t threshold -f factor -o overlap_method
 Where threshold and factor are fractions less than 1.00, overlap_method
 should either be (s)tring or (n)gram"""
 from nltk.corpus import stopwords
+from nltk import word_tokenize
 from collections import OrderedDict
 from xml.dom.minidom import parseString
 from random import choice
@@ -53,14 +54,14 @@ rejected_queries = OrderedDict()
 junk_related_keywords = set()
 
 
-# In[5]:
+# In[13]:
 
 """A method that cleans the list of obtained queries by removing stopwords
 from every query and return the cleaned queries as a list"""
 def clean_obtained_queries(queries):
     clean_related_queries = []
     for q in queries:
-        words = nltk.word_tokenize(q)
+        words = word_tokenize(q)
         query = (" ".join([i for i in words if i not in stop])).strip(' .,\'')
         clean_related_queries.append(query)
     return clean_related_queries
