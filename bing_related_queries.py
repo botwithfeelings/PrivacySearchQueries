@@ -138,7 +138,7 @@ def main():
 
         # If this query appears anywhere in the approved, rejected, or
         # junk queries, then don't process it.
-        if  (new_query in approved_queries) or (new_query in rejected_queries) or (new_query in junk_queries):
+        if  (new_query in approved_queries) or (new_query in rejected_queries) or (new_query in junk_related_keywords):
             continue
         try:   
             # Fetch the response.
