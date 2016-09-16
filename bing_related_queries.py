@@ -18,6 +18,13 @@ import sys
 import csv
 
 
+# In[16]:
+
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
+
+
 # In[7]:
 
 def get_apikey(k=None):
@@ -73,8 +80,10 @@ def clean_obtained_queries(queries):
 queries and the global set of already approved queries."""
 def get_overlap(related_queries, method):
     global approved_queries, approved_ngrams
-    if len(approved_ngrams) == 0 or len(approved_queries) == 0:
-        return 1
+    if method == 'n' and len(approved_ngrams) == 0:
+        return 1    
+    if method == 's' or len(approved_queries) == 0:
+        return 1    
     if len(related_queries) == 0:
         return 0
     count = 0.0
@@ -115,10 +124,11 @@ def save_related_queries(seed, threshold, factor, method):
             csv_writer.writerow([k, v])    
 
 
-# In[15]:
+# In[17]:
 
 def main():
     global approved_queries, approved_ngrams, rejected_queries, junk_related_keywords
+    
     ap = argparse.ArgumentParser(description='Argument parser for bing api get related search queries script')
     ap.add_argument('-s', '-seed', help='Seed word', required=True)
     ap.add_argument('-t', '-threshold', help='Overlapping threshold', default=0.25)
@@ -132,19 +142,20 @@ def main():
     selection_factor = float(args.f)
     overlap_method = args.o
     
-    newset = [seed_word]
-    while 0 < len(newset) and len(newset) < 40000:
-        new_query = newset.pop(0)
+    try:
+        newset = [seed_word]
+        while 0 < len(newset) and len(newset) < 40000:
+            new_query = newset.pop(0)
 
-        # Set the parameters for this search query
-        params['q'] = new_query
-        params['apikey'] = get_apikey()
+            # Set the parameters for this search query
+            params['q'] = new_query
+            params['apikey'] = get_apikey()
 
-        # If this query appears anywhere in the approved, rejected, or
-        # junk queries, then don't process it.
-        if  (new_query in approved_queries) or (new_query in rejected_queries) or (new_query in junk_related_keywords):
-            continue
-        try:   
+            # If this query appears anywhere in the approved, rejected, or
+            # junk queries, then don't process it.
+            if  (new_query in approved_queries) or (new_query in rejected_queries) or (new_query in junk_related_keywords):
+                continue
+
             # Fetch the response.
             session = requests.Session()
             response = session.get(url, params=params)
@@ -153,7 +164,7 @@ def main():
             if response.status_code != 200:
                 # Change to another random api key and try again.
                 params['apikey'] = get_apikey(params['apikey'])
-                print response.text
+                print 'Throttling encountered, changing key'
                 continue
 
             try:
@@ -174,7 +185,7 @@ def main():
 
             # Get overlap value
             overlap_value = get_overlap(related_keywords, overlap_method)
-            
+
             if overlap_value >= threshold:
                 # Overlap value is beyond threshold. Save the new 
                 # query's overlap value and add it to the approved
@@ -188,21 +199,19 @@ def main():
 
                 # Add the new query to the approved ngrams.
                 l = len(new_query.split())
-                approved_ngrams[l] = approved_ngrams.get(l, []).append(new_query)
+                approved_ngrams.setdefault(l, list()).append(new_query)
             else:
                 # Reject the new query.
                 rejected_queries[new_query] = overlap_value
-                
+
                 # If the overlap value is zero, then add them to junk queries.
                 if overlap_value == 0:
                     junk_related_keywords |= set(related_keywords)
-                    
-        except Exception as e:
-            print 'Error processing request ' + str(e)
-            continue
-        finally:
-            save_related_queries(seed_word, threshold, selection_factor, overlap_method)
-            return
+
+    except Exception as e:
+        print 'Error processing request ' + str(e)
+    finally:
+        save_related_queries(seed_word, threshold, selection_factor, overlap_method)
 
 
 # In[60]:
