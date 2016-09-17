@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[12]:
+# In[1]:
 
 """TypeUsage python bing_related_queries -s seed_word -t threshold -f factor -o overlap_method
 Where threshold and factor are fractions less than 1.00, overlap_method
@@ -11,6 +11,7 @@ from nltk import word_tokenize
 from collections import OrderedDict
 from xml.dom.minidom import parseString
 from random import choice
+from random import shuffle
 from keys import bing_keys
 import argparse
 import requests
@@ -195,6 +196,7 @@ def main():
                 # The related keywords are now cadidates for further
                 # related keyword fetching.
                 subset_index = int(selection_factor * len(related_keywords))
+                shuffle(related_keywords)
                 newset.extend(related_keywords[0:subset_index])
 
                 # Add the new query to the approved ngrams.
