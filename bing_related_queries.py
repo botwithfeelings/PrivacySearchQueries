@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[1]:
+# In[3]:
 
 """TypeUsage python bing_related_queries -s seed_word -t threshold -f factor -o overlap_method
 Where threshold and factor are fractions less than 1.00, overlap_method
@@ -10,7 +10,6 @@ from nltk.corpus import stopwords
 from nltk import word_tokenize
 from collections import OrderedDict
 from xml.dom.minidom import parseString
-from random import choice
 from random import shuffle
 from keys import bing_keys
 import argparse
@@ -26,13 +25,12 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 
 
-# In[7]:
+# In[5]:
 
-def get_apikey(k=None):
-    while True:
-        key = choice(bing_keys)
-        if key != k:
-            return key
+def get_apikey():
+    if not bing_keys:
+        return bing_keys.pop(0)
+    return None
 
 
 # In[8]:
@@ -125,7 +123,7 @@ def save_related_queries(seed, threshold, factor, method):
             csv_writer.writerow([k, v])    
 
 
-# In[17]:
+# In[7]:
 
 def main():
     global approved_queries, approved_ngrams, rejected_queries, junk_related_keywords
@@ -143,6 +141,9 @@ def main():
     selection_factor = float(args.f)
     overlap_method = args.o
     
+    # Set the api key.
+    params['apikey'] = get_apikey()
+    
     try:
         newset = [seed_word]
         while 0 < len(newset) and len(newset) < 40000:
@@ -150,7 +151,6 @@ def main():
 
             # Set the parameters for this search query
             params['q'] = new_query
-            params['apikey'] = get_apikey()
 
             # If this query appears anywhere in the approved, rejected, or
             # junk queries, then don't process it.
@@ -164,8 +164,16 @@ def main():
             # Check whether the response code is not 200 (ok).
             if response.status_code != 200:
                 # Change to another random api key and try again.
-                params['apikey'] = get_apikey(params['apikey'])
+                key = get_apikey()
+                if key is None:
+                    print 'Api keys exhausted due to throttling, try a few minutes later.'
+                    return
+                    
                 print 'Throttling encountered, changing key'
+                params['apikey'] = key
+                
+                # Put back the query in the candidate set and try again.
+                newset.insert(0, new_query)
                 continue
 
             try:
