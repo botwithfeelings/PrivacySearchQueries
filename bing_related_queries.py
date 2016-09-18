@@ -25,10 +25,10 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 
 
-# In[5]:
+# In[12]:
 
 def get_apikey():
-    if not bing_keys:
+    if bing_keys:
         return bing_keys.pop(0)
     return None
 
