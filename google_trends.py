@@ -1,10 +1,11 @@
 
 # coding: utf-8
 
-# In[1]:
+# In[2]:
 
 from pytrends.request import TrendReq
 from random import randint
+from keys import google_user, google_pass
 import csv
 import argparse
 import traceback
@@ -29,14 +30,14 @@ def get_trend_data(t, term, label):
         print traceback.print_exc()
 
 
-# In[6]:
+# In[3]:
 
 def main():
     ap = argparse.ArgumentParser(description='Argument parser for google trends api script')
     ap.add_argument('-f', '-file', help='CSV file containing trend keywords at column 0', required=True)
     args = ap.parse_args()
     
-    pyTrends = TrendReq('privacyprojectncsu1@gmail.com','privacyproject')
+    pyTrends = TrendReq(google_user, google_pass)
     with open(args.f, 'r') as f:
         reader = csv.reader(f)
         for row in reader:
