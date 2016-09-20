@@ -31,7 +31,7 @@ def get_trend_data(t, term, label):
         print traceback.print_exc()
 
 
-# In[5]:
+# In[6]:
 
 def main():
     ap = argparse.ArgumentParser(description='Argument parser for google trends api script')
@@ -45,7 +45,7 @@ def main():
             trend_term = row[0]
             trend_label = trend_term.replace('/', '_')
             get_trend_data(pyTrends, trend_term, trend_label)
-            sleep(randint(5,10))
+            sleep(randint(15,30))
     return
 
 
