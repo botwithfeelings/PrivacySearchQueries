@@ -1,10 +1,11 @@
 
 # coding: utf-8
 
-# In[2]:
+# In[4]:
 
 from pytrends.request import TrendReq
 from random import randint
+from time import sleep
 from keys import google_user, google_pass
 import csv
 import argparse
@@ -30,7 +31,7 @@ def get_trend_data(t, term, label):
         print traceback.print_exc()
 
 
-# In[3]:
+# In[5]:
 
 def main():
     ap = argparse.ArgumentParser(description='Argument parser for google trends api script')
@@ -44,6 +45,7 @@ def main():
             trend_term = row[0]
             trend_label = trend_term.replace('/', '_')
             get_trend_data(pyTrends, trend_term, trend_label)
+            sleep(randint(5,10))
     return
 
 
