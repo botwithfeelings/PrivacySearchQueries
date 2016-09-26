@@ -1,8 +1,9 @@
 
 # coding: utf-8
 
-# In[18]:
+# In[32]:
 
+from __future__ import division
 from pytrends.request import TrendReq, ResponseError, RateLimitError
 from random import randint
 from time import sleep
@@ -45,7 +46,7 @@ def get_trend_data(t, term, label, directory):
         no_response_list.append(term)
 
 
-# In[24]:
+# In[33]:
 
 def main():
     ap = argparse.ArgumentParser(description='Argument parser for google trends api script')
@@ -63,6 +64,7 @@ def main():
         for row in reader:
             trend_keywords.append(row[0])
     
+    total_terms = len(trend_keywords)
     pyTrends = TrendReq(google_user, google_pass)
     while trend_keywords:
         term = trend_keywords.pop(0)
@@ -71,6 +73,8 @@ def main():
         sleep(randint(MIN_WAIT, MIN_WAIT * 2))
         
     with open(NO_TRENDS_KEYWORDS_FILE, 'a') as f:
+        success_rate = (total_terms/len(no_response_list)) * 100
+        f.write(args.d + ', sucess rate: ' + str(succcess_rate) + '%\n')
         f.write('\n'.join(no_response_list))
     return
 
