@@ -23,9 +23,10 @@ no_response_list = list()
 NO_TRENDS_KEYWORDS_FILE = './gtrends/no_trends_data.txt'
 
 
-# In[30]:
+# In[34]:
 
 def get_trend_data(t, term, label, directory):
+    global MIN_WAIT
     # Concoct the dictionary for querying gtrends.
     payload = dict()
     payload['q'] = term
@@ -72,8 +73,9 @@ def main():
         get_trend_data(pyTrends, term, label, directory)
         sleep(randint(MIN_WAIT, MIN_WAIT * 2))
         
+    failed_terms = len(no_response_list)
     with open(NO_TRENDS_KEYWORDS_FILE, 'a') as f:
-        success_rate = (total_terms/len(no_response_list)) * 100
+        success_rate = ((total_terms - failed_terms) / total_terms) * 100
         f.write(args.d + ', sucess rate: ' + str(succcess_rate) + '%\n')
         f.write('\n'.join(no_response_list))
     return
