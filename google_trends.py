@@ -20,13 +20,18 @@ import pandas as pd
 MIN_WAIT = 5
 trend_keywords = list()
 no_response_list = list()
-NO_TRENDS_KEYWORDS_FILE = './gtrends/no_trends_data.txt'
 
 
-# In[34]:
+# In[36]:
 
 def get_trend_data(t, term, label, directory):
-    global MIN_WAIT
+    #global MIN_WAIT
+    
+    # First check if we have the data from some other session.
+    filename = directory + '/' + label + '.csv'
+    if os.path.isfile(filename):
+        return
+    
     # Concoct the dictionary for querying gtrends.
     payload = dict()
     payload['q'] = term
@@ -35,19 +40,18 @@ def get_trend_data(t, term, label, directory):
     payload['date'] = '01/2011 66m'
     try:
         df = t.trend(payload, return_type='dataframe')
-        filename = directory + '/' + label + '.csv'
         df.to_csv(filename)
     except RateLimitError:
         print 'Request limit exceeded, incrementing wait time between requests.'
         # Increase time between requests and put back in the keywords list.
-        MIN_WAIT += 5
+        #MIN_WAIT += 5
         trend_keywords.append(term)
     except (ResponseError, IndexError):
         print 'No trend data for: ' + term
         no_response_list.append(term)
 
 
-# In[33]:
+# In[37]:
 
 def main():
     ap = argparse.ArgumentParser(description='Argument parser for google trends api script')
@@ -73,9 +77,11 @@ def main():
         get_trend_data(pyTrends, term, label, directory)
         sleep(randint(MIN_WAIT, MIN_WAIT * 2))
         
+    # Write over any failed list file if exists.
     failed_terms = len(no_response_list)
-    with open(NO_TRENDS_KEYWORDS_FILE, 'a') as f:
-        success_rate = ((total_terms - failed_terms) / total_terms) * 100
+    failed_file = './gtrends/' + args.d + ' no trends data.txt'
+    success_rate = ((total_terms - failed_terms) / total_terms) * 100
+    with open(failed_file, 'w+') as f:
         f.write(args.d + ', sucess rate: ' + str(succcess_rate) + '%\n')
         f.write('\n'.join(no_response_list))
     return
