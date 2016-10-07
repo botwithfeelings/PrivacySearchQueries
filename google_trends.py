@@ -1,13 +1,13 @@
 
 # coding: utf-8
 
-# In[32]:
+# In[5]:
 
 from __future__ import division
 from pytrends.request import TrendReq, ResponseError, RateLimitError
-from random import randint
+from random import randint, shuffle
 from time import sleep
-from keys import google_user, google_pass
+from keys import google_auth
 import csv
 import argparse
 import traceback
@@ -15,22 +15,39 @@ import os
 import pandas as pd
 
 
-# In[16]:
+# In[17]:
 
 MIN_WAIT = 5
-trend_keywords = list()
-no_response_list = list()
+
+
+# In[6]:
+
+def get_google_auth():
+    shuffle(google_auth)
+    if len(google_auth) > 0:
+        return google_auth.pop(0)
+    return None
+
+
+# In[38]:
+
+def write_failed_list(filename, seed, failed, count, succ):
+    with open(filename, 'w+') as f:
+        f.write('\n'.join(failed))
+        if succ:
+            # Write over any failed list file if exists.
+            success_rate = ((count - len(failed)) / count) * 100    
+            f.write('\n' + seed + ', sucess rate: ' + str(succcess_rate) + '%')
 
 
 # In[36]:
 
-def get_trend_data(t, term, label, directory):
-    #global MIN_WAIT
-    
+def get_trend_data(t, term, trends, failed, seed):
     # First check if we have the data from some other session.
-    filename = directory + '/' + label + '.csv'
+    label = term.replace('/', '_')        
+    filename = os.path.join('./gtrends', seed, label + '.csv')
     if os.path.isfile(filename):
-        return
+        return True
     
     # Concoct the dictionary for querying gtrends.
     payload = dict()
@@ -42,52 +59,74 @@ def get_trend_data(t, term, label, directory):
         df = t.trend(payload, return_type='dataframe')
         df.to_csv(filename)
     except RateLimitError:
-        print 'Request limit exceeded, incrementing wait time between requests.'
-        # Increase time between requests and put back in the keywords list.
-        #MIN_WAIT += 5
-        trend_keywords.append(term)
+        print 'Request limit exceeded, switch users.'
+        trends.append(term)
+        return False        
     except (ResponseError, IndexError):
         print 'No trend data for: ' + term
-        no_response_list.append(term)
+        failed.append(term)
+    return True
 
 
-# In[37]:
+# In[40]:
 
 def main():
-    ap = argparse.ArgumentParser(description='Argument parser for google trends api script')
+    ap = argparse.ArgumentParser(description='Use the script to pull google trends data.')
     ap.add_argument('-f', '-file', help='CSV file containing trend keywords at column 0', required=True)
     ap.add_argument('-d', '-dir', help='All csv files to be written inside this directory within gtrends', required=True)
     args = ap.parse_args()
     
-    directory = './gtrends/' + args.d
+    trends_file = args.f
+    seed = args.d
+    
+    directory = os.path.join('./gtrends', seed)
     if not os.path.exists(directory):
         os.makedirs(directory)
     
     # Retrieve the list of keywords to be fetched into a list.
-    with open(args.f, 'r') as f:
+    trends_list = list()
+    with open(trends_file, 'r') as f:
         reader = csv.reader(f)
         for row in reader:
-            trend_keywords.append(row[0])
+            trends_list.append(row[0])
+            
+    count = len(trends_list)
     
-    total_terms = len(trend_keywords)
+    # Retrieve the list of failed requests if any.
+    failed_file = os.path.join('./gtrends', seed, seed + ' no trends data.txt')
+    failed_list = list()
+    if os.path.isfile(failed_file):
+        with open(failed_file, 'r') as f:
+            failed_list = list(map(str.strip, f.readlines()))
+    
+    # Get authentication keys.
+    google_user, google_pass = get_google_auth()
     pyTrends = TrendReq(google_user, google_pass)
-    while trend_keywords:
-        term = trend_keywords.pop(0)
-        label = term.replace('/', '_')
-        get_trend_data(pyTrends, term, label, directory)
-        sleep(randint(MIN_WAIT, MIN_WAIT * 2))
+    while trends_list:
+        term = trends_list.pop(0)
+        if term in failed_list:
+            continue
         
-    # Write over any failed list file if exists.
-    failed_terms = len(no_response_list)
-    failed_file = './gtrends/' + args.d + ' no trends data.txt'
-    success_rate = ((total_terms - failed_terms) / total_terms) * 100
-    with open(failed_file, 'w+') as f:
-        f.write(args.d + ', sucess rate: ' + str(succcess_rate) + '%\n')
-        f.write('\n'.join(no_response_list))
+        succ = get_trend_data(pyTrends, term, trends_list, failed_list, seed)
+        if succ:
+            # We managed to pull trend data, wait before next request.
+            sleep(randint(MIN_WAIT, MIN_WAIT * 2))
+        else:
+            # Request limit exceeded, establish new connection.
+            auth = get_google_auth()
+            if auth is not None:
+                google_user, google_pass = auth
+                pyTrends = TrendReq(google_user, google_pass)        
+            else:
+                print 'Google authentications exhausted, wait a few minutes and try again.'
+                write_failed_list(failed_file, seed, failed_list, count, False)
+                return
+        
+    write_failed_list(failed_file, seed, failed_list, count, True)
     return
 
 
-# In[ ]:
+# In[22]:
 
 if __name__ == '__main__':
     main()
