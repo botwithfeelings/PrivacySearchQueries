@@ -29,15 +29,16 @@ def get_google_auth():
     return None
 
 
-# In[38]:
+# In[44]:
 
 def write_failed_list(filename, seed, failed, count, succ):
     with open(filename, 'w+') as f:
         f.write('\n'.join(failed))
+        success_rate = 0
         if succ:
             # Write over any failed list file if exists.
             success_rate = ((count - len(failed)) / count) * 100    
-            f.write('\n' + seed + ', sucess rate: ' + str(succcess_rate) + '%')
+            f.write('\n' + seed + ', sucess rate: ' + str(success_rate) + '%')
 
 
 # In[36]:
@@ -68,7 +69,7 @@ def get_trend_data(t, term, trends, failed, seed):
     return True
 
 
-# In[40]:
+# In[41]:
 
 def main():
     ap = argparse.ArgumentParser(description='Use the script to pull google trends data.')
@@ -108,14 +109,13 @@ def main():
             continue
         
         succ = get_trend_data(pyTrends, term, trends_list, failed_list, seed)
-        if succ:
-            # We managed to pull trend data, wait before next request.
-            sleep(randint(MIN_WAIT, MIN_WAIT * 2))
-        else:
+        sleep(randint(MIN_WAIT, MIN_WAIT * 2))
+        if not succ:
             # Request limit exceeded, establish new connection.
             auth = get_google_auth()
             if auth is not None:
                 google_user, google_pass = auth
+                print google_user
                 pyTrends = TrendReq(google_user, google_pass)        
             else:
                 print 'Google authentications exhausted, wait a few minutes and try again.'
