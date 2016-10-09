@@ -115,7 +115,6 @@ def main():
             auth = get_google_auth()
             if auth is not None:
                 google_user, google_pass = auth
-                print google_user
                 pyTrends = TrendReq(google_user, google_pass)        
             else:
                 print 'Google authentications exhausted, wait a few minutes and try again.'
