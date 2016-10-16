@@ -108,7 +108,7 @@ def get_overlap(related_queries, method):
 # In[14]:
 
 def save_related_queries(seed, threshold, factor, method):
-    name_suffix = './data/' + seed.replace(' ', '_') + '_' + str(threshold) + '_' + str(factor) + '_' + method + '_'
+    name_suffix = './bingdata/' + seed.replace(' ', '_') + '_' + str(threshold) + '_' + str(factor) + '_' + method + '_'
     a_name =  name_suffix + 'approved.csv'
     r_name = name_suffix + 'rejected.csv'
         
@@ -128,7 +128,7 @@ def save_related_queries(seed, threshold, factor, method):
 def main():
     global approved_queries, approved_ngrams, rejected_queries, junk_related_keywords
     
-    ap = argparse.ArgumentParser(description='Argument parser for bing api get related search queries script')
+    ap = argparse.ArgumentParser(description='Find related keywords using the Bing webmaster keyword tool.')
     ap.add_argument('-s', '-seed', help='Seed word', required=True)
     ap.add_argument('-t', '-threshold', help='Overlapping threshold', default=0.25)
     ap.add_argument('-f', '-factor', help='Selection factor of approved related keywords', default=1.00)
