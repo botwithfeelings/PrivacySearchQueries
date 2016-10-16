@@ -43,14 +43,20 @@ def write_failed_list(filename, seed, failed, count, succ):
 
 # In[36]:
 
-def get_trend_data(t, term, trends, failed, seed):
+def get_trend_data(t, term, trends, failed, seed, comp):
     # First check if we have the data from some other session.
+    dir_suffix = seed
+    if comp:
+        dir_suffix += ' comp'
     label = term.replace('/', '_')        
-    filename = os.path.join('./gtrends', seed, label + '.csv')
+    filename = os.path.join('./gtrends', dir_suffix, label + '.csv')
     if os.path.isfile(filename):
         return True
     
     # Concoct the dictionary for querying gtrends.
+    if comp:
+        term = seed + ',' + term
+    
     payload = dict()
     payload['q'] = term
     payload['geo'] = 'US'
@@ -74,13 +80,19 @@ def get_trend_data(t, term, trends, failed, seed):
 def main():
     ap = argparse.ArgumentParser(description='Use the script to pull google trends data.')
     ap.add_argument('-f', '-file', help='CSV file containing trend keywords at column 0', required=True)
-    ap.add_argument('-d', '-dir', help='All csv files to be written inside this directory within gtrends', required=True)
+    ap.add_argument('-s', '-seed', help='Seed Word. All csv files to be written inside same name directory within gtrends', required=True)
+    ap.add_argument('-c', '-cmp', help='Enable comparison with seed word', action='store_true')
     args = ap.parse_args()
     
     trends_file = args.f
-    seed = args.d
+    seed = args.s
+    comp = args.c
     
-    directory = os.path.join('./gtrends', seed)
+    dir_suffix = seed
+    if comp:
+        dir_suffix += ' comp'
+    
+    directory = os.path.join('./gtrends', dir_suffix)
     if not os.path.exists(directory):
         os.makedirs(directory)
     
@@ -94,7 +106,7 @@ def main():
     count = len(trends_list)
     
     # Retrieve the list of failed requests if any.
-    failed_file = os.path.join('./gtrends', seed, seed + ' no trends data.txt')
+    failed_file = os.path.join('./gtrends', dir_suffix, seed + ' no trends data.txt')
     failed_list = list()
     if os.path.isfile(failed_file):
         with open(failed_file, 'r') as f:
@@ -108,7 +120,7 @@ def main():
         if term in failed_list:
             continue
         
-        succ = get_trend_data(pyTrends, term, trends_list, failed_list, seed)
+        succ = get_trend_data(pyTrends, term, trends_list, failed_list, seed, comp)
         sleep(randint(MIN_WAIT, MIN_WAIT * 2))
         if not succ:
             # Request limit exceeded, establish new connection.
