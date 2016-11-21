@@ -154,7 +154,7 @@ def do_stuff(seed, limit, keycnt):
     return
 
 
-# In[13]:
+# In[27]:
 
 def main():
     ap = argparse.ArgumentParser(description='Use the script to pull google related search queries.')
@@ -165,8 +165,8 @@ def main():
     args = ap.parse_args()
     
     seed = args.s
-    limit = args.i
-    keycnt = args.k
+    limit = int(args.i)
+    keycnt = int(args.k)
     
     do_stuff(seed, limit, keycnt)
     return
