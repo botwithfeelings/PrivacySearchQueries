@@ -1,0 +1,6 @@
+- Social media settings and privacy
+  - How to change Facebook privacy settings
+  - How to change YouTube privacy settings
+  - How to change Snapchat privacy settings
+  - How to change Instagram privacy settings
+  - How to change Twitter privacy settings
