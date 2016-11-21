@@ -78,17 +78,18 @@ def get_query_expansion_vector(vec):
 # In[8]:
 
 """Retrieves html result for a query pushed into the Google search engine."""
-def get_query_html(query):
-    try:
-        address = "http://www.google.com/search?q=%s&num=100&hl=en&start=0" % (urllib.quote_plus(query))
-        request = urllib2.Request(address, None, {'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_4) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.57 Safari/536.11'})
-        urlfile = urllib2.urlopen(request)
-        page = urlfile.read()
-        return page
-    except Exception as e:
-        print 'Error retrieving google search results: ' + str(e)
-        print 'Google throttling, wait a couple of minutes and try again.'
-        sys.exit()
+"""Retrieves html result for a query pushed into the Google search engine."""
+def get_query_html(query, limit):
+    address = "http://www.google.com/search?q=%s&num=100&hl=en&start=0" % (urllib.quote_plus(query))
+    request = urllib2.Request(address, None, {'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_4) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.57 Safari/536.11'})
+    urlfile = urllib2.urlopen(request)
+    page = urlfile.read()
+
+    # Determine the amount of time needed to sleep
+    # before we yield control.
+    sleep_time = 3600/limit
+    sleep(randint(sleep_time, sleep_time+5))
+    return page
 
 
 # In[9]:
