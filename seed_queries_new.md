@@ -11,8 +11,9 @@
   - how to search anonymously
   - how to browse anonymously
 
-- __Search anonymity__
-  - Find a search engine that doesn’t track search histories
+- Search anonymity
+  - search without history
+  - ~~Find a search engine that doesn’t track search histories~~
 
 - Deleting social media accounts
   - how to delete a facebook account
@@ -22,14 +23,8 @@
   - how to delete a google account
   - how to delete a twitter account
 
-- __Apps and privacy__
-  - what information can the government get from my facebook data
-  - what information can the government get from my gmail data
-  - what information can the government get from my twitter data
-  - what information can the government get from my youtube data
-  - what information can the government get from my instagram data
-  - what information can the government get from my uber data
-  - what information can the government get from my pokemongo data
+- Apps and privacy
+  - government monitoring social media
   
 - Deleting apps
   - how to delete facebook
@@ -45,7 +40,7 @@
   - how to uninstall youtube
   - how to uninstall snapchat
   - how to uninstall instagram
-  - how to uninstall pokemongoTemplates
+  - how to uninstall pokemongo
 
 - Removing social media connections
   - how to unfollow someone on facebook
