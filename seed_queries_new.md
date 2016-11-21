@@ -11,8 +11,9 @@
   - how to search anonymously
   - how to browse anonymously
 
-- __Search anonymity__
-  - Find a search engine that doesn’t track search histories
+- Search anonymity
+  - search without history
+  - ~~Find a search engine that doesn’t track search histories~~
 
 - Deleting social media accounts
   - how to delete a facebook account
