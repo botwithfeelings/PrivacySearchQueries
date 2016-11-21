@@ -1,13 +1,41 @@
 
 # coding: utf-8
 
-# In[10]:
+# In[25]:
 
 import google_query_similarity as gr
 from collections import OrderedDict
 import argparse
 import csv
 import os
+import pickle
+
+
+# In[26]:
+
+class ScrapeState():
+    def __init__(self, seed):
+        self.seed = seed
+        self.iteration = 0
+        self.candidates = list()
+        self.next_candidates = list()
+        self.threshold = 1.0        
+
+    def pickle(self):
+        name_suffix = './googledata/' + self.seed.replace(' ', '_') 
+        with open(name_suffix, 'wb') as f:
+            pickle.dump(self.__dict__, f, pickle.HIGHEST_PROTOCOL)        
+
+    def unpickle(self):
+        name_suffix = './googledata/' + self.seed.replace(' ', '_') 
+        if os.path.isfile(name_suffix):
+            with open(name_suffix, 'rb') as f:
+                tmp = pickle.load(f)
+                self.__dict__.update(tmp)
+    
+    def display(self):
+        attrs = vars(self)
+        print '\n'.join("%s: %s" % item for item in attrs.items())
 
 
 # In[16]:
@@ -53,12 +81,18 @@ def save_related_queries(seed, approved, rejected):
             csv_writer.writerow([k, v])    
 
 
-# In[14]:
+# In[23]:
 
 def do_stuff(seed, limit, keycnt):
     # Load the approved and rejected set 
     # from the previous attempt if any.
     approved, rejected = load_dictionaries(seed)
+    
+    # Everything we need to run is in this state object.
+    # We load it from the last attempt if any.
+    state = ScrapeState(seed)
+    state.unpickle()
+    state.display()
     
     try:
         # Expansion set and first iteration of  for the seed.
@@ -66,17 +100,11 @@ def do_stuff(seed, limit, keycnt):
         seed_rs = gr.google_related_searches(seed_page)
         seed_es = gr.google_expanded_docs(seed_page)    
 
-        # We do not want to go beyond a certain iteration.
-        iteration = 0
-        candidates = list()
-
         # Initiate the candidates with the seed's related queries.
-        candidates.extend(seed_rs)
-        while iteration < limit:
-            next_candidates = list()
-            threshold = 1.0
-            while len(candidates) > 0:
-                candidate = candidates.pop(0)
+        state.candidates.extend(seed_rs)
+        while state.iteration < limit:
+            while len(state.candidates) > 0:
+                candidate = state.candidates.pop(0)
                 # If the candidate appears in either the accepted
                 # or rejected sets then don't process it.
                 if (candidate in approved) or (candidate in rejected):
@@ -93,34 +121,36 @@ def do_stuff(seed, limit, keycnt):
                 # If this is the first iteration accept all.
                 # Otherwise if the kernel value is less than
                 # the threshold then reject it.
-                if iteration == 0:
+                if state.iteration == 0:
                     # For the first iteration accept everything.
                     approved[candidate] = kval
 
                     # Set the threshold to the minimum of the first iteration.
-                    if kval < threshold:
-                        threshold = kval                
+                    if kval < state.threshold:
+                        state.threshold = kval                
                 else:
                     # For further iteration, only accept if kernel 
                     # value is greater than the threshold.
-                    if kval > threshold:
+                    if kval >= state.threshold:
                         approved[candidate] = kval 
                     else:
                         rejected[candidate] = kval                
 
                 # Add the candidate's related searches to the next_candidates.
-                next_candidates.extend(can_rs)
+                state.next_candidates.extend(can_rs)
 
             # Add the next candidates to the candidates set
             # and increase the iteration count.
-            candidates.extend(next_candidates)
-            iteration += 1
+            state.candidates.extend(next_candidates)
+            state.next_candidates = list()
+            state.iteration += 1
     except Exception as e:
         print 'Error retrieving google search results: ' + str(e)
         print 'Google throttling, wait a couple of minutes and try again.'
     finally:
         save_related_queries(seed, approved, rejected)
-
+        state.pickle()
+        
     return
 
 
