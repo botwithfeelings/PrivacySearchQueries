@@ -1,72 +1,72 @@
 - Social media settings and privacy
-  - how to change Facebook privacy settings
-  - how to change YouTube privacy settings
-  - how to change Snapchat privacy settings
-  - how to change Instagram privacy settings
-  - how to change Twitter privacy settings
+  - how to change facebook privacy settings
+  - how to change youTube privacy settings
+  - how to change snapchat privacy settings
+  - how to change instagram privacy settings
+  - how to change twitter privacy settings
   
 - Web anonymity
-  - how to Search without being tracked
+  - how to search without being tracked
   - how to browse without being tracked
   - how to search anonymously
   - how to browse anonymously
 
-- Search anonymity
-  - __Find a search engine that doesn’t track search histories__
-Templates
-search engine; search
-Deleting social media accounts
-Base queries
-How to delete a {} account (-)
-Templates
-Facebook 
-YouTube
-Snapchat
-Instagram
-Google
-Twitter
-Apps and privacy
-Base queries
-Determine if your personal/private information is handled appropriately by the {} app (+)
-What information can the government get from my {} data (+)
-Determine the privacy policy of the {} app  (-)
-Templates
-PokemonGo
-Gmail
-Facebook 
-Twitter
-YouTube
-Uber
-Instagram
-Deleting apps
-Base queries
-Figure out how to delete/uninstall {} (-)
-Templates
-PokemonGo
-Gmail
-Facebook 
-YouTube
-Snapchat
-Instagram
-Twitter	
-Removing social media connections
-Base queries
-How to unfriend/unfollow someone on {} (-)
-Templates
-Facebook
-Snapchat
-Instagram
-Twitter
-Communication privacy
-Base queries
-Find out how to encrypt {} (+)
-What tool can I use to encrypt {} (+)
-How to protect against {} monitoring (+)
-Templates
-Emails
-Phone calls
-Text messages
-Google Hangouts
-WhatsApp
-Skype
+- __Search anonymity__
+  - Find a search engine that doesn’t track search histories
 
+- Deleting social media accounts
+  - how to delete a facebook account
+  - how to delete a youtube account
+  - how to delete a snapchat account
+  - how to delete a instagram account
+  - how to delete a google account
+  - how to delete a twitter account
+
+- __Apps and privacy__
+  - what information can the government get from my facebook data
+  - what information can the government get from my gmail data
+  - what information can the government get from my twitter data
+  - what information can the government get from my youtube data
+  - what information can the government get from my instagram data
+  - what information can the government get from my uber data
+  - what information can the government get from my pokemongo data
+  
+- Deleting apps
+  - how to delete facebook
+  - how to delete gmail
+  - how to delete twitter
+  - how to delete youtube
+  - how to delete snapchat
+  - how to delete instagram
+  - how to delete pokemongo
+  - how to uninstall facebook
+  - how to uninstall gmail
+  - how to uninstall twitter
+  - how to uninstall youtube
+  - how to uninstall snapchat
+  - how to uninstall instagram
+  - how to uninstall pokemongoTemplates
+
+- Removing social media connections
+  - how to unfollow someone on facebook
+  - how to unfollow someone on twitter
+  - how to unfollow someone on snapchat
+  - how to unfollow someone on instagram
+  - how to unfriend someone on facebook
+  - how to unfriend someone on twitter
+  - how to unfriend someone on snapchat
+  - how to unfriend someone on instagram 
+
+- Communication privacy
+  - how to encrypt emails
+  - how to encrypt phone calls
+  - how to encrypt text messages
+  - how to encrypt google hangouts
+  - how to encrypt skype
+  - how to encrypt whatsapp
+  - how to protect against email monitoring
+  - how to protect against phone call monitoring
+  - how to protect against text message monitoring
+  - how to protect against google hangout monitoring
+  - how to protect against whatsapp monitoring
+  - how to protect against skype monitoring
