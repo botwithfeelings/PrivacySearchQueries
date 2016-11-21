@@ -81,7 +81,7 @@ def save_related_queries(seed, approved, rejected):
             csv_writer.writerow([k, v])    
 
 
-# In[23]:
+# In[29]:
 
 def do_stuff(seed, limit, keycnt):
     # Load the approved and rejected set 
@@ -141,15 +141,14 @@ def do_stuff(seed, limit, keycnt):
 
             # Add the next candidates to the candidates set
             # and increase the iteration count.
-            state.candidates.extend(next_candidates)
+            state.candidates.extend(state.next_candidates)
             state.next_candidates = list()
             state.iteration += 1
     except Exception as e:
         print 'Error retrieving google search results: ' + str(e)
-        print 'Google throttling, wait a couple of minutes and try again.'
+        state.pickle()
     finally:
         save_related_queries(seed, approved, rejected)
-        state.pickle()
         
     return
 
