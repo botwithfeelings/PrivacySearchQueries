@@ -45,7 +45,7 @@
   - how to uninstall youtube
   - how to uninstall snapchat
   - how to uninstall instagram
-  - how to uninstall pokemongoTemplates
+  - how to uninstall pokemongo
 
 - Removing social media connections
   - how to unfollow someone on facebook
