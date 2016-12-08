@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[25]:
+# In[2]:
 
 import google_query_similarity as gr
 from collections import OrderedDict
@@ -11,7 +11,7 @@ import os
 import pickle
 
 
-# In[26]:
+# In[15]:
 
 class ScrapeState():
     def __init__(self, seed):
@@ -19,8 +19,8 @@ class ScrapeState():
         self.iteration = 0
         self.candidates = list()
         self.next_candidates = list()
-        self.threshold = 1.0        
-
+        self.threshold = 1.0
+        
     def pickle(self):
         name_suffix = './googledata/' + self.seed.replace(' ', '_') 
         with open(name_suffix, 'wb') as f:
@@ -53,12 +53,12 @@ def load_dictionaries(seed):
     if os.path.isfile(a_name):
         with open(a_name, mode='r') as f:
             reader = csv.reader(f)
-            approved = {rows[0]:rows[1] for rows in reader}
+            approved = {rows[0]:(rows[1], rows[2]) for rows in reader}
 
     if os.path.isfile(r_name):
         with open(r_name, mode='r') as f:
             reader = csv.reader(f)
-            rejected = {rows[0]:rows[1] for rows in reader}
+            rejected = {rows[0]:(rows[1], rows[2]) for rows in reader}
     
     return approved, rejected
 
@@ -70,18 +70,18 @@ def save_related_queries(seed, approved, rejected):
     a_name =  name_suffix + 'approved.csv'
     r_name = name_suffix + 'rejected.csv'
         
-    with open(a_name, 'a') as f:
+    with open(a_name, 'w') as f:
         csv_writer = csv.writer(f, lineterminator='\n')
         for (k, v) in approved.iteritems():
-            csv_writer.writerow([k, v])
+            csv_writer.writerow([k, v[0], v[1]])
             
-    with open(r_name, 'a') as f:
+    with open(r_name, 'w') as f:
         csv_writer = csv.writer(f, lineterminator='\n')
         for (k, v) in rejected.iteritems():
-            csv_writer.writerow([k, v])    
+            csv_writer.writerow([k, v[0], v[1]])    
 
 
-# In[29]:
+# In[6]:
 
 def do_stuff(seed, limit, keycnt):
     # Load the approved and rejected set 
@@ -94,17 +94,23 @@ def do_stuff(seed, limit, keycnt):
     state.unpickle()
     state.display()
     
+    # Create space for iteration 0 if necessary.
+    iter0 = OrderedDict()
+    iter0kvals = list()
+    
     try:
         # Expansion set and first iteration of  for the seed.
         seed_page = gr.get_query_html(seed, keycnt)
         seed_rs = gr.google_related_searches(seed_page)
         seed_es = gr.google_expanded_docs(seed_page)    
 
-        # Initiate the candidates with the seed's related queries.
-        state.candidates.extend(seed_rs)
+        # Initiate the candidates with the seed's related queries as (related search, parent) tuple.
+        # The parent in this case is the seed.
+        for rs in seed_rs:
+            state.candidates.append((rs, seed))
         while state.iteration < limit:
             while len(state.candidates) > 0:
-                candidate = state.candidates.pop(0)
+                (candidate, parent) = state.candidates.pop(0)
                 # If the candidate appears in either the accepted
                 # or rejected sets then don't process it.
                 if (candidate in approved) or (candidate in rejected):
@@ -112,9 +118,15 @@ def do_stuff(seed, limit, keycnt):
 
                 # Get the candidate's related searches and extended set.
                 can_page = gr.get_query_html(candidate, keycnt)
-                can_rs = gr.google_related_searches(can_page)
-                can_es = gr.google_expanded_docs(can_page)
-
+                
+                try:
+                    can_rs = gr.google_related_searches(can_page)
+                    can_es = gr.google_expanded_docs(can_page)
+                except Exception as e:
+                    print 'Error parsing google search results: ' + str(e)
+                    print 'Candidate query: ' + state.current_candidate
+                    continue
+                    
                 # Retrieve the kernel value.
                 kval = gr.kval_es(seed_es, can_es)
 
@@ -122,38 +134,52 @@ def do_stuff(seed, limit, keycnt):
                 # Otherwise if the kernel value is less than
                 # the threshold then reject it.
                 if state.iteration == 0:
-                    # For the first iteration accept everything.
-                    approved[candidate] = kval
-
-                    # Set the threshold to the minimum of the first iteration.
-                    if kval < state.threshold:
-                        state.threshold = kval                
+                    # For the first iteration store everything inside iter0.
+                    # We will figure out everything at the end of the iteration.
+                    iter0[state.current_candidate] = (parent, kval)
+                    iter0kvals.append(kval)
                 else:
                     # For further iteration, only accept if kernel 
                     # value is greater than the threshold.
                     if kval >= state.threshold:
-                        approved[candidate] = kval 
+                        approved[candidate] = (parent, kval)
                     else:
-                        rejected[candidate] = kval                
+                        rejected[candidate] = (parent, kval)              
 
                 # Add the candidate's related searches to the next_candidates.
-                state.next_candidates.extend(can_rs)
+                for rs in can_rs:
+                    state.candidates.append((rs, candidate))
 
             # Add the next candidates to the candidates set
             # and increase the iteration count.
             state.candidates.extend(state.next_candidates)
             state.next_candidates = list()
+            
+            # Before incrementing the iteration counter, process 
+            # the first iteration if this is the first iteration.
+            if state.iteration == 0:
+                q75, q25 = np.percentile(iter0kvals, [75 ,25])
+                iqr = q75 - q25
+                state.threshold = q25 - (1.5 * iqr)
+                
+                # Process the iteration 0 candidates and later ones
+                # based on this threshold.
+                for (k,v) in iter0.iteritems():
+                    if v[1] >= state.threshold:
+                        approved[k] = v
+                    else:
+                        rejected[k] = v
+            
             state.iteration += 1
     except Exception as e:
         print 'Error retrieving google search results: ' + str(e)
-        state.pickle()
     finally:
         save_related_queries(seed, approved, rejected)
-        
+        state.pickle()
     return
 
 
-# In[27]:
+# In[7]:
 
 def main():
     ap = argparse.ArgumentParser(description='Use the script to pull google related search queries.')
