@@ -124,7 +124,7 @@ def do_stuff(seed, limit, keycnt):
                     can_es = gr.google_expanded_docs(can_page)
                 except Exception as e:
                     print 'Error parsing google search results: ' + str(e)
-                    print 'Candidate query: ' + state.current_candidate
+                    print 'Candidate query: ' + candidate
                     continue
                     
                 # Retrieve the kernel value.
@@ -136,7 +136,7 @@ def do_stuff(seed, limit, keycnt):
                 if state.iteration == 0:
                     # For the first iteration store everything inside iter0.
                     # We will figure out everything at the end of the iteration.
-                    iter0[state.current_candidate] = (parent, kval)
+                    iter0[candidate] = (parent, kval)
                     iter0kvals.append(kval)
                 else:
                     # For further iteration, only accept if kernel 
