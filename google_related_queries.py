@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[2]:
+# In[18]:
 
 import google_query_similarity as gr
 from collections import OrderedDict
@@ -9,6 +9,7 @@ import argparse
 import csv
 import os
 import pickle
+import numpy as np
 
 
 # In[15]:
