@@ -148,7 +148,7 @@ def do_stuff(seed, limit, keycnt):
 
                 # Add the candidate's related searches to the next_candidates.
                 for rs in can_rs:
-                    state.candidates.append((rs, candidate))
+                    state.next_candidates.append((rs, candidate))
 
             # Add the next candidates to the candidates set
             # and increase the iteration count.
