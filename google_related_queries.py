@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[18]:
+# In[19]:
 
 import google_query_similarity as gr
 from collections import OrderedDict
@@ -9,6 +9,7 @@ import argparse
 import csv
 import os
 import pickle
+import traceback
 import numpy as np
 
 
@@ -173,7 +174,8 @@ def do_stuff(seed, limit, keycnt):
             
             state.iteration += 1
     except Exception as e:
-        print 'Error retrieving google search results: ' + str(e)
+        print 'Error retrieving google search results: ' + repr(e)
+        traceback.print_exc()
     finally:
         save_related_queries(seed, approved, rejected)
         state.pickle()
