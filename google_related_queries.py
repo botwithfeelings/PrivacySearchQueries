@@ -124,13 +124,13 @@ def do_stuff(seed, limit, keycnt):
                 try:
                     can_rs = gr.google_related_searches(can_page)
                     can_es = gr.google_expanded_docs(can_page)
+                    
+                    # Retrieve the kernel value.
+                    kval = gr.kval_es(seed_es, can_es)
                 except Exception as e:
-                    print 'Error parsing google search results: ' + str(e)
+                    print 'Error processing google search results: ' + repr(e)
                     print 'Candidate query: ' + candidate
                     continue
-                    
-                # Retrieve the kernel value.
-                kval = gr.kval_es(seed_es, can_es)
 
                 # If this is the first iteration accept all.
                 # Otherwise if the kernel value is less than
