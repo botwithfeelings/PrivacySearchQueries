@@ -15,9 +15,18 @@ Based on these results, we chose to use search query trends to construct an inde
 
 In order to use search queries as an index, we have laid out the following plan:
 
-* Construct a set of search queries related to the core concepts identified in the Pew Report. (We are currently generating this set with a recursive expansion on an initial seed query by mining Google's related queries.)
+* Construct a set of search queries related to the core concepts identified in the Pew Report.
 * Leverage Google Trends [\[1\]](#ref) to track the temporal popularity of the related queries from before the Snowden revelations up to present time.
 * Create an index based on the search query trends to determine if the population's behavior has changed in a manner consistent with the Pew Report's results.
+
+We are currently generating the set of related queries with a recursive expansion on an initial seed query by mining Google's related queries. We have collected sample queries from AMT users to test against the generated related query set to analyze the recall of our method.
+
+There are several limitations to our methodology that we are aware of and will try to minimize:
+
+* Search queries can be ambiguous and therefore difficult to understand users' intents. We will use multiple classifiers to determine the intent of the queries generated in our sets.
+* As we are relying on Google Trends, we cannot measure the actual query volume but only an normalized index. We need to ensure that we can normalize all query volumes to a consistent reference to allow comparison.
+* This method often generates long tailed queries that do not have enough search volume to register on Google Trends. Long tailed queries are used less frequently; we will determine whether our results are still valid without being able to use these queries.
+
 
 <a name="ref">
 ## References
