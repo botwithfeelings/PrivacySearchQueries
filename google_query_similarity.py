@@ -78,9 +78,8 @@ def get_query_expansion_vector(vec):
 # In[8]:
 
 """Retrieves html result for a query pushed into the Google search engine."""
-"""Retrieves html result for a query pushed into the Google search engine."""
-def get_query_html(query, limit):
-    address = "http://www.google.com/search?q=%s&num=100&hl=en&start=0" % (urllib.quote_plus(query))
+def get_query_html(query, limit, num_results=100):
+    address = 'http://www.google.com/search?q={}&num={}&hl=en&start=0'.format(urllib.quote_plus(query), num_results)
     request = urllib2.Request(address, None, {'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_4) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.57 Safari/536.11'})
     urlfile = urllib2.urlopen(request)
     page = urlfile.read()
