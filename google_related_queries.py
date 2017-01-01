@@ -1,21 +1,44 @@
+#!/usr/bin/env python2.7
+#
+# This script can be used to pull related search queries from a Google search.
+# ***brief description of algorithm***
+#
+# Before running, you will need to determine the following:
+#
+#
+#
+# You will need to provide the following arguments to the argument parser for this script:
+#
+# * seed
+# * iteration count
+# * request limit (see bullet 2 in next list)
+#
+# In running this script, we have identified the following issues that you need to be aware of and potentially
+# address:
+#
+# * This script relies on a specific structure of Google's search results. The logic provided
+#   by the script can break at any time if Google changes how the results and/or related queries are displayed.
+# * When running this script, we have been hit with Google's rate limiters, rejecting all of our requests.
+#   In order to bypass this issue, we have implemented a feature to only submit a specific number of requests
+#   in a time period. While you might be able to use a higher rate, we were generally running at 60 requests/hour.
+#
 
-# coding: utf-8
-
-# In[19]:
-
-import google_query_similarity as gr
-from collections import OrderedDict
+# standard library imports
 import argparse
+from collections import OrderedDict
 import csv
 import os
 import pickle
 import traceback
+
+# third party imports
 import numpy as np
 
+# local imports
+import google_query_similarity as gr
 
-# In[15]:
 
-class ScrapeState():
+class ScrapeState:
     def __init__(self, seed):
         self.seed = seed
         self.iteration = 0
@@ -40,8 +63,6 @@ class ScrapeState():
         print '\n'.join("%s: %s" % item for item in attrs.items())
 
 
-# In[16]:
-
 def load_dictionaries(seed):
     # Dictionaries of approved and rejected queries
     # along with their kernel value.
@@ -49,27 +70,25 @@ def load_dictionaries(seed):
     rejected = OrderedDict()
     
     name_suffix = './googledata/' + seed.replace(' ', '_') + '_' 
-    a_name =  name_suffix + 'approved.csv'
+    a_name = name_suffix + 'approved.csv'
     r_name = name_suffix + 'rejected.csv'
     
     if os.path.isfile(a_name):
         with open(a_name, mode='r') as f:
             reader = csv.reader(f)
-            approved = {rows[0]:(rows[1], rows[2]) for rows in reader}
+            approved = {rows[0]: (rows[1], rows[2]) for rows in reader}
 
     if os.path.isfile(r_name):
         with open(r_name, mode='r') as f:
             reader = csv.reader(f)
-            rejected = {rows[0]:(rows[1], rows[2]) for rows in reader}
+            rejected = {rows[0]: (rows[1], rows[2]) for rows in reader}
     
     return approved, rejected
 
 
-# In[17]:
-
 def save_related_queries(seed, approved, rejected):
     name_suffix = './googledata/' + seed.replace(' ', '_') + '_' 
-    a_name =  name_suffix + 'approved.csv'
+    a_name = name_suffix + 'approved.csv'
     r_name = name_suffix + 'rejected.csv'
         
     with open(a_name, 'w') as f:
@@ -82,8 +101,6 @@ def save_related_queries(seed, approved, rejected):
         for (k, v) in rejected.iteritems():
             csv_writer.writerow([k, v[0], v[1]])    
 
-
-# In[6]:
 
 def do_stuff(seed, limit, keycnt):
     # Load the approved and rejected set 
@@ -166,7 +183,7 @@ def do_stuff(seed, limit, keycnt):
                 
                 # Process the iteration 0 candidates and later ones
                 # based on this threshold.
-                for (k,v) in iter0.iteritems():
+                for (k, v) in iter0.iteritems():
                     if v[1] >= state.threshold:
                         approved[k] = v
                     else:
@@ -181,8 +198,6 @@ def do_stuff(seed, limit, keycnt):
         state.pickle()
     return
 
-
-# In[7]:
 
 def main():
     ap = argparse.ArgumentParser(description='Use the script to pull google related search queries.')
@@ -200,8 +215,5 @@ def main():
     return
 
 
-# In[ ]:
-
 if __name__ == '__main__':
     main()
-
