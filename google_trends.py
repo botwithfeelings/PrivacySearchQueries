@@ -1,26 +1,41 @@
+#!/usr/bin/env python2.7
+#
+# This script can be used to pull Google trends data for a specified query
+# ***brief description of algorithm***
+#
+# Before running, you will need to determine the following:
+#
+#
+#
+# You will need to provide the following arguments to the argument parser for this script:
+#
+# * csv file, containing queries to get trends for
+# * seed word, specifies the folder which all trends will be placed within
+# * whether all queries should be compared against the seed in the Google Trend results
+#
+# In running this script, we have identified the following issues that you need to be aware of and potentially
+# address:
+#
+# *
+#
 
-# coding: utf-8
-
-# In[5]:
-
+# standard library imports
 from __future__ import division
-from pytrends.request import TrendReq, ResponseError, RateLimitError
-from random import randint, shuffle
-from time import sleep
-from keys import google_auth
-import csv
 import argparse
-import traceback
+import csv
+from random import randint, shuffle
 import os
-import pandas as pd
+from time import sleep
 
+# third party imports
+from pytrends.request import TrendReq, ResponseError, RateLimitError
 
-# In[17]:
+# local imports?
+from keys import google_auth
+
 
 MIN_WAIT = 5
 
-
-# In[6]:
 
 def get_google_auth():
     shuffle(google_auth)
@@ -29,19 +44,14 @@ def get_google_auth():
     return None
 
 
-# In[44]:
-
 def write_failed_list(filename, seed, failed, count, succ):
     with open(filename, 'w+') as f:
         f.write('\n'.join(failed))
-        success_rate = 0
         if succ:
             # Write over any failed list file if exists.
             success_rate = ((count - len(failed)) / count) * 100    
             f.write('\n' + seed + ', sucess rate: ' + str(success_rate) + '%')
 
-
-# In[36]:
 
 def get_trend_data(t, term, trends, failed, seed, comp):
     # First check if we have the data from some other session.
@@ -75,12 +85,11 @@ def get_trend_data(t, term, trends, failed, seed, comp):
     return True
 
 
-# In[41]:
-
 def main():
     ap = argparse.ArgumentParser(description='Use the script to pull google trends data.')
     ap.add_argument('-f', '-file', help='CSV file containing trend keywords at column 0', required=True)
-    ap.add_argument('-s', '-seed', help='Seed Word. All csv files to be written inside same name directory within gtrends', required=True)
+    ap.add_argument('-s', '-seed', help='Seed Word. All csv files to be written inside same name directory within '
+                                        'gtrends', required=True)
     ap.add_argument('-c', '-cmp', help='Enable comparison with seed word', action='store_true')
     args = ap.parse_args()
     
@@ -114,31 +123,27 @@ def main():
     
     # Get authentication keys.
     google_user, google_pass = get_google_auth()
-    pyTrends = TrendReq(google_user, google_pass)
+    py_trends = TrendReq(google_user, google_pass)
     while trends_list:
         term = trends_list.pop(0)
         if term in failed_list:
             continue
         
-        succ = get_trend_data(pyTrends, term, trends_list, failed_list, seed, comp)
+        succ = get_trend_data(py_trends, term, trends_list, failed_list, seed, comp)
         sleep(randint(MIN_WAIT, MIN_WAIT * 2))
         if not succ:
             # Request limit exceeded, establish new connection.
             auth = get_google_auth()
             if auth is not None:
                 google_user, google_pass = auth
-                pyTrends = TrendReq(google_user, google_pass)        
+                py_trends = TrendReq(google_user, google_pass)
             else:
                 print 'Google authentications exhausted, wait a few minutes and try again.'
                 write_failed_list(failed_file, seed, failed_list, count, False)
                 return
         
     write_failed_list(failed_file, seed, failed_list, count, True)
-    return
 
-
-# In[22]:
 
 if __name__ == '__main__':
     main()
-
