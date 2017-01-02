@@ -40,6 +40,12 @@ import google_query_similarity as gr
 
 class ScrapeState:
     def __init__(self, seed):
+        """
+        Create a scrape state for a given query seed.
+
+        :param seed: The root query that this state was generated for. The seed should only contain alphanumeric
+                     characters and spaces/underscores as the seed is used to generate the backup file.
+        """
         self.seed = seed
         self.iteration = 0
         self.candidates = list()
@@ -47,11 +53,21 @@ class ScrapeState:
         self.threshold = 1.0
         
     def pickle(self):
+        """
+        Save the object to a data file so we can resume where we left off
+
+        :return: None
+        """
         name_suffix = './googledata/' + self.seed.replace(' ', '_') 
         with open(name_suffix, 'wb') as f:
             pickle.dump(self.__dict__, f, pickle.HIGHEST_PROTOCOL)        
 
     def unpickle(self):
+        """
+        Load the object from a cached data file to resume where left off.
+
+        :return: None
+        """
         name_suffix = './googledata/' + self.seed.replace(' ', '_') 
         if os.path.isfile(name_suffix):
             with open(name_suffix, 'rb') as f:
@@ -59,13 +75,29 @@ class ScrapeState:
                 self.__dict__.update(tmp)
     
     def display(self):
+        """
+        Print the current state of the object. This can be used to check the progress after unpickling
+
+        :return: None
+        """
         attrs = vars(self)
         print '\n'.join("%s: %s" % item for item in attrs.items())
 
 
-def load_dictionaries(seed):
-    # Dictionaries of approved and rejected queries
-    # along with their kernel value.
+def load_related_queries(seed):
+    """
+    Load the state of the approved and rejected dictionaries from the saved related query files, if they exist. If no
+    files exist, an empty ordered dictionary will be returned. If the file does exist, the ordered dictionary will
+    contain the appropriate data.
+
+    The key for the ordered dictionary is the candidate query. The value for the ordered dictionary is the parent query
+    and kernel value as a tuple. OrderedDict([query:(parent query, kernel value)])
+
+    :param seed: The root query that this state was generated for. The seed should only contain alphanumeric
+                 characters and spaces/underscores as the seed is used to generate the backup file.
+
+    :return: The approved and rejected ordered dictionaries in a tuple (approved, rejected)
+    """
     approved = OrderedDict()
     rejected = OrderedDict()
     
@@ -76,36 +108,53 @@ def load_dictionaries(seed):
     if os.path.isfile(a_name):
         with open(a_name, mode='r') as f:
             reader = csv.reader(f)
-            approved = {rows[0]: (rows[1], rows[2]) for rows in reader}
+            approved = OrderedDict((rows[0], (rows[1], rows[2])) for rows in reader)
 
     if os.path.isfile(r_name):
         with open(r_name, mode='r') as f:
             reader = csv.reader(f)
-            rejected = {rows[0]: (rows[1], rows[2]) for rows in reader}
+            rejected = OrderedDict((rows[0], (rows[1], rows[2])) for rows in reader)
     
     return approved, rejected
 
 
 def save_related_queries(seed, approved, rejected):
+    """
+    Save the approved and rejected related queries to a file.
+
+    :param seed:
+    :param approved:
+    :param rejected:
+    :return:
+    """
     name_suffix = './googledata/' + seed.replace(' ', '_') + '_' 
     a_name = name_suffix + 'approved.csv'
     r_name = name_suffix + 'rejected.csv'
-        
-    with open(a_name, 'w') as f:
-        csv_writer = csv.writer(f, lineterminator='\n')
-        for (k, v) in approved.iteritems():
-            csv_writer.writerow([k, v[0], v[1]])
-            
-    with open(r_name, 'w') as f:
-        csv_writer = csv.writer(f, lineterminator='\n')
-        for (k, v) in rejected.iteritems():
-            csv_writer.writerow([k, v[0], v[1]])    
+
+    if any(approved):
+        with open(a_name, 'w') as f:
+            csv_writer = csv.writer(f, lineterminator='\n')
+            for (k, v) in approved.iteritems():
+                csv_writer.writerow([k, v[0], v[1]])
+
+    if any(rejected):
+        with open(r_name, 'w') as f:
+            csv_writer = csv.writer(f, lineterminator='\n')
+            for (k, v) in rejected.iteritems():
+                csv_writer.writerow([k, v[0], v[1]])
 
 
 def do_stuff(seed, limit, keycnt):
+    """
+
+    :param seed:
+    :param limit:
+    :param keycnt:
+    :return:
+    """
     # Load the approved and rejected set 
     # from the previous attempt if any.
-    approved, rejected = load_dictionaries(seed)
+    approved, rejected = load_related_queries(seed)
     
     # Everything we need to run is in this state object.
     # We load it from the last attempt if any.
@@ -200,6 +249,10 @@ def do_stuff(seed, limit, keycnt):
 
 
 def main():
+    """
+
+    :return:
+    """
     ap = argparse.ArgumentParser(description='Use the script to pull google related search queries.')
     ap.add_argument('-s', '-seed', help='Seed word', required=True)
     ap.add_argument('-i', '-iteration', help='limit to number of related search iteration', default=3)
