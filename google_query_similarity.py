@@ -18,7 +18,16 @@ import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 
-def stem_tokens(tokens, stemmer):
+def stem_tokens(tokens):
+    """
+    Stem the tokens passed in. All lexical representations are to be used in the stemmed representation by the Porter
+    stemmer.
+
+    :param tokens: Tokens to stem
+    :return: All tokens passed in with stemming applied
+    """
+    #
+    stemmer = PorterStemmer()
     stemmed = []
     for item in tokens:
         stemmed.append(stemmer.stem(item))
@@ -27,17 +36,19 @@ def stem_tokens(tokens, stemmer):
 
 def tokenize(text):
     """
+
+    :param text:
+    :return:
+    """
+    """
     Tokenizes and performs stemming on the tokens.
 
     :param text:
     :return:
     """
-    # All lexical representations are to be used is the stemmed representation by the Porter stemmer
-    stemmer = PorterStemmer()
-
     text = text.lower()
     tokens = nltk.word_tokenize(text)
-    stems = stem_tokens(tokens, stemmer)
+    stems = stem_tokens(tokens)
     return stems
 
 
@@ -134,6 +145,8 @@ def kval_es(es_q, es_c):
     Calculates the kernel function value from two expansion sets rather
     than raw short string candidates, makes caching easier.
 
+    .. note:: This kernel function is an implementation of the methodology presented in [].
+
     :param es_q:
     :param es_c:
     :return:
@@ -146,23 +159,23 @@ def kval_es(es_q, es_c):
 
 def kval(q, c):
     """
-    Finds the value of the kernel function between
-    query string q and candidate c, better not use this,
-    cause this is costly. Use the extended set version when
-    handling bulk. Use this for checking or debugging.
+    Find the kernel function value between a query string and candidate string
 
-    :param q:
-    :param c:
-    :return:
+    .. note:: Do not use this when handling bulk queries as it is computationally expensive. This should only be used
+              for testing and debugging. Use the extended set version instead when handling bulk.
+
+    :param q: Query string to calculate the kernel value in reference to
+    :param c: Candidate to calculate the k value for
+    :return: Value of kernel function
     """
     q_page = get_query_html(q)
     c_page = get_query_html(c)
-    es_q = google_expanded_docs(q_page)
-    es_c = google_expanded_docs(c_page)
+    es_q = get_google_query_summary_set(q_page)
+    es_c = get_google_query_summary_set(c_page)
     return kval_es(es_q, es_c)
 
 
-def google_related_searches(page):
+def get_google_related_searches(page):
     """
     Retrieves the related searches for a Google query string,
     given the html page of the google search page."
@@ -182,23 +195,24 @@ def google_related_searches(page):
     return rs
 
 
-def google_expanded_docs(page):
+def get_google_query_summary_set(query_results_page):
     """
-    Retrieves the first 100 expanded sets for a query string,
-    given the html page of the google search page.Expanded set
-    consists of the result header and the summary text
-    strip for each of the search results in the returned page.
+    Retrieves the summary set for a query string given the html page of the google search page. The summary set
+    consists of the result header and the summary text strip for each of the search results in the returned page.
+    
+    .. note:: This function depends on the tags assigned by Google in the search results. Any change in these tags
+              will likely break the functionality of this function.
 
-    :param page:
-    :return:
+    :param query_results_page: Google search result to determine the summary set of
+    :return: Summary set for the provided page
     """
-    es = list()
-    if page is not None:
-        soup = BeautifulSoup(page, 'lxml')
+    summary_set = list()
+    if query_results_page is not None:
         # Strip the extended set using beautifulsoup.
-        esdivs = soup.findAll("div", {"class": "g"})
-        for esdiv in esdivs:
-            for d in esdiv.findAll('div', {'class': 'rc'}):
+        soup = BeautifulSoup(query_results_page, 'lxml')
+        summary_divs = soup.findAll("div", {"class": "g"})
+        for div in summary_divs:
+            for d in div.findAll('div', {'class': 'rc'}):
                 doc = ""
                 for hr in d.findAll('h3', {'class': 'r'}):
                     doc += hr.getText()
@@ -206,11 +220,18 @@ def google_expanded_docs(page):
                 for ds in d.findAll('div', {'class': 's'}):
                     for s in ds.findAll('span', {'class': 'st'}):
                         doc += s.getText()
-                es.append(to_ascii(doc).translate(None, string.punctuation))
+                summary_set.append(to_ascii(doc).translate(None, string.punctuation))
 
-    return es
+    return summary_set
 
 
 def test_kval(q, c):
+    """
+    Calculate and print the kernel function value between a query string and a candidate.
+
+    :param q: Query string to calculate the k value in reference to
+    :param c: Candidate to calculate the k value for
+    :return: None
+    """
     k = kval(q, c)
     print k

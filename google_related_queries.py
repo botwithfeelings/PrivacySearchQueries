@@ -122,10 +122,15 @@ def save_related_queries(seed, approved, rejected):
     """
     Save the approved and rejected related queries to a file.
 
-    :param seed:
-    :param approved:
-    :param rejected:
-    :return:
+    In this implementation, the collections to be stored are ordered dictionaries. While the collection does not need
+    to be an ordered dictionary, it must be parsable with the structure (k, (v0, v1)) where k is the related query,
+    v0 is the parent query, and v1 is the kernel value for the related query
+
+    :param seed: The root query that the approved/rejected queries were generated for. The seed should only contain
+                 alphanumeric characters and spaces/underscores as the seed is used to generate the backup file.
+    :param approved: Collection of approved queries following structure described above
+    :param rejected: Collection of rejected queries following structure described above
+    :return: None
     """
     name_suffix = './googledata/' + seed.replace(' ', '_') + '_' 
     a_name = name_suffix + 'approved.csv'
@@ -144,33 +149,38 @@ def save_related_queries(seed, approved, rejected):
                 csv_writer.writerow([k, v[0], v[1]])
 
 
-def do_stuff(seed, limit, keycnt):
+def run_google_related_queries(seed, limit, keycnt):
     """
+    This function is where the main logic of getting the related google queries occurs. Execution continues until either
+    the maximum number of iterations occur or there is an error in the execution.
 
-    :param seed:
-    :param limit:
-    :param keycnt:
-    :return:
+    The iterations have the following logic:
+        Iteration 0:
+
+        Iteration 1+:
+
+    :param str seed: The root query that the related queries are generated for. The seed should only contain
+                     alphanumeric characters and spaces/underscores as the seed is used to generate the backup file.
+    :param int limit: Specifies the maximum number of times to iterate through the related queries
+    :param int keycnt: The maximum number of Google keyword requests per hour
+    :return: None
     """
-    # Load the approved and rejected set 
-    # from the previous attempt if any.
+    # Recover from any previous failures/runs, if any, by loading the queries and unpickling the scrape state
     approved, rejected = load_related_queries(seed)
-    
-    # Everything we need to run is in this state object.
-    # We load it from the last attempt if any.
     state = ScrapeState(seed)
     state.unpickle()
     state.display()
     
     # Create space for iteration 0 if necessary.
-    iter0 = OrderedDict()
-    iter0kvals = list()
+    if state.iteration==0:
+        iter0 = OrderedDict()
+        iter0kvals = list()
     
     try:
         # Expansion set and first iteration of  for the seed.
         seed_page = gr.get_query_html(seed, keycnt)
-        seed_rs = gr.google_related_searches(seed_page)
-        seed_es = gr.google_expanded_docs(seed_page)    
+        seed_rs = gr.get_google_related_searches(seed_page)
+        seed_es = gr.get_google_query_summary_set(seed_page)
 
         # Initiate the candidates with the seed's related queries as (related search, parent) tuple.
         # The parent in this case is the seed.
@@ -188,8 +198,8 @@ def do_stuff(seed, limit, keycnt):
                 can_page = gr.get_query_html(candidate, keycnt)
                 
                 try:
-                    can_rs = gr.google_related_searches(can_page)
-                    can_es = gr.google_expanded_docs(can_page)
+                    can_rs = gr.get_google_related_searches(can_page)
+                    can_es = gr.get_google_query_summary_set(can_page)
                     
                     # Retrieve the kernel value.
                     kval = gr.kval_es(seed_es, can_es)
@@ -226,7 +236,7 @@ def do_stuff(seed, limit, keycnt):
             # Before incrementing the iteration counter, process 
             # the first iteration if this is the first iteration.
             if state.iteration == 0:
-                q75, q25 = np.percentile(iter0kvals, [75 ,25])
+                q75, q25 = np.percentile(iter0kvals, [75, 25])
                 iqr = q75 - q25
                 state.threshold = q25 - (1.5 * iqr)
                 
@@ -240,33 +250,22 @@ def do_stuff(seed, limit, keycnt):
             
             state.iteration += 1
     except Exception as e:
+        # We do not want to die unexpectedly without saving the current progress, so catch all errors.
         print 'Error retrieving google search results: ' + repr(e)
         traceback.print_exc()
     finally:
+        # Regardless of whether we have failed (i.e. caught an exception) or not, save the approved and rejected queries
+        # and the state of the calculation.
         save_related_queries(seed, approved, rejected)
         state.pickle()
-    return
 
 
-def main():
-    """
-
-    :return:
-    """
+if __name__ == '__main__':
     ap = argparse.ArgumentParser(description='Use the script to pull google related search queries.')
     ap.add_argument('-s', '-seed', help='Seed word', required=True)
     ap.add_argument('-i', '-iteration', help='limit to number of related search iteration', default=3)
     ap.add_argument('-k', '-keywordlimit', help='limit to number of keyword request per hour', default=30)
-    
+
     args = ap.parse_args()
-    
-    seed = args.s
-    limit = int(args.i)
-    keycnt = int(args.k)
-    
-    do_stuff(seed, limit, keycnt)
-    return
 
-
-if __name__ == '__main__':
-    main()
+    run_google_related_queries(args.s, int(args.i), int(args.k))

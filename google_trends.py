@@ -45,6 +45,15 @@ def get_google_auth():
 
 
 def write_failed_list(filename, seed, failed, count, succ):
+    """
+
+    :param filename:
+    :param seed:
+    :param failed:
+    :param count:
+    :param succ:
+    :return:
+    """
     with open(filename, 'w+') as f:
         f.write('\n'.join(failed))
         if succ:
@@ -54,6 +63,16 @@ def write_failed_list(filename, seed, failed, count, succ):
 
 
 def get_trend_data(t, term, trends, failed, seed, comp):
+    """
+
+    :param t:
+    :param term:
+    :param trends:
+    :param failed:
+    :param seed:
+    :param comp:
+    :return:
+    """
     # First check if we have the data from some other session.
     dir_suffix = seed
     if comp:
@@ -86,6 +105,10 @@ def get_trend_data(t, term, trends, failed, seed, comp):
 
 
 def main():
+    """
+
+    :return:
+    """
     ap = argparse.ArgumentParser(description='Use the script to pull google trends data.')
     ap.add_argument('-f', '-file', help='CSV file containing trend keywords at column 0', required=True)
     ap.add_argument('-s', '-seed', help='Seed Word. All csv files to be written inside same name directory within '
