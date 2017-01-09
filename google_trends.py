@@ -3,9 +3,6 @@
 # This script can be used to pull Google trends data for a specified query
 # ***brief description of algorithm***
 #
-# Before running, you will need to determine the following:
-#
-#
 #
 # You will need to provide the following arguments to the argument parser for this script:
 #
@@ -16,7 +13,15 @@
 # In running this script, we have identified the following issues that you need to be aware of and potentially
 # address:
 #
-# *
+# * Trend data collected is normalized for each query individually. If the data is requested for only one query, the
+#   normalization such that the maximum fraction of search volume history in the requested time range will have a value
+#   of 100 and all other values will be relative to that. If the history is collected for more than one trend at the
+#   same time, the data for all queries will be normalized relative to the maximum of all queries. Therefore, if
+#   query histories are requested individually, they cannot be compared directly.
+# * Since the trend data retrieved is normalized to the entire Google search volume, care needs to be taken to ensure
+#   that a change in a specific trend is not caused by a severe increase/decrease in a small number of queries. The
+#   proposed method to accomplish this is by comparing the trend data against several queries which are considered to
+#   have a consistent volume across time (life and love) [].
 #
 
 # standard library imports

@@ -3,10 +3,6 @@
 # This script can be used to pull related search queries from a Google search.
 # ***brief description of algorithm***
 #
-# Before running, you will need to determine the following:
-#
-#
-#
 # You will need to provide the following arguments to the argument parser for this script:
 #
 # * seed

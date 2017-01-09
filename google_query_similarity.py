@@ -1,5 +1,9 @@
 #
+# This file contains the functions necessary to get the Google search pages, related queries, kernel values, and
+# expansion sets from a specific query.
 #
+# Several functions in this page depend on hard-coded HTML class names to parse the Google search pages. If the
+# structure of the search result page changes, these functions will break.
 #
 
 # standard library imports
@@ -36,9 +40,10 @@ def stem_tokens(tokens):
 
 def tokenize(text):
     """
+    Lowercase, tokenize, and stem text based on the nltk tokenizer
 
-    :param text:
-    :return:
+    :param text: The text to tokenize
+    :return: A list of stemmed tokens from the input text
     """
     """
     Tokenizes and performs stemming on the tokens.
@@ -54,22 +59,24 @@ def tokenize(text):
 
 def to_ascii(s):
     """
-    Convert unicode to ascii, removes accents.
+    Convert unicode to ascii, (this process removes accents).
 
-    :param s:
-    :return:
+    :param s: The string to convert
+    :return: The string in ascii
     """
     return unicodedata.normalize('NFKD', s).encode('ascii', 'ignore')
 
 
 def tfidf_normalize(row):
     """
-    Prepares for centroid calculation:
-        - Calculate L2 norm for each row
-        - Normalize the row by L2 norm
+    A function used to normalize the tf-idf matrix along an axis. This function is used to prepare for centroid
+    calculation by:
 
-    :param row:
-    :return:
+    * Calculating the L2 norm for each row
+    * Normalizing the row by the L2 norm
+
+    :param row: The row to normalize
+    :return: The normalized row
     """
     # Calculate L2 norm value.
     l2norm = np.linalg.norm(row, 2)
@@ -80,10 +87,10 @@ def tfidf_normalize(row):
 
 def get_query_expansion_vector(vec):
     """
-    Takes in the sparse matrix
+    Get the query expansion vector for a tf-idf matrix
 
-    :param vec:
-    :return:
+    :param vec: A tf-idf sparse matrix
+    :return: The expansion vector for the matrix
     """
     # Calculate the vector.
     normalized = np.apply_along_axis(tfidf_normalize, axis=1, arr=vec)
@@ -96,10 +103,11 @@ def get_query_html(query, limit=None, num_results=100):
     """
     Retrieves html result for a query pushed into the Google search engine.
 
-    :param query:
-    :param limit:
-    :param num_results:
-    :return:
+    :param query: The query to search Google for
+    :param limit: THe limit for the number of Google queries to issue in an hour. This parameter should be specified
+                  to reduce the risk of being hit by rate limiting.
+    :param num_results: THe number of query results to retrieve
+    :return: The Google search page for the provided query
     """
     address = 'http://www.google.com/search?q={}&num={}&hl=en&start=0'.format(urllib.quote_plus(query), num_results)
     request = urllib2.Request(address,
@@ -119,11 +127,11 @@ def get_query_html(query, limit=None, num_results=100):
 
 def get_tfidf_matrices(es_q, es_c):
     """
-    Retrives the tf-idf matrix for a query and candidate.
+    Retrives the term frequency inverse document frequency (tf-idf) matrix for a query and candidate.
 
-    :param es_q:
-    :param es_c:
-    :return:
+    :param es_q: The expansion set for the reference query (i.e. the ultimate root query)
+    :param es_c: The expansion set for the candidate query
+    :return: The tf-idf matrices
     """
     lq = len(es_q)
     lc = len(es_c)
@@ -142,14 +150,14 @@ def get_tfidf_matrices(es_q, es_c):
 
 def kval_es(es_q, es_c):
     """
-    Calculates the kernel function value from two expansion sets rather
-    than raw short string candidates, makes caching easier.
+    Calculates the kernel function value from two expansion sets rather than raw short string candidates, makes
+    caching easier.
 
     .. note:: This kernel function is an implementation of the methodology presented in [].
 
-    :param es_q:
-    :param es_c:
-    :return:
+    :param es_q: The expansion set for the reference query (i.e. the ultimate root query)
+    :param es_c: The expansion set for the candidate query
+    :return: The kernel function value
     """
     vq, vc = get_tfidf_matrices(es_q, es_c)
     qe_q = get_query_expansion_vector(vq)
@@ -177,11 +185,15 @@ def kval(q, c):
 
 def get_google_related_searches(page):
     """
-    Retrieves the related searches for a Google query string,
-    given the html page of the google search page."
+    Retrieves the related searches for a Google query string, given the html page of the google search page. The
+    related searches are the queries found at the bottom of the first page of results titled "Searches related to this
+    search."
 
-    :param page:
-    :return:
+    .. note:: This function depends on the classes assigned by Google in the search results. Any change in these
+              will likely break the functionality of this function.
+
+    :param page: Google serch result page to determine the related queries of
+    :return: The related searches
     """
     rs = list()
     if page is not None:
@@ -200,7 +212,7 @@ def get_google_query_summary_set(query_results_page):
     Retrieves the summary set for a query string given the html page of the google search page. The summary set
     consists of the result header and the summary text strip for each of the search results in the returned page.
     
-    .. note:: This function depends on the tags assigned by Google in the search results. Any change in these tags
+    .. note:: This function depends on the classes assigned by Google in the search results. Any change in these
               will likely break the functionality of this function.
 
     :param query_results_page: Google search result to determine the summary set of
