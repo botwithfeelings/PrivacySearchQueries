@@ -1,12 +1,18 @@
 #!/usr/bin/env python2.7
 #
-# This script can be used to pull related search queries from a Google search.
-# ***brief description of algorithm***
+# This script can be used to pull related search queries from a Google search from an initial seed query. It recursively
+# passes search queries to a Google search page, pulling out the Google-defined related queries from the resulting page.
+# For each of these candidate queries, it compares the summary snippets associated with the search first 100 search
+# results with the snippets in the seed query by use of a kernel function (for more information, see the documentation
+# in google_query_similarity.py) and a decision is made whether to accept this candidate query as related or reject it
+# based on an outlier threshold defined by the first iteration. This recursion wil continue until the iteration count
+# specified in the command line arguments has been reached.
+#
 #
 # You will need to provide the following arguments to the argument parser for this script:
 #
 # * seed
-# * iteration count
+# * iteration count (generally set to 3)
 # * request limit (see bullet 2 in next list)
 #
 # In running this script, we have identified the following issues that you need to be aware of and potentially
@@ -16,7 +22,7 @@
 #   by the script can break at any time if Google changes how the results and/or related queries are displayed.
 # * When running this script, we have been hit with Google's rate limiters, rejecting all of our requests.
 #   In order to bypass this issue, we have implemented a feature to only submit a specific number of requests
-#   in a time period. While you might be able to use a higher rate, we were generally running at 60 requests/hour.
+#   in a time period. While you might be able to use a higher rate, we were generally running at 100 requests/hour.
 #
 
 # standard library imports
@@ -152,8 +158,21 @@ def run_google_related_queries(seed, limit, keycnt):
 
     The iterations have the following logic:
         Iteration 0:
+            1) Get the first set of related search queries and page summary set from the Google search page of the seed
+               query (a summary set is the result header and the summary text strip for each of the results in a Google
+               search results page)
+            2) Add this initial set of related searched to the candidate set for the initial iteration
+            3) The related searches and summary set for each of the candidate queries are acquired
+            4) The related queries for every candidate seed in this iteration is added to the candidate seeds for the
+               next iteration.
+            5) Calculate the kernel function value between each of these candidate queries and the seed query
+            6) Determine the threshold kernel function value, set to be Q25-1.5*IQR based on the values calculated in
+               this initial iteration. This method of determining outliers is common practice within statistics.
+            7) Based on the kernel function value for each of the candidate queries, add them into the accepted list
+               iff the kernel function has a value greater than or equal to the threshold.
 
         Iteration 1+:
+            steps 3, 4, 5, and 7 are repeated for all other iterations (1+).
 
     :param str seed: The root query that the related queries are generated for. The seed should only contain
                      alphanumeric characters and spaces/underscores as the seed is used to generate the backup file.
