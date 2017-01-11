@@ -1,12 +1,5 @@
 #!/usr/bin/env python2.7
 #
-<<<<<<< HEAD
-# This script can be used to pull related search queries from a Google search.
-# ***brief description of algorithm***
-#
-# Before running, you will need to determine the following:
-#
-=======
 # This script can be used to pull related search queries from a Google search from an initial seed query. It recursively
 # passes search queries to a Google search page, pulling out the Google-defined related queries from the resulting page.
 # For each of these candidate queries, it compares the summary snippets associated with the search first 100 search
@@ -14,17 +7,12 @@
 # in google_query_similarity.py) and a decision is made whether to accept this candidate query as related or reject it
 # based on an outlier threshold defined by the first iteration. This recursion wil continue until the iteration count
 # specified in the command line arguments has been reached.
->>>>>>> 14b9455e352fce888bb2315929dcb78f31d2167f
 #
 #
 # You will need to provide the following arguments to the argument parser for this script:
 #
 # * seed
-<<<<<<< HEAD
-# * iteration count
-=======
 # * iteration count (generally set to 3)
->>>>>>> 14b9455e352fce888bb2315929dcb78f31d2167f
 # * request limit (see bullet 2 in next list)
 #
 # In running this script, we have identified the following issues that you need to be aware of and potentially
@@ -34,11 +22,7 @@
 #   by the script can break at any time if Google changes how the results and/or related queries are displayed.
 # * When running this script, we have been hit with Google's rate limiters, rejecting all of our requests.
 #   In order to bypass this issue, we have implemented a feature to only submit a specific number of requests
-<<<<<<< HEAD
-#   in a time period. While you might be able to use a higher rate, we were generally running at 60 requests/hour.
-=======
 #   in a time period. While you might be able to use a higher rate, we were generally running at 100 requests/hour.
->>>>>>> 14b9455e352fce888bb2315929dcb78f31d2167f
 #
 
 # standard library imports
@@ -174,10 +158,6 @@ def run_google_related_queries(seed, limit, keycnt):
 
     The iterations have the following logic:
         Iteration 0:
-<<<<<<< HEAD
-
-        Iteration 1+:
-=======
             1) Get the first set of related search queries and page summary set from the Google search page of the seed
                query (a summary set is the result header and the summary text strip for each of the results in a Google
                search results page)
@@ -193,7 +173,6 @@ def run_google_related_queries(seed, limit, keycnt):
 
         Iteration 1+:
             steps 3, 4, 5, and 7 are repeated for all other iterations (1+).
->>>>>>> 14b9455e352fce888bb2315929dcb78f31d2167f
 
     :param str seed: The root query that the related queries are generated for. The seed should only contain
                      alphanumeric characters and spaces/underscores as the seed is used to generate the backup file.
