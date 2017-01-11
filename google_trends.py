@@ -1,12 +1,5 @@
 #!/usr/bin/env python2.7
 #
-<<<<<<< HEAD
-# This script can be used to pull Google trends data for a specified query
-# ***brief description of algorithm***
-#
-# Before running, you will need to determine the following:
-#
-=======
 # If you pull this code from the repo, you will need to provide a keys file before being able to run it. The keys.py file
 # should contain the google authentication credentials (gmail account and their corresponding password) as a list of tuples
 # as shown in the following:
@@ -14,7 +7,6 @@
 #
 # This script can be used to pull Google trends data for a specified query. When a csv is passed with search queries
 # of interest in the first column, this script will pull the search history trends for each.
->>>>>>> 14b9455e352fce888bb2315929dcb78f31d2167f
 #
 #
 # You will need to provide the following arguments to the argument parser for this script:
@@ -26,9 +18,6 @@
 # In running this script, we have identified the following issues that you need to be aware of and potentially
 # address:
 #
-<<<<<<< HEAD
-# *
-=======
 # * Trend data collected is normalized for each query individually. If the data is requested for only one query, the
 #   normalization such that the maximum fraction of search volume history in the requested time range will have a value
 #   of 100 and all other values will be relative to that. If the history is collected for more than one trend at the
@@ -38,7 +27,6 @@
 #   that a change in a specific trend is not caused by a severe increase/decrease in a small number of queries. The
 #   proposed method to accomplish this is by comparing the trend data against several queries which are considered to
 #   have a consistent volume across time (life and love) [].
->>>>>>> 14b9455e352fce888bb2315929dcb78f31d2167f
 #
 
 # standard library imports
@@ -52,11 +40,7 @@ from time import sleep
 # third party imports
 from pytrends.request import TrendReq, ResponseError, RateLimitError
 
-<<<<<<< HEAD
-# local imports?
-=======
 # local imports
->>>>>>> 14b9455e352fce888bb2315929dcb78f31d2167f
 from keys import google_auth
 
 
@@ -64,14 +48,11 @@ MIN_WAIT = 5
 
 
 def get_google_auth():
-<<<<<<< HEAD
-=======
     """
     Get a random google username/password from the loaded list, if any are available.
 
     :return: A random username/password combination
     """
->>>>>>> 14b9455e352fce888bb2315929dcb78f31d2167f
     shuffle(google_auth)
     if len(google_auth) > 0:
         return google_auth.pop(0)
@@ -138,32 +119,6 @@ def get_trend_data(t, term, trends, failed, seed, comp):
     return True
 
 
-<<<<<<< HEAD
-def main():
-    """
-
-    :return:
-    """
-    ap = argparse.ArgumentParser(description='Use the script to pull google trends data.')
-    ap.add_argument('-f', '-file', help='CSV file containing trend keywords at column 0', required=True)
-    ap.add_argument('-s', '-seed', help='Seed Word. All csv files to be written inside same name directory within '
-                                        'gtrends', required=True)
-    ap.add_argument('-c', '-cmp', help='Enable comparison with seed word', action='store_true')
-    args = ap.parse_args()
-    
-    trends_file = args.f
-    seed = args.s
-    comp = args.c
-    
-    dir_suffix = seed
-    if comp:
-        dir_suffix += ' comp'
-    
-    directory = os.path.join('./gtrends', dir_suffix)
-    if not os.path.exists(directory):
-        os.makedirs(directory)
-    
-=======
 def run_google_trends(trends_file, seed, comp):
     """
     Collect the trend data for all queries in a file if the data exists. This function has the ability to recover from
@@ -186,33 +141,22 @@ def run_google_trends(trends_file, seed, comp):
     if not os.path.exists(directory):
         os.makedirs(directory)
 
->>>>>>> 14b9455e352fce888bb2315929dcb78f31d2167f
     # Retrieve the list of keywords to be fetched into a list.
     trends_list = list()
     with open(trends_file, 'r') as f:
         reader = csv.reader(f)
         for row in reader:
             trends_list.append(row[0])
-<<<<<<< HEAD
-            
-    count = len(trends_list)
-    
-=======
 
     count = len(trends_list)
 
->>>>>>> 14b9455e352fce888bb2315929dcb78f31d2167f
     # Retrieve the list of failed requests if any.
     failed_file = os.path.join('./gtrends', dir_suffix, seed + ' no trends data.txt')
     failed_list = list()
     if os.path.isfile(failed_file):
         with open(failed_file, 'r') as f:
             failed_list = list(map(str.strip, f.readlines()))
-<<<<<<< HEAD
     
-=======
-
->>>>>>> 14b9455e352fce888bb2315929dcb78f31d2167f
     # Get authentication keys.
     google_user, google_pass = get_google_auth()
     py_trends = TrendReq(google_user, google_pass)
@@ -220,11 +164,6 @@ def run_google_trends(trends_file, seed, comp):
         term = trends_list.pop(0)
         if term in failed_list:
             continue
-<<<<<<< HEAD
-        
-=======
-
->>>>>>> 14b9455e352fce888bb2315929dcb78f31d2167f
         succ = get_trend_data(py_trends, term, trends_list, failed_list, seed, comp)
         sleep(randint(MIN_WAIT, MIN_WAIT * 2))
         if not succ:
@@ -237,18 +176,10 @@ def run_google_trends(trends_file, seed, comp):
                 print 'Google authentications exhausted, wait a few minutes and try again.'
                 write_failed_list(failed_file, seed, failed_list, count, False)
                 return
-<<<<<<< HEAD
-        
-=======
-
->>>>>>> 14b9455e352fce888bb2315929dcb78f31d2167f
     write_failed_list(failed_file, seed, failed_list, count, True)
 
 
 if __name__ == '__main__':
-<<<<<<< HEAD
-    main()
-=======
     ap = argparse.ArgumentParser(description='Use the script to pull google trends data.')
     ap.add_argument('-f', '-file', help='CSV file containing trend keywords at column 0', required=True)
     ap.add_argument('-s', '-seed', help='Seed Word. All csv files to be written inside same name directory within '
@@ -257,4 +188,3 @@ if __name__ == '__main__':
     args = ap.parse_args()
 
     run_google_trends(args.f, args.s, args.c)
->>>>>>> 14b9455e352fce888bb2315929dcb78f31d2167f
