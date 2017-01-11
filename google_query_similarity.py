@@ -5,6 +5,24 @@
 # Several functions in this page depend on hard-coded HTML class names to parse the Google search pages. If the
 # structure of the search result page changes, these functions will break.
 #
+# The main purpose of this is to compute the web based kernel function between two given query strings. For detailed
+# explanation of the method used here, see [A web-based kernel function for measuring the similarity of short text snippets]
+# URL: http://dl.acm.org/citation.cfm?id=1135834
+#
+# The following is a simplified description of the algorithm used:
+# The similarity kernel function between two short snippets of text or query string x and y are calculated as:
+# K(x, y) = QE(x).QE(y)
+# That the kernel is the inner product between the query expansions of x and y.
+# The query expansion of x, denoted QE(x) is computed as follows:
+#   1. Issue x as a query to a search engine S (in this case google).
+#   2. Let R(x) be the set of (at most) n retrieved documents d1, d2, . . . , dn (we used n=100, 
+#   compared to 200 in the original cited work)
+#   3. Compute the TF-IDF term vector vi for each document di ∈ R(x)
+#   4. Compute C(x), the centroid of the L2 normalized vectors vi.
+#   5. Let QE(x) be the L2 normalization of the centroid C(x).
+#
+# Compared to the original, we didn't perform any truncation of the TF-IDF vectors achieved in step 3 due to the short
+# document size retrieved from google search results page.
 
 # standard library imports
 from random import randint
@@ -153,7 +171,9 @@ def kval_es(es_q, es_c):
     Calculates the kernel function value from two expansion sets rather than raw short string candidates, makes
     caching easier.
 
-    .. note:: This kernel function is an implementation of the methodology presented in [].
+    .. note:: This kernel function is an implementation of the methodology presented in 
+    [A web-based kernel function for measuring the similarity of short text snippets]
+    URL: http://dl.acm.org/citation.cfm?id=1135834
 
     :param es_q: The expansion set for the reference query (i.e. the ultimate root query)
     :param es_c: The expansion set for the candidate query
