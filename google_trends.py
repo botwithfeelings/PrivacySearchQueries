@@ -1,6 +1,9 @@
 #!/usr/bin/env python2.7
 #
-# If you pull this code from the repo, you will need to provide a keys file before being able to run it.
+# If you pull this code from the repo, you will need to provide a keys file before being able to run it. The keys.py file
+# should contain the google authentication credentials (gmail account and their corresponding password) as a list of tuples
+# as shown in the following:
+# google_auth = [('email1@gmail.com', 'pass1'), ('email2@gmail.com', 'pass2'), ..., ('emailn@gmail.com', 'passn')]
 #
 # This script can be used to pull Google trends data for a specified query. When a csv is passed with search queries
 # of interest in the first column, this script will pull the search history trends for each.
