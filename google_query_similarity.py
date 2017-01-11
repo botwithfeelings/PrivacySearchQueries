@@ -17,7 +17,7 @@
 #   1. Issue x as a query to a search engine S (in this case google).
 #   2. Let R(x) be the set of (at most) n retrieved documents d1, d2, . . . , dn (we used n=100, 
 #   compared to 200 in the original cited work)
-#   3. Compute the TF-IDF term vector vi for each document di ∈ R(x)
+#   3. Compute the TF-IDF term vector vi for each document di in R(x)
 #   4. Compute C(x), the centroid of the L2 normalized vectors vi.
 #   5. Let QE(x) be the L2 normalization of the centroid C(x).
 #
