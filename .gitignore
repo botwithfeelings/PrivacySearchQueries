@@ -67,7 +67,7 @@ docs/_build/
 target/
 
 # IPython Notebook
-.ipynb
+*.ipynb
 .ipynb_checkpoints
 
 # pyenv
