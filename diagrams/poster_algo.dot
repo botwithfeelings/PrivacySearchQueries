@@ -1,0 +1,74 @@
+digraph G {
+        splines=false;
+	seed [shape=box, label="Seed Query", fontsize=12];
+
+	subgraph cluster_0 {
+		style=filled;
+		color=lightgrey;
+		node [style=filled, color=white, shape=box, fontsize=10];
+		rel1 [label="Similar\nQuery 1"];
+                rel2 [label="Similar\nQuery 2"];
+                rel3 [label="Similar\nQuery 3"];
+                rel4 [shape=plaintext, color=lightgray, label="..."];
+                reln [label="Similar\nQuery n"];
+		label = "Iteration #1\nThreshold determined, t";
+                labeljust="r";
+                labelloc="b";
+                fontsize=10;
+	}
+
+	subgraph cluster_1 {
+		node [style=filled, shape=box, fontsize=12];
+                rel2n1 [shape=plaintext, style=none, label="..."];
+                rel2n2 [shape=plaintext, style=none, label="..."];
+		rel21 [label="Similar\nQuery 1\nk>=t", color=lightgreen];
+                rel22 [label="Similar\nQuery 2\nk<t", color=red];
+                rel23 [shape=plaintext, style=none, label="..."];
+                rel2n [label="Similar\nQuery n\nk<t", color=red];
+                rel2n3 [shape=plaintext, style=none, label="..."];
+		label = "Iteration #2";
+                labeljust="r";
+                labelloc="b";
+                fontsize=10;
+                color=gray;
+	}
+
+	subgraph cluster_2 {
+		node [style=filled, color=lightgray, shape=box, fontsize=12];
+                rel31 [label="Similar\nQuery 1\nk<t", color=red];
+                rel32 [label="Similar\nQuery 2\nk>=t", color=lightgreen];
+                rel33 [shape=plaintext, style=none, label="..."];
+                rel3n [label="Similar\nQuery n\nk>=t", color=lightgreen];
+                rel3n1 [shape=plaintext, style=none, label="..."];
+		rel3n2 [shape=plaintext, style=none, label="..."];
+                label = "Iteration #3";
+                labeljust="r";
+                labelloc="b";
+                fontsize=10;
+                color=gray;
+	}
+
+
+        edge [arrowhead=none, fontsize=10, color=gray];
+        seed -> rel1 [color=red, label="k<t", fontcolor=red];
+        seed -> rel2 [color=green, label="k>=t", fontcolor=green];
+        seed -> rel3 [color=green, label="k>=t", fontcolor=green];
+        seed -> rel4 [style=dotted];
+        seed -> reln [color=red, label="k<t", fontcolor=red];
+
+        rel1 -> rel2n1 [style=dotted];
+        rel2 -> rel2n2 [style=dotted];
+        rel3 -> rel21;
+        rel3 -> rel22;
+        rel3 -> rel23 [style=dotted];
+        rel3 -> rel2n;
+        reln -> rel2n3 [style=dotted];
+
+        rel21 -> rel3n1 [style=dotted];
+        rel22 -> rel31;
+        rel22 -> rel32;
+        rel22 -> rel33 [style=dotted];
+        rel22 -> rel3n;
+        rel2n -> rel3n2 [style=dotted];
+
+}
