@@ -1,4 +1,5 @@
 digraph G {
+        size="15,12";
         splines=false;
 	seed [shape=box, label="Seed Query", fontsize=12];
 
