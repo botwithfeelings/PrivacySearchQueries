@@ -217,13 +217,17 @@ def get_w_likelihood_query(word, query_tokens, fd_query_docs, fd_coll, prob_w_co
 
     ..note:: In the paper, this function is represented by the function:
              P(w|Q) = \Sum_{D \in R} P(w|D)P(D|Q)
+             and
+             P(Q|D) = \Pi_{q \in Q} P(q|D)
              where:
              w is any term
+             q is a query term
              D is a document
              R is the set of all documents containing at least one query term
              Q is the query
 
-             The probability P(w|D) is estimated with linear smoothing.
+             P(D|Q) is calculated from a Bayesian inversion of P(Q|D)
+             The probability P(w|D) an P(q|D) are estimated with linear smoothing.
 
     :param word: The word in the entire vocabulary that we want to determine the probability of
     :param query_tokens: The tokenized query applied to the collection of documents
