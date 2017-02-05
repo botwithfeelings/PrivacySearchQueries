@@ -1,19 +1,57 @@
+#!/usr/bin/env python2.7
+#
+#
+# This script is used to determine the clarity score of a search query according to the paper:
+#
+#       Cronen-Townsend, Steve, and W. Bruce Croft. "Quantifying query ambiguity."
+#       Proceedings of the second international conference on Human Language Technology Research.
+#       Morgan Kaufmann Publishers Inc., 2002.
+#
+# ABSTRACT:
+#   We develop a measure of a query with respect to a collection
+#   of documents with the aim of quantifying the query's
+#   ambiguity with respect to those documents. This measure,
+#   the clarity score, is the relative entropy between a query
+#   language model and the corresponding collection language
+#   model. We substantiate that the clarity score measures the
+#   coherence and specificity of the language used in documents
+#   likely to satisfy the query. We also argue that it provides a
+#   suitable quantification of the (lack of) ambiguity of a query
+#   with respect to a collection of documents and has potential
+#   applications throughout the field of information retrieval. In
+#   particular, the clarity score is shown to correlate positively
+#   with average precision in evaluations using TREC test collections.
+#   Hence, as one example, the clarity score could serve
+#   as a predictor of query performance. Systems would then
+#   be able to identify vague information requests and respond
+#   differently than they would to clear and specific requests.
+#
+# While this paper was proposed as a method to measure the entropy of a query with respect to a
+# collection of documents, we have modified it to operate on a corpus of documents considered to
+# be related according to a search engine provider (i.e. Google). Our intention with this application
+# is to be able to measure how precise a given search query is based on the documents returned. If the
+# clarity score is high, the documents returned by the search engine are largely related to the query
+# and there is not expected to be much noise in the returned queries that is not related to the original
+# query. These clarity scores can then be used to give further insight into the kernel function threshold
+# used when determining related queries.
+#
 
-# coding: utf-8
-
-# In[1]:
-
+# standard library imports
 from __future__ import division
-import ssl
-import nltk
-import re
-import urllib2
-import string
-from math import log
 from argparse import ArgumentParser
+from math import log
+import re
+import ssl
+import string
+import urllib2
+
+# third party imports
 from bs4 import BeautifulSoup
+import nltk
 from nltk.corpus import stopwords
-from google_query_similarity import get_query_html, to_ascii, tokenize
+
+# local imports
+from google_query_similarity import get_query_html, tokenize
 
 
 stop_words = stopwords.words('english') + list(string.punctuation)
@@ -42,7 +80,7 @@ def clean_tokenize(text):
 def visible(element):
     """
     Determine whether an element is visible HTML code as defined by not a style, script, head, title, or
-    [document] element. Also, if the element is surrounded by an HTML comment, the method will retur False.
+    [document] element. Also, if the element is surrounded by an HTML comment, the method will return False.
 
     :param element: The element to determine the visibility of
     :return: True iff the element is not a handled invisible element.
@@ -77,15 +115,16 @@ def get_visible_text(url):
         texts = soup.findAll(text=True)
         visible_texts = filter(visible, texts)
         return ' '.join(visible_texts)
-    except Exception as e:
+    except Exception:
         return None
 
 
 def get_search_urls(page):
     """
+    Get the URLs for the search results on the provided page
 
-    :param page:
-    :return:
+    :param page: Google search result page to pull result URLs from
+    :return: The list of URLs.
     """
     urls = list()
     if page is not None:
@@ -102,10 +141,11 @@ def get_search_urls(page):
 
 def get_document_set(urls, debug):
     """
+    Get the visible document text from all urls provided
 
-    :param urls:
-    :param debug:
-    :return:
+    :param urls: The list of urls to pull visible text from
+    :param debug: True iff you want to print debug information to stdout
+    :return: The list of visible document text corresponding to URLs passed
     """
     docs = list()
     if debug:
@@ -123,10 +163,19 @@ def get_document_set(urls, debug):
 
 def get_q_docs(query, docs):
     """
+    Find the list of documents that contain a word from the query. This method iterates through
+    all of the documents and appends it to the return list if there are any words shared between
+    it and the query.
 
-    :param query:
-    :param docs:
-    :return:
+    ..note:: As indicated in the paper, stemming words can have an effect on the clarity score. Since
+             searching based on the stemmed words can easily match words in different topics, if the
+             stemmed words appear frequently, the clarity score will be lowered as the identified
+             documents will have a language model similar to the overall collection language model.
+             [page 4]
+
+    :param query: The query to find in the documents
+    :param docs: The list of documents to search for the query
+    :return: The list of documents that contain at least one query keyword
     """
     q_tokens = clean_tokenize(query)
 
@@ -138,33 +187,72 @@ def get_q_docs(query, docs):
     return docs_r
 
 
-def get_w_likelihood_query(word, query_tokens, fd_query_docs, fd_coll):
+def linear_smoothing(w, fd_doc, p_coll, l=0.6):
     """
+    Linear smoothing as defined/implemented in the paper for determining the probability of occurrence in
+    a set of documents. Used to calculate P(w|D) and p(q|D)
 
-    :param word:
-    :param query_tokens:
-    :param fd_query_docs:
-    :param fd_coll:
+    The authors used a value of \lambda = 0.6 throughout their study for linear smoothing
+
+    ..note:: In the paper, this function is represented by the function:
+             P(w|D) = \lambda P_{ml}(w_D) + (1 - \lambda) P_{coll}(w)
+             where:
+             w is any term
+             D is a document
+             P_{ml}(w_D) is the relative frequency of w in documents D
+             P_{coll}(w) is the relative frequency of the term in the whole collection
+
+    :param w: word to determine
+    :param fd_doc: word frequency distribution of given document
+    :param p_coll: probability of word within collection
+    :param l: value of lambda to use in linear smoothing, set to default used in paper
+    :return: the linear smoothing of the variable
+    """
+    return (l * fd_doc.freq(w)) + ((1 - l) * p_coll)
+
+
+def get_w_likelihood_query(word, query_tokens, fd_query_docs, fd_coll, prob_w_coll=None):
+    """
+    Determine the probability of a word given a query, P(w|Q).
+
+    ..note:: In the paper, this function is represented by the function:
+             P(w|Q) = \Sum_{D \in R} P(w|D)P(D|Q)
+             where:
+             w is any term
+             D is a document
+             R is the set of all documents containing at least one query term
+             Q is the query
+
+             The probability P(w|D) is estimated with linear smoothing.
+
+    :param word: The word in the entire vocabulary that we want to determine the probability of
+    :param query_tokens: The tokenized query applied to the collection of documents
+    :param fd_query_docs: list of word frequency distributions of documents containing at least one query term
+    :param fd_coll: word frequency distribution of union of documents in the collection
+    :param prob_w_coll: Probability of the word in the collection. This can be calculated within
+                        this function, but is passed in to increase efficiency since it is already
+                        calculated before calling the function.
     :return:
     """
     # Relative frequency of word in the collection as a whole.
-    prob_w_coll = fd_coll.freq(word)
+    if prob_w_coll is None:
+        prob_w_coll = fd_coll.freq(word)
 
-    # The probabilistic likelishood of the word given the query
+    # The probabilistic likelihood of the word given the query
     # is calculated over the set of documents containing at least
     # one query term.
     prob_w_query = 0
     prob_doc = 1/len(fd_coll)
+
     for fd_doc in fd_query_docs:
         # Calculate likelihood of word for current document.
-        lamda = 0.6 # From the authors.
-        prob_w_doc = (lamda * fd_doc.freq(word)) + ((1-lamda) * prob_w_coll)
+        prob_w_doc = linear_smoothing(word, fd_doc, prob_w_coll)
 
         # Calculate the likelihood of the query given the document.
         prob_query_doc = 1.0
         for q in query_tokens:
             prob_q_coll = fd_coll.freq(q)
-            prob_q_doc = (lamda * fd_doc.freq(q)) + ((1-lamda) * prob_q_coll)
+            prob_q_doc = linear_smoothing(q, fd_doc, prob_q_coll)
             prob_query_doc *= prob_q_doc
 
         # Calculate the likelihood of the document given the query
@@ -177,11 +265,13 @@ def get_w_likelihood_query(word, query_tokens, fd_query_docs, fd_coll):
 
 def get_clarity_score(query, docs, debug):
     """
+    Calculate the clarity score as defined by the authors. This function takes a query and all documents
+    related to it and returns the clarity score.
 
-    :param query:
-    :param docs:
-    :param debug:
-    :return:
+    :param query: The query to calculate the clarity score of
+    :param docs: The collection of documents to base the clarity score off of
+    :param debug: True iff you want to print debug information to stdout
+    :return: The calculated clarity score
     """
     # Form the collection from the docs and get the overall frequency distribution
     coll = ' '.join(docs)
@@ -208,9 +298,12 @@ def get_clarity_score(query, docs, debug):
     query_tokens = clean_tokenize(query)
 
     score = 0.0
+    # iterate through every word in the vocab to calculate the clarity score
     for word in vocab:
+        # determine the probability of the word in the entire collection
         prob_w_coll = fd_coll.freq(word)
-        prob_w_query = get_w_likelihood_query(word, query_tokens, fd_query_docs, fd_coll)
+        # determine the probability of the word given the query
+        prob_w_query = get_w_likelihood_query(word, query_tokens, fd_query_docs, fd_coll, prob_w_coll)
 
         score += (prob_w_query * log((prob_w_query/prob_w_coll), 2))
 
@@ -220,13 +313,14 @@ def get_clarity_score(query, docs, debug):
     return score
 
 
-def do_stuff(query, count, debug):
+def main(query, count, debug):
     """
+    Main function to determine the clarity score for a given query.
 
-    :param query:
-    :param count:
-    :param debug:
-    :return:
+    :param query: Query to calculate the clarity score for
+    :param count: number of documents to fetch related to a specific query
+    :param debug: True iff you want to print debug information to stdout
+    :return: The clarity score
     """
     page = get_query_html(query, num_results=count)
     urls = get_search_urls(page)
@@ -234,27 +328,12 @@ def do_stuff(query, count, debug):
     return get_clarity_score(query, docs, debug)
 
 
-def main():
-    """
-
-    :return:
-    """
+if __name__ == '__main__':
     ap = ArgumentParser(description='Compute the clarity score of a given short text and the no. of documents.')
     ap.add_argument('-q', '-query', help='Query text', required=True)
-    ap.add_argument('-c', '-doc', help='No. of fetched documents to use', default=100)
+    ap.add_argument('-c', '-doc', help='No. of fetched documents to use', default=100, type=int)
     ap.add_argument('-d', '-debug', help='Print traces', action='store_true')
 
     args = ap.parse_args()
 
-    query = args.q
-    count = int(args.c)
-    debug = bool(args.d)
-
-    score = do_stuff(query, count, debug)
-
-    print query.ljust(45), score
-    return
-
-
-if __name__ == '__main__':
-    main()
+    print args.q.ljust(45), main(args.q, args.c, args.d)
