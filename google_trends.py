@@ -107,7 +107,7 @@ def get_trend_data(t, term, trends, failed, seed, comp):
         t.build_payload(kw, timeframe='2011-01-01 2017-01-31', geo='US')
         df = t.interest_over_time()
         df.to_csv(filename)
-    except IndexError:
+    except IndexError, KeyError:
         print 'No trend data for: ' + term
         failed.append(term)
         return True
@@ -166,17 +166,12 @@ def run_google_trends(trends_file, seed, comp, limit):
         if term in failed_list:
             continue
         succ = get_trend_data(py_trends, term, trends_list, failed_list, seed, comp)
-        sleep(randint(sleep_time, sleep_time+5))
         if not succ:
-            # Request limit exceeded, establish new connection.
-            auth = get_google_auth()
-            if auth is not None:
-                google_user, google_pass = auth
-                py_trends = TrendReq(google_user, google_pass)
-            else:
-                print 'Google authentications exhausted, wait a few minutes and try again.'
-                write_failed_list(failed_file, seed, failed_list, count, False)
-                return
+            print 'Google authentications exhausted, wait a few minutes and try again.'
+            break
+        
+        sleep(randint(sleep_time, sleep_time+5))
+    
     write_failed_list(failed_file, seed, failed_list, count, True)
     return
 
