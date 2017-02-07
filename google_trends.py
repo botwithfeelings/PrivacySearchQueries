@@ -38,7 +38,7 @@ import os
 from time import sleep
 
 # third party imports
-from pytrends.request import TrendReq, ResponseError, RateLimitError
+from pytrends.request import TrendReq
 
 # local imports
 from keys import google_auth
@@ -107,17 +107,18 @@ def get_trend_data(t, term, trends, failed, seed, comp):
         t.build_payload(kw, timeframe='2011-01-01 2017-01-31', geo='US')
         df = t.interest_over_time()
         df.to_csv(filename)
-    except RateLimitError:
-        print 'Request limit exceeded, switch users.'
-        trends.append(term)
-        return False        
-    except (ResponseError, IndexError):
+    except IndexError:
         print 'No trend data for: ' + term
         failed.append(term)
-    return True
+        return True
+    except Exception as e:
+        print 'PyTrends Ex: ' + repr(e)
+        trends.append(term)
+        return False
+    return true
 
 
-def run_google_trends(trends_file, seed, comp):
+def run_google_trends(trends_file, seed, comp, limit):
     """
     Collect the trend data for all queries in a file if the data exists. This function has the ability to recover from
     failure if Google's anti-spam prevention temporarily causes the trend collection from failing.
@@ -129,6 +130,7 @@ def run_google_trends(trends_file, seed, comp):
                  parameter is set to True).
     :param comp: Set to True if you want to compare the seed word against all queries when collecting trend data. This
                  allows all trends collected to have a common reference point.
+    :param limit: No. of trend request to make per hour.             
     :return: None
     """
     dir_suffix = seed
@@ -147,6 +149,7 @@ def run_google_trends(trends_file, seed, comp):
             trends_list.append(row[0])
 
     count = len(trends_list)
+    sleep_time = 3600/int(limit)
 
     # Retrieve the list of failed requests if any.
     failed_file = os.path.join('./gtrends', dir_suffix, seed + ' no trends data.txt')
@@ -157,13 +160,13 @@ def run_google_trends(trends_file, seed, comp):
     
     # Get authentication keys.
     google_user, google_pass = get_google_auth()
-    py_trends = TrendReq(google_username, google_password, custom_useragent='WSPR PrivacySearchQueries')
+    py_trends = TrendReq(google_user, google_pass, custom_useragent='WSPR PrivacySearchQueries')
     while trends_list:
         term = trends_list.pop(0)
         if term in failed_list:
             continue
         succ = get_trend_data(py_trends, term, trends_list, failed_list, seed, comp)
-        sleep(randint(MIN_WAIT, MIN_WAIT * 2))
+        sleep(randint(sleep_time, sleep_time+5))
         if not succ:
             # Request limit exceeded, establish new connection.
             auth = get_google_auth()
@@ -175,7 +178,7 @@ def run_google_trends(trends_file, seed, comp):
                 write_failed_list(failed_file, seed, failed_list, count, False)
                 return
     write_failed_list(failed_file, seed, failed_list, count, True)
-
+    return
 
 if __name__ == '__main__':
     ap = argparse.ArgumentParser(description='Use the script to pull google trends data.')
@@ -183,6 +186,7 @@ if __name__ == '__main__':
     ap.add_argument('-s', '-seed', help='Seed Word. All csv files to be written inside same name directory within '
                                         'gtrends', required=True)
     ap.add_argument('-c', '-cmp', help='Enable comparison with seed word', action='store_true')
+    ap.add_argument('-k', '-keywordlimit', help='limit to number of keyword request per hour', default=30)
     args = ap.parse_args()
 
-    run_google_trends(args.f, args.s, args.c)
+    run_google_trends(args.f, args.s, args.c, args.k)
