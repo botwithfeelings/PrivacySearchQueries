@@ -1,21 +1,17 @@
 # Most of the contents of this make file is courtesy of Professor
 # Tim Menzies, Dept. of CSC, NC State Univerisity. See
 # https://github.com/txt/se16/blob/master/Makefile for the original.
-asave: add save
+save: status add saving update upload
 
-acommit: add commit
+commit: status add committing update upload
 
-add: ready
-	@- git add -A
+saving:
+	@-git commit -am "saving"
 
-save: ready
-	@- git status
-	@- git commit -am "saving"
-	@- git push origin master
-
-commit: ready
-	@- git status
+committing:
 	@- git commit -a
+
+upload: ready
 	@- git push origin master
 
 update: ready
