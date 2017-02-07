@@ -115,7 +115,7 @@ def get_trend_data(t, term, trends, failed, seed, comp):
         print 'PyTrends Ex: ' + repr(e)
         trends.append(term)
         return False
-    return true
+    return True
 
 
 def run_google_trends(trends_file, seed, comp, limit):
