@@ -43,10 +43,6 @@ from pytrends.request import TrendReq
 # local imports
 from keys import google_auth
 
-
-MIN_WAIT = 5
-
-
 def get_google_auth():
     """
     Get a random google username/password from the loaded list, if any are available.
@@ -108,8 +104,7 @@ def get_trend_data(t, term, trends, failed, seed, comp):
         df = t.interest_over_time()
         df.to_csv(filename)
     except Exception as e:
-        print 'No trend data for: ' + term
-        print repr(e)
+        print 'No trend data for: ' + term, repr(e)
         failed.append(term)
     return True
 
