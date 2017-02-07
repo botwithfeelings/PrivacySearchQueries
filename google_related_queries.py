@@ -196,6 +196,9 @@ def run_google_related_queries(seed, limit, keycnt):
         seed_page = gr.get_query_html(seed, keycnt)
         seed_rs = gr.get_google_related_searches(seed_page)
         seed_es = gr.get_google_query_summary_set(seed_page)
+        
+        # Add seed to the accepted set.
+        approved[seed] = (seed, 1.0)
 
         # Initiate the candidates with the seed's related queries as (related search, parent) tuple.
         # The parent in this case is the seed.
