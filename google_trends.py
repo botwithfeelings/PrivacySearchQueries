@@ -97,17 +97,15 @@ def get_trend_data(t, term, trends, failed, seed, comp):
     if os.path.isfile(filename):
         return True
     
+    kw = list()
+    kw.append(term)
     # Concoct the dictionary for querying gtrends.
     if comp:
-        term = seed + ',' + term
+        kw.append(seed)    
     
-    payload = dict()
-    payload['q'] = term
-    payload['geo'] = 'US'
-    payload['hl'] = 'en-US'
-    payload['date'] = '01/2011 66m'
     try:
-        df = t.trend(payload, return_type='dataframe')
+        t.build_payload(kw, timeframe='2011-01-01 2017-01-31', geo='US')
+        df = t.interest_over_time()
         df.to_csv(filename)
     except RateLimitError:
         print 'Request limit exceeded, switch users.'
@@ -159,7 +157,7 @@ def run_google_trends(trends_file, seed, comp):
     
     # Get authentication keys.
     google_user, google_pass = get_google_auth()
-    py_trends = TrendReq(google_user, google_pass)
+    py_trends = TrendReq(google_username, google_password, custom_useragent='WSPR PrivacySearchQueries')
     while trends_list:
         term = trends_list.pop(0)
         if term in failed_list:
