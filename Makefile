@@ -5,10 +5,13 @@ save: status add saving update upload
 
 commit: status add committing update upload
 
-saving:
-	@-git commit -am "saving"
+add: ready
+	@- git add -A
 
-committing:
+saving: status add
+	@- git commit -am "saving"
+
+committing: status add
 	@- git commit -a
 
 upload: ready
