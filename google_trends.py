@@ -104,17 +104,13 @@ def get_trend_data(t, term, trends, failed, seed, comp):
         kw.append(seed)    
     
     try:
-        t.build_payload(kw, timeframe='2011-01-01 2017-01-31', geo='US')
+        t.build_payload(kw, timeframe='2011-01-01 2017-01-31')
         df = t.interest_over_time()
         df.to_csv(filename)
-    except IndexError, KeyError:
-        print 'No trend data for: ' + term
-        failed.append(term)
-        return True
     except Exception as e:
-        print 'PyTrends Ex: ' + repr(e)
-        trends.append(term)
-        return False
+        print 'No trend data for: ' + term
+        print repr(e)
+        failed.append(term)
     return True
 
 
