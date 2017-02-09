@@ -14,7 +14,7 @@ saving: status add
 committing: status add
 	@- git commit -a
 
-upload: ready
+upload: ready update
 	@- git push origin master
 
 update: ready
