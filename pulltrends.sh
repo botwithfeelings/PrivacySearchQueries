@@ -8,7 +8,7 @@ do
     SEED=$line
     echo "Current Seed: $SEED"
     SEED_FILE="./googledata/${SEED// /_}_approved.csv"
-    if ["$cmp" == "cmp"]; then
+    if [ "$cmp" == "cmp" ]; then
       python google_trends.py -f "$SEED_FILE" -s "$SEED" -k $cnt -cmp >> log.txt
     else
       python google_trends.py -f "$SEED_FILE" -s "$SEED" -k $cnt >> log.txt
