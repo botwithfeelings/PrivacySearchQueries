@@ -55,10 +55,23 @@ def stem_tokens(tokens):
         stemmed.append(stemmer.stem(item))
     return stemmed
 
-
-def tokenize(text):
+def regex_tokenize(text):
     """
-    Lowercase, tokenize, and stem text based on the nltk tokenizer
+    Lowercase, tokenize, and stem text based on the nltk regex tokenizer. The difference between this and the next one is 
+    that this one takes care of punctuation by itself before tokenize and stemming.
+
+    :param text: The text to tokenize
+    :return: A list of stemmed tokens from the input text
+    """
+    text = text.lower()
+    tokenizer = nltk.RegexpTokenizer(r'\w+')
+    tokens = tokenizer.tokenize(text)
+    stems = stem_tokens(tokens)
+    return stems
+
+def word_tokenize(text):
+    """
+    Lowercase, tokenize, and stem text based on the nltk word tokenizer
 
     :param text: The text to tokenize
     :return: A list of stemmed tokens from the input text
@@ -153,7 +166,7 @@ def get_tfidf_matrices(es_q, es_c):
     combined.extend(es_c)
 
     # We want to get a new vectorizer for every string.
-    tfidf = TfidfVectorizer(tokenizer=tokenize, stop_words='english')
+    tfidf = TfidfVectorizer(tokenizer=word_tokenize, stop_words='english')
     tfs = tfidf.fit_transform(combined)
 
     vectors = tfs.toarray()
