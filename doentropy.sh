@@ -8,8 +8,8 @@ do
     q=$line
     echo "Current Seed: $q"
     if [ "$exp" == "x" ]; then
-      python query_clarity_score.py -q "$q" -c $cnt -x >> seed_entropy.csv
+      python query_clarity_score.py -q "$q" -c $cnt -x >> seed_entropy_expanded_representation.csv
     else
-      python query_clarity_score.py -q "$q" -c $cnt >> seed_entropy.csv
+      python query_clarity_score.py -q "$q" -c $cnt >> seed_entropy_visible_text.csv
     fi
 done < "$filename"
