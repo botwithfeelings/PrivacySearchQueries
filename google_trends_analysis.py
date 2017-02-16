@@ -2,7 +2,7 @@
 # coding: utf-8
 
 # In[15]:
-
+from __future__ import division
 import csv
 import os
 import glob
@@ -12,8 +12,6 @@ import numpy as np
 from collections import OrderedDict
 from scipy import stats
 from datetime import datetime
-from __future__ import division
-
 
 # In[16]:
 
