@@ -166,7 +166,7 @@ def run_google_trends(trends_file, seed, comp, limit):
     write_failed_list(failed_file, seed, failed_list, count, True)
     return
 
-if __name__ == '__main__':
+def main():
     ap = argparse.ArgumentParser(description='Use the script to pull google trends data.')
     ap.add_argument('-f', '-file', help='CSV file containing trend keywords at column 0', required=True)
     ap.add_argument('-s', '-seed', help='Seed Word. All csv files to be written inside same name directory within '
@@ -176,3 +176,7 @@ if __name__ == '__main__':
     args = ap.parse_args()
 
     run_google_trends(args.f, args.s, args.c, args.k)
+    return
+
+if __name__ == '__main__':
+    main()

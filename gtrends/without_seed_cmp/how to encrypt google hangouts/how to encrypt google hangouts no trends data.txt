@@ -2,7 +2,6 @@ how to encrypt google hangouts
 google hangouts security risk
 does skype use end to end encryption
 is hangout video call safe
-google hangouts privacy
 google hangout security concerns
 google hangouts privacy settings
 end to end encrypted video call
@@ -14,16 +13,11 @@ hangout video call privacy
 is skype secure for video calls
 is skype for business encrypted
 encrypted skype alternative
-skype security risks
 skype encryption plugin
 google hangout video call history
 is google hangouts video secure
-how to use google hangout
 google hangout popup notification
-hangouts desktop notifications
-hangouts notifications not working
 hangouts notification sound download
-google hangouts chat
 how to use google hangouts on android
 is whatsapp video call encrypted
 whatsapp video call privacy
@@ -33,7 +27,6 @@ is whatsapp video calling recorded
 whatsapp video call security
 encrypted video call android
 google voice hipaa
-google apps message encryption
 duo encryption
 is hangouts video call safe
 google hangout privacy
@@ -57,22 +50,12 @@ can someone record skype video calls
 are skype calls monitored
 are imo video calls recorded
 can skype video be recorded and hacked by third party
-can skype video calls be recorded
 hangout call history
-skype
-google hangouts history
 how to use hangouts on android
-how to use google hangouts on iphone
-how to join a google hangout
 how do i use google hangouts on my phone
 how does hangouts work on android
-hangout app android
-schedule a google hangout
 hangouts android video call
 turn off hangouts desktop notifications
-google hangouts notifications not working
-google hangouts desktop
-google hangouts extension
 gchat desktop notifications
 hangouts notifications not working desktop
 hangouts notifications not working 2016
@@ -89,4 +72,4 @@ hangouts custom notification sound
 hangouts notification sound wont change
 change google hangouts ringtone
 hangouts notification sound iphone
-how to encrypt google hangouts, sucess rate: 0.0%
+how to encrypt google hangouts, sucess rate: 18.6813186813%

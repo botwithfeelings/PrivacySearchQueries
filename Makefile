@@ -3,26 +3,26 @@
 # https://github.com/txt/se16/blob/master/Makefile for the original.
 save: status add saving update upload
 
-commit: status add committing update upload
+commit: st add c ud ul
 
-add: ready
+add: rdy
 	@- git add -A
 
-saving: status add
+sv: st add
 	@- git commit -am "saving"
 
-committing: status add
+c: st add
 	@- git commit -a
 
-upload: ready update
+ul: rdy ud
 	@- git push origin master
 
-update: ready
+ud: ready
 	@- git pull origin master
 
-status: ready
+st: rdy
 	@- git status
 
-ready:
+rdy:
 	@git config --global credential.helper cache
 	@git config credential.helper 'cache --timeout=3600'
