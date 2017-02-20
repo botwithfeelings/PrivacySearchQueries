@@ -1,2 +1,0 @@
-
-anonymous web proxy, sucess rate: 100.0%
