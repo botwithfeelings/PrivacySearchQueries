@@ -2,7 +2,7 @@ refs = {
     "how to change facebook privacy settings": "how to change facebook privacy settings",
     "how to change youtube privacy settings": "youtube private channel",
     "how to change snapchat privacy settings": "who can see my snapchat story",
-    "how to change instagram privacy settings": "how to change instagram privacy settings"
+    "how to change instagram privacy settings": "how to change instagram privacy settings",
     "how to change twitter privacy settings": "private twitter account",
     "how to search without being tracked": "most private browser",
     "how to browse without being tracked": "most private browser",
