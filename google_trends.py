@@ -42,6 +42,7 @@ from pytrends.request import TrendReq
 
 # local imports
 from keys import google_auth
+from refs import refs
 
 def get_google_auth():
     """
@@ -97,7 +98,7 @@ def get_trend_data(t, term, trends, failed, seed, comp):
     kw.append(term)
     # Concoct the dictionary for querying gtrends.
     if comp:
-        kw.append(seed)    
+        kw.append(refs[seed])    
     
     try:
         t.build_payload(kw, timeframe='2011-01-01 2017-01-31')

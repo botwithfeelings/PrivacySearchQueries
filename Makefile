@@ -1,7 +1,7 @@
 # Most of the contents of this make file is courtesy of Professor
 # Tim Menzies, Dept. of CSC, NC State Univerisity. See
 # https://github.com/txt/se16/blob/master/Makefile for the original.
-save: status add saving update upload
+save: st add sv ud ul
 
 commit: st add c ud ul
 
@@ -17,7 +17,7 @@ c: st add
 ul: rdy ud
 	@- git push origin master
 
-ud: ready
+ud: rdy
 	@- git pull origin master
 
 st: rdy
