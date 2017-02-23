@@ -204,7 +204,9 @@ def pull_seed_scale(dir_suffix, seed, sleep_time):
     ref_df = get_trend_data_multiple(py_trends, terms, failed_list)
 
     # If there aren't any trend data for the reference
-    # for current seed, we can't do anything about it's scale. 
+    # for current seed, we can't do anything about it's scale.
+    if ref_df is None:
+        return
     ref_vals_scaled = ref_df[ref]
     if not (ref_vals_scaled > 0).any():
         return    
