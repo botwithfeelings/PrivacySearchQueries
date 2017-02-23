@@ -2,7 +2,7 @@
 # Usage ./pulltrends.sh 200 (cmp)
 cnt=$1
 cmp=$2
-filename="seed_queries.txt"
+filename="seed_queries_refs.txt"
 while read -r line
 do
     SEED=$line
