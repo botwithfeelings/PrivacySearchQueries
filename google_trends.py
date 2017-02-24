@@ -257,6 +257,8 @@ def pull_seed_scale(dir_suffix, seed, sleep_time):
                     col_vals = scale_df[col].apply(do_scale)
                     if (col_vals > 0).any():
                         ref_df = pd.concat([ref_df, col_vals], axis=1)
+                    else:
+                        failed_list.append(col)
     
     # Write failed list if any.
     if failed_list:

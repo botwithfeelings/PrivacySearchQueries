@@ -4,7 +4,7 @@
   - how to change snapchat privacy settings
   - how to change instagram privacy settings
   - how to change twitter privacy settings
-  
+
 - Web anonymity
   - how to search without being tracked
   - how to browse without being tracked
@@ -13,7 +13,6 @@
 
 - Search anonymity
   - search without history
-  - ~~Find a search engine that doesn’t track search histories~~
 
 - Deleting social media accounts
   - how to delete a facebook account
@@ -25,7 +24,7 @@
 
 - Apps and privacy
   - government monitoring social media
-  
+
 - Deleting apps
   - how to delete facebook
   - how to delete gmail
@@ -50,7 +49,7 @@
   - how to unfriend someone on facebook
   - how to unfriend someone on twitter
   - how to unfriend someone on snapchat
-  - how to unfriend someone on instagram 
+  - how to unfriend someone on instagram
 
 - Communication privacy
   - how to encrypt emails

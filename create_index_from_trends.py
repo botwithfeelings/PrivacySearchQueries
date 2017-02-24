@@ -8,8 +8,10 @@ import csv
 import os
 import glob
 import pandas as pd
+import operator as op
 from datetime import datetime
 from math import ceil
+from refs import refs
 
 
 # In[3]:
@@ -42,21 +44,26 @@ def load_trends_df(filename):
 
 # In[82]:
 
-def process_trends(trendsdir, ref, resultdir):
+def process_trends(trendsdir, seed, resultdir):
     # Make results directory if not exists.
     if not os.path.exists(resultdir):
         os.makedirs(resultdir)
 
-    result_file = os.path.join(resultdir, ref + ".csv")
+    result_file = os.path.join(resultdir, seed + ".csv")
 
-    dirname = os.path.join(trendsdir, ref + " comp")
+    dirname = os.path.join(trendsdir, seed + " comp")
     filenames = get_trend_files(dirname, "csv")
 
     # Sanity Check: is there trend data for the reference (seed).
+    ref = refs[seed]
     ref_file = os.path.join(dirname, ref + ".csv")
     if ref_file not in filenames:
-        print ref
+        print seed
         return
+    
+    # Load the reference file itself for 
+    ref_df = load_trends_df(ref_file)
+    ref_vals_scaled = ref_df[ref]
 
     resultdf = pd.DataFrame()
     date_col_added = False
@@ -69,24 +76,36 @@ def process_trends(trendsdir, ref, resultdir):
         query_vals = df[query]
         if not (query_vals > 0).any():
             continue
+        
+        ref_vals = df[ref]
+        if not (ref_vals > 0).any():
+            continue
+            
+        # Determine the scale factor from the reference column.
+        max_ref_val = max(ref_vals)
+        scale_factor = 100/max_ref_val
+        do_scale = lambda x: int(ceil(x*scale_factor))
+        ref_vals = ref_vals.apply(do_scale)
+
+        # Get the sum of the absolute difference
+        # between scaled reference values.
+        scaled_diff = sum(map(op.abs, map(op.sub, ref_vals, ref_vals_scaled)))
+
+        # If the scaled difference is more than 2.5 for each of the rows 
+        # in the dataframe then there is only minute data for the ref aginst
+        # this term. Compared to the peak, the maximum value is very small. 
+        # So, we shouldn't scale in this case.
+        if scaled_diff > int(ref_df.shape[0]*2.5):
+            continue
 
         if not date_col_added:
             resultdf = pd.concat([resultdf, df.ix[:, 0]], axis=1)
             date_col_added = True
 
-        # Check if the query values have the peak, if so we need to
-        # have things scaled.
-        if (query_vals == 100).any():
-            ref_vals = df[ref]
-            max_ref_val =  max(ref_vals)
-            if not max_ref_val > 0:
-                continue
-
-            scale_factor = 100/max_ref_val
-            df[query] = df[query].apply(lambda x: int(ceil(x*scale_factor)))
+        query_vals = query_vals.apply(do_scale)
 
         # Append this to the result dataframe.
-        resultdf = pd.concat([resultdf, df[query]], axis=1)
+        resultdf = pd.concat([resultdf, query_vals], axis=1)
 
     # Save the dataframe.
     resultdf.to_csv(result_file, index=False)
