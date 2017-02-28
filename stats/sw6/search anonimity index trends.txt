@@ -1,0 +1,46 @@
+search anonimity index trends
+Window size: 6
+Window 2
+KS test value: 1.0
+KS test p-value: 0.00129974398539
+Cliff's delta value: -1.0
+Window 3
+KS test value: 1.0
+KS test p-value: 0.00129974398539
+Cliff's delta value: -1.0
+Window 4
+KS test value: 0.833333333333
+KS test p-value: 0.0122381531259
+Cliff's delta value: -0.972222222222
+Window 5
+KS test value: 0.833333333333
+KS test p-value: 0.0122381531259
+Cliff's delta value: -0.916666666667
+Window 6
+KS test value: 1.0
+KS test p-value: 0.00129974398539
+Cliff's delta value: -1.0
+Window 7
+KS test value: 0.333333333333
+KS test p-value: 0.809557310617
+Cliff's delta value: -0.166666666667
+Window 8
+KS test value: 0.666666666667
+KS test p-value: 0.0766451325638
+Cliff's delta value: -0.833333333333
+Window 9
+KS test value: 1.0
+KS test p-value: 0.00129974398539
+Cliff's delta value: 1.0
+Window 10
+KS test value: 1.0
+KS test p-value: 0.00129974398539
+Cliff's delta value: -1.0
+Window 11
+KS test value: 0.833333333333
+KS test p-value: 0.0122381531259
+Cliff's delta value: 0.805555555556
+Window 12
+KS test value: 0.833333333333
+KS test p-value: 0.00870085655346
+Cliff's delta value: -0.666666666667

@@ -1,0 +1,46 @@
+social media settings & privacy index trends
+Window size: 6
+Window 2
+KS test value: 1.0
+KS test p-value: 0.00129974398539
+Cliff's delta value: -1.0
+Window 3
+KS test value: 0.333333333333
+KS test p-value: 0.809557310617
+Cliff's delta value: 0.0277777777778
+Window 4
+KS test value: 0.833333333333
+KS test p-value: 0.0122381531259
+Cliff's delta value: -0.777777777778
+Window 5
+KS test value: 0.833333333333
+KS test p-value: 0.0122381531259
+Cliff's delta value: 0.666666666667
+Window 6
+KS test value: 0.333333333333
+KS test p-value: 0.809557310617
+Cliff's delta value: -0.333333333333
+Window 7
+KS test value: 0.333333333333
+KS test p-value: 0.809557310617
+Cliff's delta value: 0.111111111111
+Window 8
+KS test value: 0.5
+KS test p-value: 0.318028354062
+Cliff's delta value: -0.444444444444
+Window 9
+KS test value: 0.333333333333
+KS test p-value: 0.809557310617
+Cliff's delta value: 0.25
+Window 10
+KS test value: 0.333333333333
+KS test p-value: 0.809557310617
+Cliff's delta value: -0.472222222222
+Window 11
+KS test value: 0.333333333333
+KS test p-value: 0.809557310617
+Cliff's delta value: -0.444444444444
+Window 12
+KS test value: 0.833333333333
+KS test p-value: 0.00870085655346
+Cliff's delta value: -0.761904761905

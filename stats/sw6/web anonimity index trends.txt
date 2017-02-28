@@ -1,0 +1,50 @@
+web anonimity index trends
+Window size: 6
+Window 2
+KS test value: 0.5
+KS test p-value: 0.318028354062
+Cliff's delta value: -0.694444444444
+Window 3
+KS test value: 1.0
+KS test p-value: 0.00129974398539
+Cliff's delta value: -1.0
+Window 4
+KS test value: 0.333333333333
+KS test p-value: 0.809557310617
+Cliff's delta value: -0.361111111111
+Window 5
+KS test value: 0.166666666667
+KS test p-value: 0.999956514899
+Cliff's delta value: -0.25
+Window 6
+KS test value: 0.833333333333
+KS test p-value: 0.0122381531259
+Cliff's delta value: -0.944444444444
+Window 7
+KS test value: 0.833333333333
+KS test p-value: 0.0122381531259
+Cliff's delta value: -0.694444444444
+Window 8
+KS test value: 1.0
+KS test p-value: 0.00129974398539
+Cliff's delta value: -1.0
+Window 9
+KS test value: 0.666666666667
+KS test p-value: 0.0766451325638
+Cliff's delta value: 0.75
+Window 10
+KS test value: 0.833333333333
+KS test p-value: 0.0122381531259
+Cliff's delta value: -0.861111111111
+Window 11
+KS test value: 0.666666666667
+KS test p-value: 0.0766451325638
+Cliff's delta value: 0.666666666667
+Window 12
+KS test value: 0.833333333333
+KS test p-value: 0.0122381531259
+Cliff's delta value: -0.944444444444
+Window 13
+KS test value: 0.833333333333
+KS test p-value: 0.0122381531259
+Cliff's delta value: -0.944444444444
