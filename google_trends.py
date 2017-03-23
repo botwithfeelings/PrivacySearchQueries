@@ -216,34 +216,35 @@ def pull_seed_scale(dir_suffix, seed, sleep_time):
     for (s, r) in refs.iteritems():
         if s != seed:
             terms.append(r)
+        else:
+            continue
         
-        if len(terms) == 5:
-            scale_df = get_trend_data_multiple(py_trends, terms, failed_list)
-            sleep(randint(sleep_time, sleep_time+5))
-            
-            # Remove all the terms except the seed for the next request.
-            del terms[1:]
-            
-            # Process the dataframe and combine it with the other.
-            col_names = scale_df.columns.values.tolist()
-            col_names.remove(ref)
-            # If there aren't any value for the reference columns then
-            # we can't do anything.
-            ref_vals = scale_df[ref]
-            if not (ref_vals > 0).any():
-                failed_list.extend(col_names)
-                continue
-                
+        scale_df = get_trend_data_multiple(py_trends, terms, failed_list)
+        sleep(randint(sleep_time, sleep_time+5))
+
+        # Remove all the terms except the seed for the next request.
+        del terms[1:]
+
+        # Process the dataframe and combine it with the other.
+        col_names = scale_df.columns.values.tolist()
+        col_names.remove(ref)
+        # If there aren't any value for the reference columns then
+        # we can't do anything.
+        ref_vals = scale_df[ref]
+        if not (ref_vals > 0).any():
+            failed_list.extend(col_names)
+            continue
+
             # Determine the scale factor from the reference column.
             max_ref_val = max(ref_vals)
             scale_factor = 100/max_ref_val
             do_scale = lambda x: int(ceil(x*scale_factor))
             ref_vals = ref_vals.apply(do_scale)
-            
+
             # Get the sum of the absolute difference
             # between scaled reference values.
             scaled_diff = sum(map(op.abs, map(op.sub, ref_vals, ref_vals_scaled)))
-            
+
             # If the scaled difference is more than 2.5 for each of the rows 
             # in the dataframe then there is only minute data for these terms.
             # Compared to the peak, the maximum value is very small. So, we
@@ -251,14 +252,14 @@ def pull_seed_scale(dir_suffix, seed, sleep_time):
             if scaled_diff > int(scale_df.shape[0]*2.5):
                 failed_list.extend(col_names)
                 continue
-            
-            for col in scale_df.columns:
-                if col not in ref_df.columns:
-                    col_vals = scale_df[col].apply(do_scale)
-                    if (col_vals > 0).any():
-                        ref_df = pd.concat([ref_df, col_vals], axis=1)
-                    else:
-                        failed_list.append(col)
+
+                for col in scale_df.columns:
+                    if col not in ref_df.columns:
+                        col_vals = scale_df[col].apply(do_scale)
+                        if (col_vals > 0).any():
+                            ref_df = pd.concat([ref_df, col_vals], axis=1)
+                        else:
+                            failed_list.append(col)
     
     # Write failed list if any.
     if failed_list:
