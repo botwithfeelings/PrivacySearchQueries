@@ -143,7 +143,7 @@ def get_trend_data_multiple(t, terms, failed):
     return scale_df
 
 
-def run_google_trends(trends_file, seed, comp, scale, limit):
+def run_google_trends(trends_file, seed, comp, scale, limit, amt):
     """
     Collect the trend data for all queries in a file if the data exists. This function has the ability to recover from
     failure if Google's anti-spam prevention temporarily causes the trend collection from failing.
@@ -152,7 +152,8 @@ def run_google_trends(trends_file, seed, comp, scale, limit):
     :param seed: The seed word associated with the trends file. This will define the directory used to store the trends collected. It will also be added to the trends data collected for each query in trends_file (if comp parameter is set to True).
     :param comp: Set to True if you want to compare the seed word against all queries when collecting trend data. This allows all trends collected to have a common reference point.
     :param scale: Set to True if you want to pull trends data for the seed (reference for seed) comparison scale for the given seed. This will override the comp parameter.
-    :param limit: No. of trend request to make per hour.         
+    :param limit: No. of trend request to make per hour.
+    :param amt: Indicate which seed queries list to use.
     :return: None
     """
     dir_suffix = seed
@@ -168,8 +169,16 @@ def run_google_trends(trends_file, seed, comp, scale, limit):
 
     sleep_time = 3600/int(limit)
     
+    seed_file = "./seed_queries.txt"
+    if bool(amt):
+        seed_file = "./seed_queries_amt.txt"
+
+    seed_list = list()
+    with open(seed_file) as f:
+        seed_list = f.readlines()
+    
     if scale:
-        pull_seed_scale(dir_suffix, seed, sleep_time)
+        pull_seed_scale(dir_suffix, seed, sleep_time, seed_list)
     else:
         pull_seed_trends(trends_file, dir_suffix, seed, sleep_time, comp)
         
@@ -187,12 +196,13 @@ def load_failed_list(failed_file):
             failed_list = list(map(str.strip, f.readlines()))
     return failed_list
 
-def pull_seed_scale(dir_suffix, seed, sleep_time):
+def pull_seed_scale(dir_suffix, seed, sleep_time, seed_list):
     """
     Builds the seed to seed scale for a given seed.
     :param dir_suffix: The directory inside gtrends folder containing the scale files.
     :param seed: The seed query.
     :param sleep_time: Amount of time to wait between trend requests.
+    :param seed_list: List of seeds for comparison in the scale
     :return: None.
     """
     # Retrieve the list of failed requests if any.
@@ -219,8 +229,14 @@ def pull_seed_scale(dir_suffix, seed, sleep_time):
     
     ref_df = pd.DataFrame()
     ref_df = pd.concat([ref_df, ref_vals_scaled], axis=1)
-    for (s, r) in refs.iteritems():
+    
+    # Load the seed queries list
+    
+    for s in seed_list:
         if s != seed:
+            r = s
+            if s in refs.keys():
+                r = refs[s]
             terms.append(r)
         else:
             continue
@@ -323,9 +339,10 @@ def main():
     ap.add_argument('-c', '-cmp', help='Enable comparison with seed word', action='store_true')
     ap.add_argument('-l', '-scale', help='Enable seed to seed comparison scale', action='store_true')
     ap.add_argument('-k', '-keywordlimit', help='limit to number of keyword request per hour', default=200)
+    ap.add_argument('-a', '-amt', help='Use the AMT seed list rather than the index one', action='store_false')
     args = ap.parse_args()
 
-    run_google_trends(args.f, args.s, args.c, args.l, args.k)
+    run_google_trends(args.f, args.s, args.c, args.l, args.k, args.a)
     return
 
 if __name__ == '__main__':
