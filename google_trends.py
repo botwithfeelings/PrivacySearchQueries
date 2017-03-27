@@ -293,7 +293,7 @@ def pull_seed_trends(trends_file, dir_suffix, seed, sleep_time, comp):
     # Retrieve the list of keywords to be fetched into a list.
     trends_list = list()
     
-    with open(trends_file, 'r') as f:
+    with open(trends_file, 'rU') as f:
         reader = csv.reader(f)
         for row in reader:
             trends_list.append(row[0])
