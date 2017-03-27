@@ -19,7 +19,11 @@ do
       SEED_FILE="./googledata/${SEED// /_}_approved.csv"
     fi
     if [ "$cs" == "scale" ]; then
-      python google_trends.py -s "$SEED" -k $cnt -scale >> log.txt
+      if [ "$amt" == "amt" ]; then
+        python google_trends.py -s "$SEED" -k $cnt -scale -amt >> log.txt
+      else
+        python google_trends.py -s "$SEED" -k $cnt -scale >> log.txt
+      fi
     elif [ "$cs" == "cmp" ]; then
       python google_trends.py -f "$SEED_FILE" -s "$SEED" -k $cnt -cmp >> log.txt
     else
