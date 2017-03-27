@@ -2,7 +2,12 @@
 # Usage ./pulltrends.sh 200 (cmp|scale)
 cnt=$1
 cs=$2
-filename="seed_queries.txt"
+if [ "$cs" == "cmp" ]; then
+  filename="seed_queries.txt"
+else
+  filename="seed_queries_amt.txt"
+fi
+
 while read -r line
 do
     SEED=$line

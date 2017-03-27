@@ -110,7 +110,10 @@ def get_trend_data(t, term, failed, seed, comp):
     kw.append(term)
     # Concoct the dictionary for querying gtrends.
     if comp:
-        kw.append(refs[seed]) 
+        ref = seed
+        if seed in refs.keys():
+            ref = refs[seed]
+        kw.append(ref) 
         
     try:
         t.build_payload(kw, timeframe='2011-01-01 2017-01-31')
@@ -198,8 +201,11 @@ def pull_seed_scale(dir_suffix, seed, sleep_time):
     
     # Iterate over the reference dictionary and make pull requests.
     py_trends = get_pytrends_obj()
-    ref = refs[seed]
+    ref = seed
+    if seed in refs.keys():
+        ref = refs[seed]
     terms = [ref]
+    
     # Pull the reference data trends to check if we can go further.
     ref_df = get_trend_data_multiple(py_trends, terms, failed_list)
 
@@ -280,8 +286,13 @@ def pull_seed_trends(trends_file, dir_suffix, seed, sleep_time, comp):
     :param comp: Set to True if you want to compare the seed word against all queries when collecting trend data. This allows all trends collected to have a common reference point.
     :return: None.
     """
+    # If there is no such file just return
+    if not os.path.isfile(trends_file):
+        return
+    
     # Retrieve the list of keywords to be fetched into a list.
     trends_list = list()
+    
     with open(trends_file, 'r') as f:
         reader = csv.reader(f)
         for row in reader:
