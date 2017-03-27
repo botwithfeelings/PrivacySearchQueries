@@ -1,18 +1,23 @@
 #!/bin/bash
-# Usage ./pulltrends.sh 200 (cmp|scale)
+# Usage ./pulltrends.sh 200 (cmp|scale) amt
 cnt=$1
 cs=$2
-if [ "$cs" == "cmp" ]; then
-  filename="seed_queries.txt"
-else
+amt=$3
+if [ "$amt" == "amt" ]; then
   filename="seed_queries_amt.txt"
+else
+  filename="seed_queries.txt"
 fi
 
 while read -r line
 do
     SEED=$line
     echo "Current Seed: $SEED"
-    SEED_FILE="./googledata/${SEED// /_}_approved.csv"
+    if [ "$amt" == "amt" ]; then
+      SEED_FILE="./surveyQueries/grouped_by_seed/${SEED// /_}_approved.csv"
+    else
+      SEED_FILE="./googledata/${SEED// /_}_approved.csv"
+    fi
     if [ "$cs" == "scale" ]; then
       python google_trends.py -s "$SEED" -k $cnt -scale >> log.txt
     elif [ "$cs" == "cmp" ]; then
