@@ -1,5 +1,8 @@
 #!/usr/bin/env python2.7
 #
+# NOTE: This script is dependent on the pytrends package which updated on a regular basis depending on the changes in the
+# google trends website interface and export changes. If the package gets updated, this script is likely to be broken.
+#
 # If you pull this code from the repo, you will need to provide a keys file before being able to run it. The keys.py file
 # should contain the google authentication credentials (gmail account and their corresponding password) as a list of tuples
 # as shown in the following:
