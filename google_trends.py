@@ -86,7 +86,7 @@ def get_pytrends_obj():
     py_trends = TrendReq(google_user, google_pass, custom_useragent='WSPR PrivacySearchQueries')
     return py_trends
 
-def get_trend_data(t, term, failed, seed, comp):
+def get_trend_data(t, term, failed, seed, comp, sleep_time):
     """
 
     :param t:
@@ -95,6 +95,7 @@ def get_trend_data(t, term, failed, seed, comp):
     :param failed:
     :param seed:
     :param comp:
+    :param sleep_time:
     :return:
     """
     # First check if we have the data from some other session.
@@ -104,7 +105,7 @@ def get_trend_data(t, term, failed, seed, comp):
     label = term.replace('/', '_')
     filename = os.path.join('./gtrends', dir_suffix, label + '.csv')
     if os.path.isfile(filename):
-        return True
+        return
 
     kw = list()
     kw.append(term)
@@ -122,14 +123,17 @@ def get_trend_data(t, term, failed, seed, comp):
     except Exception as e:
         print 'No trend data for: ' + term, repr(e)
         failed.append(term)
+
+    sleep(randint(sleep_time, sleep_time+5))
     return
 
-def get_trend_data_multiple(t, terms, failed):
+def get_trend_data_multiple(t, terms, failed, sleep_time):
     """
     Pulls trend data based on reference scale.
     :param t:
     :param terms:
     :param failed:
+    :param sleep_time:
     :return: The dataframe containing the scale.
     """
     scale_df = None
@@ -140,6 +144,7 @@ def get_trend_data_multiple(t, terms, failed):
         print 'No trend data for: ' + ', '.join(terms), repr(e)
         failed.extend(terms)
 
+    sleep(randint(sleep_time, sleep_time+5))
     return scale_df
 
 
@@ -169,18 +174,36 @@ def run_google_trends(trends_file, seed, comp, scale, limit, amt):
 
     sleep_time = 3600/int(limit)
 
-    seed_file = "./seed_queries.txt"
-    if bool(amt):
-        seed_file = "./seed_queries_amt.txt"
-
-    seed_list = list()
-    with open(seed_file) as f:
-        seed_list = f.readlines()
-
     if scale:
+        seed_file = "./seed_queries.txt"
+        if bool(amt):
+            seed_file = "./seed_queries_amt.txt"
+
+        # Load the seeds list.
+        seed_list = list()
+        with open(seed_file, 'r') as f:
+            seed_list = f.readlines()
+
         pull_seed_scale(dir_suffix, seed, sleep_time, seed_list)
     else:
-        pull_seed_trends(trends_file, dir_suffix, seed, sleep_time, comp)
+        # If there is no such file just return
+        if not os.path.isfile(trends_file):
+            return
+
+        # Retrieve the list of keywords to be fetched into a list.
+        trends_list = list()
+
+        # If the trends file is from AMT then treat it as a text file due to
+        # MAC csv formatting issues.
+        with open(trends_file, 'r') as f:
+            if bool(amt):
+                trends_list = f.readlines()
+            else:
+                reader = csv.reader(f)
+                for row in reader:
+                    trends_list.append(row[0])
+
+        pull_seed_trends(trends_list, dir_suffix, seed, sleep_time, comp)
 
     return
 
@@ -240,8 +263,7 @@ def pull_seed_scale(dir_suffix, seed, sleep_time, seed_list):
         else:
             continue
 
-        scale_df = get_trend_data_multiple(py_trends, terms, failed_list)
-        sleep(randint(sleep_time, sleep_time+5))
+        scale_df = get_trend_data_multiple(py_trends, terms, failed_list, sleep_time)
 
         # Remove all the terms except the seed for the next request.
         del terms[1:]
@@ -291,28 +313,16 @@ def pull_seed_scale(dir_suffix, seed, sleep_time, seed_list):
     ref_df.to_csv(scale_file, index=True)
     return
 
-def pull_seed_trends(trends_file, dir_suffix, seed, sleep_time, comp):
+def pull_seed_trends(trends_list, dir_suffix, seed, sleep_time, comp):
     """
     Pulls the seed trend data for a given seed.
-    :param trends_file: The csv file containing the queries to retrieve trends for. The queries must be located in the first columns. Overriden by the scale parameter.
+    :param trends_list: The list file containing the queries to retrieve trends for. Overriden by the scale parameter.
     :param dir_suffix: The directory inside gtrends folder containing the scale files.
     :param seed: The seed query.
     :param sleep_time: Amount of time to wait between trend requests.
     :param comp: Set to True if you want to compare the seed word against all queries when collecting trend data. This allows all trends collected to have a common reference point.
     :return: None.
     """
-    # If there is no such file just return
-    if not os.path.isfile(trends_file):
-        return
-
-    # Retrieve the list of keywords to be fetched into a list.
-    trends_list = list()
-
-    with open(trends_file, 'rU') as f:
-        reader = csv.reader(f)
-        for row in reader:
-            trends_list.append(row[0])
-
     count = len(trends_list)
 
     # Retrieve the list of failed requests if any.
@@ -324,8 +334,8 @@ def pull_seed_trends(trends_file, dir_suffix, seed, sleep_time, comp):
         term = trends_list.pop(0)
         if term in failed_list:
             continue
-        get_trend_data(py_trends, term, failed_list, seed, comp)
-        sleep(randint(sleep_time, sleep_time+5))
+
+        get_trend_data(py_trends, term, failed_list, seed, comp, sleep_time)
 
     write_failed_list(failed_file, seed, failed_list, count, True)
     return
