@@ -73,12 +73,12 @@ def write_failed_list(filename, seed, failed, count, succ):
         f.write('\n'.join(failed))
         if succ:
             # Write over any failed list file if exists.
-            success_rate = ((count - len(failed)) / count) * 100    
+            success_rate = ((count - len(failed)) / count) * 100
             f.write('\n' + seed + ', sucess rate: ' + str(success_rate) + '%')
-            
+
 def get_pytrends_obj():
     """
-    Picks a google credential randomly and creates a 
+    Picks a google credential randomly and creates a
     pytrends object to pull trends data.
     """
     # Get authentication keys.
@@ -101,11 +101,11 @@ def get_trend_data(t, term, failed, seed, comp):
     dir_suffix = seed
     if comp:
         dir_suffix += ' comp'
-    label = term.replace('/', '_')        
+    label = term.replace('/', '_')
     filename = os.path.join('./gtrends', dir_suffix, label + '.csv')
     if os.path.isfile(filename):
         return True
-    
+
     kw = list()
     kw.append(term)
     # Concoct the dictionary for querying gtrends.
@@ -113,8 +113,8 @@ def get_trend_data(t, term, failed, seed, comp):
         ref = seed
         if seed in refs.keys():
             ref = refs[seed]
-        kw.append(ref) 
-        
+        kw.append(ref)
+
     try:
         t.build_payload(kw, timeframe='2011-01-01 2017-01-31')
         df = t.interest_over_time()
@@ -135,7 +135,7 @@ def get_trend_data_multiple(t, terms, failed):
     scale_df = None
     try:
         t.build_payload(terms, timeframe='2011-01-01 2017-01-31')
-        scale_df = t.interest_over_time()        
+        scale_df = t.interest_over_time()
     except Exception as e:
         print 'No trend data for: ' + ', '.join(terms), repr(e)
         failed.extend(terms)
@@ -159,7 +159,7 @@ def run_google_trends(trends_file, seed, comp, scale, limit, amt):
     dir_suffix = seed
     if comp:
         dir_suffix += ' comp'
-    
+
     if scale:
         dir_suffix = 'seed_scales'
 
@@ -168,7 +168,7 @@ def run_google_trends(trends_file, seed, comp, scale, limit, amt):
         os.makedirs(directory)
 
     sleep_time = 3600/int(limit)
-    
+
     seed_file = "./seed_queries.txt"
     if bool(amt):
         seed_file = "./seed_queries_amt.txt"
@@ -176,12 +176,12 @@ def run_google_trends(trends_file, seed, comp, scale, limit, amt):
     seed_list = list()
     with open(seed_file) as f:
         seed_list = f.readlines()
-    
+
     if scale:
         pull_seed_scale(dir_suffix, seed, sleep_time, seed_list)
     else:
         pull_seed_trends(trends_file, dir_suffix, seed, sleep_time, comp)
-        
+
     return
 
 def load_failed_list(failed_file):
@@ -208,14 +208,14 @@ def pull_seed_scale(dir_suffix, seed, sleep_time, seed_list):
     # Retrieve the list of failed requests if any.
     failed_file = os.path.join('./gtrends', dir_suffix, seed + ' no trends data.txt')
     failed_list = load_failed_list(failed_file)
-    
+
     # Iterate over the reference dictionary and make pull requests.
     py_trends = get_pytrends_obj()
     ref = seed
     if seed in refs.keys():
         ref = refs[seed]
     terms = [ref]
-    
+
     # Pull the reference data trends to check if we can go further.
     ref_df = get_trend_data_multiple(py_trends, terms, failed_list)
 
@@ -225,13 +225,12 @@ def pull_seed_scale(dir_suffix, seed, sleep_time, seed_list):
         return
     ref_vals_scaled = ref_df[ref]
     if not (ref_vals_scaled > 0).any():
-        return    
-    
+        return
+
     ref_df = pd.DataFrame()
     ref_df = pd.concat([ref_df, ref_vals_scaled], axis=1)
-    
+
     # Load the seed queries list
-    
     for s in seed_list:
         if s != seed:
             r = s
@@ -240,7 +239,7 @@ def pull_seed_scale(dir_suffix, seed, sleep_time, seed_list):
             terms.append(r)
         else:
             continue
-        
+
         scale_df = get_trend_data_multiple(py_trends, terms, failed_list)
         sleep(randint(sleep_time, sleep_time+5))
 
@@ -257,41 +256,41 @@ def pull_seed_scale(dir_suffix, seed, sleep_time, seed_list):
             failed_list.extend(col_names)
             continue
 
-            # Determine the scale factor from the reference column.
-            max_ref_val = max(ref_vals)
-            scale_factor = 100/max_ref_val
-            do_scale = lambda x: int(ceil(x*scale_factor))
-            ref_vals = ref_vals.apply(do_scale)
+        # Determine the scale factor from the reference column.
+        max_ref_val = max(ref_vals)
+        scale_factor = 100/max_ref_val
+        do_scale = lambda x: int(ceil(x*scale_factor))
+        ref_vals = ref_vals.apply(do_scale)
 
-            # Get the sum of the absolute difference
-            # between scaled reference values.
-            scaled_diff = sum(map(op.abs, map(op.sub, ref_vals, ref_vals_scaled)))
+        # Get the sum of the absolute difference
+        # between scaled reference values.
+        scaled_diff = sum(map(op.abs, map(op.sub, ref_vals, ref_vals_scaled)))
 
-            # If the scaled difference is more than 2.5 for each of the rows 
-            # in the dataframe then there is only minute data for these terms.
-            # Compared to the peak, the maximum value is very small. So, we
-            # shouldn't scale in this case.
-            if scaled_diff > int(scale_df.shape[0]*2.5):
-                failed_list.extend(col_names)
-                continue
+        # If the scaled difference is more than 2.5 for each of the rows
+        # in the dataframe then there is only minute data for these terms.
+        # Compared to the peak, the maximum value is very small. So, we
+        # shouldn't scale in this case.
+        if scaled_diff > int(scale_df.shape[0]*2.5):
+            failed_list.extend(col_names)
+            continue
 
-            for col in scale_df.columns:
-                if col not in ref_df.columns:
-                    col_vals = scale_df[col].apply(do_scale)
+        for col in scale_df.columns:
+            if col not in ref_df.columns:
+                col_vals = scale_df[col].apply(do_scale)
                 if (col_vals > 0).any():
                     ref_df = pd.concat([ref_df, col_vals], axis=1)
                 else:
                     failed_list.append(col)
-    
+
     # Write failed list if any.
     if failed_list:
         write_failed_list(failed_file, seed, failed_list, len(refs), True)
-    
+
     # Push the scale dataframe to csv file.
     scale_file = os.path.join('./gtrends', dir_suffix, seed + '.csv')
     ref_df.to_csv(scale_file, index=True)
     return
-    
+
 def pull_seed_trends(trends_file, dir_suffix, seed, sleep_time, comp):
     """
     Pulls the seed trend data for a given seed.
@@ -305,21 +304,21 @@ def pull_seed_trends(trends_file, dir_suffix, seed, sleep_time, comp):
     # If there is no such file just return
     if not os.path.isfile(trends_file):
         return
-    
+
     # Retrieve the list of keywords to be fetched into a list.
     trends_list = list()
-    
+
     with open(trends_file, 'rU') as f:
         reader = csv.reader(f)
         for row in reader:
             trends_list.append(row[0])
 
-    count = len(trends_list)    
+    count = len(trends_list)
 
     # Retrieve the list of failed requests if any.
     failed_file = os.path.join('./gtrends', dir_suffix, seed + ' no trends data.txt')
     failed_list = load_failed_list(failed_file)
-    
+
     py_trends = get_pytrends_obj()
     while trends_list:
         term = trends_list.pop(0)
@@ -327,7 +326,7 @@ def pull_seed_trends(trends_file, dir_suffix, seed, sleep_time, comp):
             continue
         get_trend_data(py_trends, term, failed_list, seed, comp)
         sleep(randint(sleep_time, sleep_time+5))
-    
+
     write_failed_list(failed_file, seed, failed_list, count, True)
     return
 
