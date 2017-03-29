@@ -338,8 +338,6 @@ def pull_seed_trends(trends_list, dir_suffix, seed, sleep_time, comp):
         if term in failed_list:
             continue
 
-        print term
-
         get_trend_data(py_trends, term, failed_list, seed, comp, sleep_time)
 
     write_failed_list(failed_file, seed, failed_list, count, True)
