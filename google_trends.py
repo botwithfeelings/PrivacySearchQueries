@@ -89,7 +89,7 @@ def get_pytrends_obj():
     py_trends = TrendReq(google_user, google_pass, custom_useragent='WSPR PrivacySearchQueries')
     return py_trends
 
-def get_trend_data(t, term, failed, ref, comp, sleep_time):
+def get_trend_data(t, term, failed, seed, ref, comp, sleep_time):
     """
 
     :param t:
@@ -196,11 +196,6 @@ def run_google_trends(trends_file, seed, comp, scale, limit, amt):
         # Retrieve the list of keywords to be fetched into a list.
         trends_list = list()
 
-        # Get the reference for the seed if any.
-        ref = seed
-        if seed in refs.keys():
-            ref = refs[seed]
-
         with open(trends_file, 'rU') as f:
             # If the trends file is from AMT then treat it as a text file due to
             # MAC csv formatting issues.
@@ -208,13 +203,17 @@ def run_google_trends(trends_file, seed, comp, scale, limit, amt):
                 trends_list = list(map(str.strip, f.readlines()))
 
                 # Manually add the seed reference to the list.
+                # Get the reference for the seed if any.
+                ref = seed
+                if seed in refs.keys():
+                    ref = refs[seed]
                 trends_list.append(ref)
             else:
                 reader = csv.reader(f)
                 for row in reader:
                     trends_list.append(row[0])
 
-        pull_seed_trends(trends_list, dir_suffix, ref, sleep_time, comp)
+        pull_seed_trends(trends_list, dir_suffix, seed, sleep_time, comp)
 
     return
 
@@ -251,7 +250,7 @@ def pull_seed_scale(dir_suffix, seed, sleep_time, seed_list):
     terms = [ref]
 
     # Pull the reference data trends to check if we can go further.
-    ref_df = get_trend_data_multiple(py_trends, terms, failed_list)
+    ref_df = get_trend_data_multiple(py_trends, terms, failed_list, sleep_time)
 
     # If there aren't any trend data for the reference
     # for current seed, we can't do anything about it's scale.
@@ -340,13 +339,18 @@ def pull_seed_trends(trends_list, dir_suffix, seed, sleep_time, comp):
     failed_file = os.path.join('./gtrends', dir_suffix, seed + ' no trends data.txt')
     failed_list = load_failed_list(failed_file)
 
+    # Retrieve the seed reference if any.
+    ref = seed
+    if seed in refs.keys():
+        ref = refs[seed]
+
     py_trends = get_pytrends_obj()
     while trends_list:
         term = trends_list.pop(0)
         if term in failed_list:
             continue
 
-        get_trend_data(py_trends, term, failed_list, seed, comp, sleep_time)
+        get_trend_data(py_trends, term, failed_list, seed, ref, comp, sleep_time)
 
     write_failed_list(failed_file, seed, failed_list, count, True)
     return
