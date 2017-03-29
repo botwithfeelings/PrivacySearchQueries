@@ -353,7 +353,7 @@ def main():
     ap.add_argument('-c', '-cmp', help='Enable comparison with seed word', action='store_true')
     ap.add_argument('-l', '-scale', help='Enable seed to seed comparison scale', action='store_true')
     ap.add_argument('-k', '-keywordlimit', help='limit to number of keyword request per hour', default=200)
-    ap.add_argument('-a', '-amt', help='Use the AMT seed list rather than the index one', action='store_false')
+    ap.add_argument('-a', '-amt', help='Use the AMT seed list rather than the index one', action='store_true')
     args = ap.parse_args()
 
     run_google_trends(args.f, args.s, args.c, args.l, args.k, args.a)
