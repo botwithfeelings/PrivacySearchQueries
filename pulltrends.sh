@@ -33,7 +33,7 @@ do
       fi
     elif [ "$cs" == "nocmp" ]; then
       if [ "$amt" == "amt" ]; then
-        python google_trends.py -f "$SEED_FILE" -s "$SEED" -k $cnt -amp >> log.txt
+        python google_trends.py -f "$SEED_FILE" -s "$SEED" -k $cnt -amt >> log.txt
       elif [ "$amt" == "noamt" ]; then
         python google_trends.py -f "$SEED_FILE" -s "$SEED" -k $cnt >> log.txt
       fi
