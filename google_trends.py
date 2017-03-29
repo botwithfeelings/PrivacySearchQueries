@@ -103,6 +103,9 @@ def get_trend_data(t, term, failed, seed, comp, sleep_time):
     """
     # First check if we have the data from some other session.
     dir_suffix = seed
+
+    # Remove any residual newlines due to cross platform csv processing.
+    term = term.translate(None, "\r\n")
     if comp:
         dir_suffix += ' comp'
     label = term.replace('/', '_')
@@ -185,7 +188,7 @@ def run_google_trends(trends_file, seed, comp, scale, limit, amt):
         # Load the seeds list.
         seed_list = list()
         with open(seed_file, 'r') as f:
-            seed_list = f.readlines()
+            seed_list = list(map(str.strip, f.readlines()))
 
         pull_seed_scale(dir_suffix, seed, sleep_time, seed_list)
     else:
@@ -198,9 +201,15 @@ def run_google_trends(trends_file, seed, comp, scale, limit, amt):
 
         # If the trends file is from AMT then treat it as a text file due to
         # MAC csv formatting issues.
-        with open(trends_file, 'r') as f:
+        with open(trends_file, 'rU') as f:
             if bool(amt):
-                trends_list = f.readlines()
+                trends_list = list(map(str.strip, f.readlines()))
+
+                # Manually add the seed reference to the list.
+                ref = seed
+                if seed in refs.keys():
+                    ref = refs[seed]
+                trends_list.append(ref)
             else:
                 reader = csv.reader(f)
                 for row in reader:

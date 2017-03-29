@@ -55,13 +55,15 @@ def process_trends(trendsdir, seed, resultdir):
     filenames = get_trend_files(dirname, "csv")
 
     # Sanity Check: is there trend data for the reference (seed).
-    ref = refs[seed]
+    ref = seed
+    if seed in refs.keys():
+        ref = refs[seed]
     ref_file = os.path.join(dirname, ref + ".csv")
     if ref_file not in filenames:
         print seed
         return
-    
-    # Load the reference file itself for 
+
+    # Load the reference file itself for
     ref_df = load_trends_df(ref_file)
     ref_vals_scaled = ref_df[ref]
 
@@ -76,11 +78,11 @@ def process_trends(trendsdir, seed, resultdir):
         query_vals = df[query]
         if not (query_vals > 0).any():
             continue
-        
+
         ref_vals = df[ref]
         if not (ref_vals > 0).any():
             continue
-            
+
         # Determine the scale factor from the reference column.
         max_ref_val = max(ref_vals)
         scale_factor = 100/max_ref_val
@@ -91,9 +93,9 @@ def process_trends(trendsdir, seed, resultdir):
         # between scaled reference values.
         scaled_diff = sum(map(op.abs, map(op.sub, ref_vals, ref_vals_scaled)))
 
-        # If the scaled difference is more than 2.5 for each of the rows 
+        # If the scaled difference is more than 2.5 for each of the rows
         # in the dataframe then there is only minute data for the ref aginst
-        # this term. Compared to the peak, the maximum value is very small. 
+        # this term. Compared to the peak, the maximum value is very small.
         # So, we shouldn't scale in this case.
         if scaled_diff > int(ref_df.shape[0]*2.5):
             continue
