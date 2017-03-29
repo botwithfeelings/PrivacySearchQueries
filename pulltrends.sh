@@ -26,8 +26,16 @@ do
         python google_trends.py -s "$SEED" -k $cnt -scale >> log.txt
       fi
     elif [ "$cs" == "cmp" ]; then
-      python google_trends.py -f "$SEED_FILE" -s "$SEED" -k $cnt -cmp >> log.txt
+      if [ "$amt" == "amt" ]; then
+        python google_trends.py -f "$SEED_FILE" -s "$SEED" -k $cnt -cmp -amt >> log.txt
+      elif [ "$amt" == "noamt" ]; then
+        python google_trends.py -f "$SEED_FILE" -s "$SEED" -k $cnt -cmp >> log.txt
+      fi
     elif [ "$cs" == "nocmp" ]; then
-      python google_trends.py -f "$SEED_FILE" -s "$SEED" -k $cnt >> log.txt
+      if [ "$amt" == "amt" ]; then
+        python google_trends.py -f "$SEED_FILE" -s "$SEED" -k $cnt -amp >> log.txt
+      elif [ "$amt" == "noamt" ]; then
+        python google_trends.py -f "$SEED_FILE" -s "$SEED" -k $cnt >> log.txt
+      fi
     fi
 done < "$filename"
