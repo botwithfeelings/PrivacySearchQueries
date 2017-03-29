@@ -4,5 +4,7 @@ how to protect against google hangout monitoring
 how to protect against whatsapp monitoring
 remove social media connection instagram
 remove social media connection twitter
-tool to encrypt email
-tool to encrypt skype
+tool to encrypt google hangouts
+tool to encrypt phone calls
+tool to encrypt text messages
+tool to encrypt whatsapp

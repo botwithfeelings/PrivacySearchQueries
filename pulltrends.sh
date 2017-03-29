@@ -1,5 +1,5 @@
 #!/bin/bash
-# Usage ./pulltrends.sh 200 (cmp|scale|nocmp) (noamt|amt)
+# Usage ./pulltrends.sh 150 (cmp|scale|nocmp) (noamt|amt)
 cnt=$1
 cs=$2
 amt=$3
