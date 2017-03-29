@@ -89,14 +89,14 @@ def get_pytrends_obj():
     py_trends = TrendReq(google_user, google_pass, custom_useragent='WSPR PrivacySearchQueries')
     return py_trends
 
-def get_trend_data(t, term, failed, seed, comp, sleep_time):
+def get_trend_data(t, term, failed, ref, comp, sleep_time):
     """
 
     :param t:
     :param term:
     :param trends:
     :param failed:
-    :param seed:
+    :param ref:
     :param comp:
     :param sleep_time:
     :return:
@@ -117,9 +117,6 @@ def get_trend_data(t, term, failed, seed, comp, sleep_time):
     kw.append(term)
     # Concoct the dictionary for querying gtrends.
     if comp:
-        ref = seed
-        if seed in refs.keys():
-            ref = refs[seed]
         kw.append(ref)
 
     try:
@@ -199,23 +196,25 @@ def run_google_trends(trends_file, seed, comp, scale, limit, amt):
         # Retrieve the list of keywords to be fetched into a list.
         trends_list = list()
 
-        # If the trends file is from AMT then treat it as a text file due to
-        # MAC csv formatting issues.
+        # Get the reference for the seed if any.
+        ref = seed
+        if seed in refs.keys():
+            ref = refs[seed]
+
         with open(trends_file, 'rU') as f:
+            # If the trends file is from AMT then treat it as a text file due to
+            # MAC csv formatting issues.
             if bool(amt):
                 trends_list = list(map(str.strip, f.readlines()))
 
                 # Manually add the seed reference to the list.
-                ref = seed
-                if seed in refs.keys():
-                    ref = refs[seed]
                 trends_list.append(ref)
             else:
                 reader = csv.reader(f)
                 for row in reader:
                     trends_list.append(row[0])
 
-        pull_seed_trends(trends_list, dir_suffix, seed, sleep_time, comp)
+        pull_seed_trends(trends_list, dir_suffix, ref, sleep_time, comp)
 
     return
 
