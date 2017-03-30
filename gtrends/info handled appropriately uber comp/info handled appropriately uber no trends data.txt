@@ -1,2 +1,0 @@
-
-info handled appropriately uber, sucess rate: 100.0%

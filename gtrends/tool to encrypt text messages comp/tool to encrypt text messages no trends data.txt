@@ -1,2 +1,0 @@
-
-tool to encrypt text messages, sucess rate: 96.6666666667%

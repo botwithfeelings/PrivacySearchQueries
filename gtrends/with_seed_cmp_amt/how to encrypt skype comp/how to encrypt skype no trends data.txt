@@ -1,2 +1,2 @@
 ﻿"""how to encrypt Skype"""
-how to encrypt skype, sucess rate: 95.2380952381%
+how to encrypt skype, sucess rate: 95.4545454545%
