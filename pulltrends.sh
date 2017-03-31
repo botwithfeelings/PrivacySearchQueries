@@ -21,21 +21,21 @@ do
 
     if [ "$cs" == "scale" ]; then
       if [ "$amt" == "amt" ]; then
-        python google_trends.py -s "$SEED" -k $cnt -scale -amt >> log.txt
+        python google_trends.py -s "$SEED" -k $cnt -scale -amt >> pull_trends_log.txt
       elif [ "$amt" == "noamt" ]; then
-        python google_trends.py -s "$SEED" -k $cnt -scale >> log.txt
+        python google_trends.py -s "$SEED" -k $cnt -scale >> pull_trends_log.txt
       fi
     elif [ "$cs" == "cmp" ]; then
       if [ "$amt" == "amt" ]; then
-        python google_trends.py -f "$SEED_FILE" -s "$SEED" -k $cnt -cmp -amt >> log.txt
+        python google_trends.py -f "$SEED_FILE" -s "$SEED" -k $cnt -cmp -amt >> pull_trends_log.txt
       elif [ "$amt" == "noamt" ]; then
-        python google_trends.py -f "$SEED_FILE" -s "$SEED" -k $cnt -cmp >> log.txt
+        python google_trends.py -f "$SEED_FILE" -s "$SEED" -k $cnt -cmp >> pull_trends_log.txt
       fi
     elif [ "$cs" == "nocmp" ]; then
       if [ "$amt" == "amt" ]; then
-        python google_trends.py -f "$SEED_FILE" -s "$SEED" -k $cnt -amt >> log.txt
+        python google_trends.py -f "$SEED_FILE" -s "$SEED" -k $cnt -amt >> pull_trends_log.txt
       elif [ "$amt" == "noamt" ]; then
-        python google_trends.py -f "$SEED_FILE" -s "$SEED" -k $cnt >> log.txt
+        python google_trends.py -f "$SEED_FILE" -s "$SEED" -k $cnt >> pull_trends_log.txt
       fi
     fi
 done < "$filename"
