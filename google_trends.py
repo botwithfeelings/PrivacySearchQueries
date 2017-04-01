@@ -238,6 +238,12 @@ def pull_seed_scale(dir_suffix, seed, sleep_time, seed_list):
     :param seed_list: List of seeds for comparison in the scale
     :return: None.
     """
+
+    # If we have the scale already just return.
+    scale_file = os.path.join('./gtrends', dir_suffix, seed + '.csv')
+    if os.path.isfile(scale_file):
+        return
+
     # Retrieve the list of failed requests if any.
     failed_file = os.path.join('./gtrends', dir_suffix, seed + ' no trends data.txt')
     failed_list = load_failed_list(failed_file)
@@ -320,7 +326,6 @@ def pull_seed_scale(dir_suffix, seed, sleep_time, seed_list):
         write_failed_list(failed_file, seed, failed_list, len(refs), True)
 
     # Push the scale dataframe to csv file.
-    scale_file = os.path.join('./gtrends', dir_suffix, seed + '.csv')
     ref_df.to_csv(scale_file, index=True)
     return
 
