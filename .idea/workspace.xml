@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="aa1e3105-5a2a-4354-9a44-08b834c4bc2b" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/surveyQueries/grouped_by_seed/Users:shaowns:Documents:Pri.textClipping" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/surveyQueries/grouped_by_seed/search_without_history_approved_approved.csv" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/buildindex.sh" afterPath="$PROJECT_DIR$/buildindex.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/google_related_queries.py" afterPath="$PROJECT_DIR$/google_related_queries.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/how to browse anonymously comp/how to browse anonymously no trends data.txt" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/how to browse anonymously comp/how to browse anonymously no trends data.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/how to browse without being tracked comp/how to browse without being tracked no trends data.txt" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/how to browse without being tracked comp/how to browse without being tracked no trends data.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/how to change facebook privacy settings comp/how to change facebook privacy settings no trends data.txt" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/how to change facebook privacy settings comp/how to change facebook privacy settings no trends data.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/how to change instagram privacy settings comp/how to change instagram privacy settings no trends data.txt" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/how to change instagram privacy settings comp/how to change instagram privacy settings no trends data.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/how to change snapchat privacy settings comp/how to change snapchat privacy settings no trends data.txt" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/how to change snapchat privacy settings comp/how to change snapchat privacy settings no trends data.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/how to change twitter privacy settings comp/how to change twitter privacy settings no trends data.txt" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/how to change twitter privacy settings comp/how to change twitter privacy settings no trends data.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/how to change youtube privacy settings comp/how to change youtube privacy settings no trends data.txt" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/how to change youtube privacy settings comp/how to change youtube privacy settings no trends data.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/how to search anonymously comp/how to search anonymously no trends data.txt" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/how to search anonymously comp/how to search anonymously no trends data.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/how to search without being tracked comp/how to search without being tracked no trends data.txt" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/how to search without being tracked comp/how to search without being tracked no trends data.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/Find a fully private search engine..csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/Find a fully private search engine..csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/Find a secure search engine..csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/Find a secure search engine..csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/Find an anonymous search engine..csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/Find an anonymous search engine..csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/How can i search with no tracking..csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/How can i search with no tracking..csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/Private search engines.csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/Private search engines.csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/Search sites with no history tracking.csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/Search sites with no history tracking.csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/Where can U search with no history tracking..csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/Where can U search with no history tracking..csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/Which search engine doesn't track search histories..csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/Which search engine doesn't track search histories..csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/anonymous search engines.csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/anonymous search engines.csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/are there any search engines that do not track search histories.csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/are there any search engines that do not track search histories.csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/cloaked search.csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/cloaked search.csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/default search engine tor uses.csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/default search engine tor uses.csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/no trace private search engine.csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/no trace private search engine.csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/private no track search engine.csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/private no track search engine.csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/search don't save.csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/search don't save.csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/search engine no history tracking.csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/search engine no history tracking.csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/search engine no tracking.csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/search engine no tracking.csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/search engine recommended by edward snowden.csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/search engine recommended by edward snowden.csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/search engine that doesn't track history.csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/search engine that doesn't track history.csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/search engine that doesn't track results.csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/search engine that doesn't track results.csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/search engine that doesn't track you.csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/search engine that doesn't track you.csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/search engine without tracking.csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/search engine without tracking.csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/search engines that don't track history.csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/search engines that don't track history.csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/search engines that respect privacy.csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/search engines that respect privacy.csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/search with no history.csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/search with no history.csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/what is the best search engine that also does not track search histories.csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/what is the best search engine that also does not track search histories.csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/what search engines offer private browsing?.csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/what search engines offer private browsing?.csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/﻿search engine no tracking.csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/﻿search engine no tracking.csv" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FavoritesManager">
+    <favorites_list name="PrivacySearchQueries" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="google_related_queries.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/google_related_queries.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-597">
+              <caret line="284" column="17" lean-forward="true" selection-start-line="284" selection-start-column="17" selection-end-line="284" selection-end-column="17" />
+              <folding>
+                <element signature="e#1689#1720#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="google_query_similarity.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/google_query_similarity.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="405">
+              <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+              <folding>
+                <element signature="e#1611#1637#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="google_trends.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/google_trends.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="395">
+              <caret line="113" column="14" lean-forward="true" selection-start-line="112" selection-start-column="4" selection-end-line="113" selection-end-column="14" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/google_related_queries.py" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="-1920" />
+    <option name="y" value="23" />
+    <option name="width" value="1920" />
+    <option name="height" value="988" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scratches" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PrivacySearchQueries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PrivacySearchQueries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="PrivacySearchQueries" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Tox" factoryName="Tox">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="PrivacySearchQueries" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Doctests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="PrivacySearchQueries" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Unittests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="PrivacySearchQueries" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;.&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method />
+    </configuration>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="aa1e3105-5a2a-4354-9a44-08b834c4bc2b" name="Default" comment="" />
+      <created>1491118205130</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1491118205130</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-1920" y="23" width="1920" height="988" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1640625" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3296875" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/google_query_similarity.py</url>
+          <line>27</line>
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="1" />
+    </breakpoint-manager>
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/google_query_similarity.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+          <folding>
+            <element signature="e#1611#1637#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/google_trends.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="395">
+          <caret line="113" column="14" lean-forward="true" selection-start-line="112" selection-start-column="4" selection-end-line="113" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/google_related_queries.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-597">
+          <caret line="284" column="17" lean-forward="true" selection-start-line="284" selection-start-column="17" selection-end-line="284" selection-end-column="17" />
+          <folding>
+            <element signature="e#1689#1720#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

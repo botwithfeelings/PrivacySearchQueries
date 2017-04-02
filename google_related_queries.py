@@ -26,6 +26,7 @@
 #
 
 # standard library imports
+from __future__ import division
 import argparse
 from collections import OrderedDict
 import csv
@@ -278,12 +279,96 @@ def run_google_related_queries(seed, limit, keycnt):
         state.pickle()
 
 
-if __name__ == '__main__':
+def comp_survey_index_similarity(seed, indfile, keycnt):
+    """
+    Computes and calculates the success rate of a given index, if the threshold is priorly calculated.
+    :param seed: 
+    :param indfile: 
+    :param keycnt: 
+    :return: 
+    """
+
+    # If there is no such file for the given index just return
+    if not os.path.isfile(indfile):
+        return
+
+    # Load the pickled state for the seed to find the threshold
+    state = ScrapeState(seed)
+    state.unpickle()
+    t = state.threshold
+
+    print seed, t
+
+    # Retrieve the list of keywords to be fetched into a list.
+    ind_list = list()
+    with open(indfile, 'rU') as f:
+        # If the trends file is from AMT then treat it as a text file due to
+        # MAC csv formatting issues.
+        ind_list = list(map(str.strip, f.readlines()))
+
+    # Expansion set of for the seed.
+    seed_page = gr.get_query_html(seed, keycnt)
+    seed_es = gr.get_google_query_summary_set(seed_page)
+
+    # Start computing the k-values for each of the query in the index.
+    approved = 0
+    kvals = OrderedDict()
+    for q in ind_list:
+
+        # Get the query's related searches and extended set.
+        ind_page = gr.get_query_html(q, keycnt)
+
+        kval = 0.0
+        try:
+            ind_es = gr.get_google_query_summary_set(ind_page)
+
+            # Retrieve the kernel value.
+            kval = gr.kval_es(seed_es, ind_es)
+        except Exception as e:
+            # Could not compute index, set to value so that it is rejected.
+            kval = -1.0
+
+        # Add the result to the dictionary.
+        kvals[q] = kval
+
+        # Check if this is above the threshold.
+        if kval >= t:
+            approved += 1
+
+    # Write out the kvals, and the success rate.
+    success_rate = (approved/len(ind_list)) * 100
+    print seed, success_rate
+
+    filename = './surveyQueries/kvals/' + seed.replace(' ', '_') + '.csv'
+    if any(kvals):
+        with open(filename, 'w') as f:
+            csv_writer = csv.writer(f, lineterminator='\n')
+            for (k, v) in approved.iteritems():
+                csv_writer.writerow([k, v])
+            csv_writer.writerow(['success rate', success_rate])
+    return
+
+
+def main():
     ap = argparse.ArgumentParser(description='Use the script to pull google related search queries.')
     ap.add_argument('-s', '-seed', help='Seed word', required=True)
     ap.add_argument('-i', '-iteration', help='limit to number of related search iteration', default=3)
     ap.add_argument('-k', '-keywordlimit', help='limit to number of keyword request per hour', default=30)
+    ap.add_argument('-c', '-comp', help='compute the k-value for the survey index, overrides the iteration '
+                                        'limit parameter if given', action='store_true')
+    ap.add_argument('-f', '-file', help='file containing the index for computing k-values')
 
     args = ap.parse_args()
 
-    run_google_related_queries(args.s, int(args.i), int(args.k))
+    seed, limit, keycnt, comp, indfile = args.s, int(args.i), int(args.k), bool(args.c), args.f
+
+    if comp:
+        comp_survey_index_similarity(seed, indfile, keycnt)
+    else:
+        run_google_related_queries(seed, limit, keycnt)
+
+    return
+
+
+if __name__ == '__main__':
+    main()
