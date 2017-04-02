@@ -1,0 +1,83 @@
+No trend data for: how to uninstall twitter KeyError(u'time',)
+Can't pull trends for seed: how to uninstall twitter, ref: how to uninstall twitter
+No trend data for: how to uninstall pokemongo KeyError(u'time',)
+Can't pull trends for seed: how to uninstall pokemongo, ref: how to uninstall pokemongo
+No trend data for: how to unfriend someone on twitter KeyError(u'time',)
+Can't pull trends for seed: how to unfriend someone on twitter, ref: how to unfriend someone on twitter
+No trend data for: google hangouts privacy, pokemon go settings ValueError('No JSON object could be decoded',)
+No trend data for: skype privacy policy ValueError('No JSON object could be decoded',)
+Can't pull trends for seed: how to encrypt skype, ref: skype privacy policy
+No trend data for: whatsapp security settings ValueError('No JSON object could be decoded',)
+Can't pull trends for seed: how to encrypt whatsapp, ref: whatsapp security settings
+No trend data for: how to protect against phishing ValueError('No JSON object could be decoded',)
+Can't pull trends for seed: how to protect against email monitoring, ref: how to protect against phishing
+No trend data for: delete hangout history ValueError('No JSON object could be decoded',)
+Can't pull trends for seed: how to protect against phone call monitoring, ref: delete hangout history
+No trend data for: can someone read my text messages from their phone ValueError('No JSON object could be decoded',)
+Can't pull trends for seed: how to protect against text message monitoring, ref: can someone read my text messages from their phone
+No trend data for: google hangouts privacy ValueError('No JSON object could be decoded',)
+Can't pull trends for seed: how to protect against google hangout monitoring, ref: google hangouts privacy
+No trend data for: how to encrypt whatsapp messages ValueError('No JSON object could be decoded',)
+Can't pull trends for seed: how to protect against whatsapp monitoring, ref: how to encrypt whatsapp messages
+No trend data for: skype privacy policy ValueError('No JSON object could be decoded',)
+Can't pull trends for seed: how to protect against skype monitoring, ref: skype privacy policy
+No trend data for: Facebook privacy policy ValueError('No JSON object could be decoded',)
+Can't pull trends for seed: info handled appropriately facebook, ref: Facebook privacy policy
+No trend data for: gmail privacy issues ValueError('No JSON object could be decoded',)
+Can't pull trends for seed: info handled appropriately gmail, ref: gmail privacy issues
+No trend data for: instagram privacy policy ValueError('No JSON object could be decoded',)
+Can't pull trends for seed: info handled appropriately instagram, ref: instagram privacy policy
+No trend data for: Privacy policy Pokemon Go ValueError('No JSON object could be decoded',)
+Can't pull trends for seed: info handled appropriately pokemongo, ref: Privacy policy Pokemon Go
+No trend data for: Twitter privacy policy ValueError('No JSON object could be decoded',)
+Can't pull trends for seed: info handled appropriately twitter, ref: Twitter privacy policy
+No trend data for: uber privacy policy ValueError('No JSON object could be decoded',)
+Can't pull trends for seed: info handled appropriately uber, ref: uber privacy policy
+No trend data for: Facebook Privacy settings ValueError('No JSON object could be decoded',)
+Can't pull trends for seed: hide facebook from government, ref: Facebook Privacy settings
+No trend data for: Gmail privacy ValueError('No JSON object could be decoded',)
+Can't pull trends for seed: hide gmail from government, ref: Gmail privacy
+No trend data for: private instagram posts ValueError('No JSON object could be decoded',)
+Can't pull trends for seed: hide instagram from government, ref: private instagram posts
+No trend data for: pokemon go settings ValueError('No JSON object could be decoded',)
+Can't pull trends for seed: hide pokemongo from government, ref: pokemon go settings
+No trend data for: How to make tweets private ValueError('No JSON object could be decoded',)
+Can't pull trends for seed: hide twitter from government, ref: How to make tweets private
+No trend data for: Uber privacy ValueError('No JSON object could be decoded',)
+Can't pull trends for seed: hide uber from government, ref: Uber privacy
+No trend data for: Youtube Privacy ValueError('No JSON object could be decoded',)
+Can't pull trends for seed: hide youtube from government, ref: Youtube Privacy
+No trend data for: facebook app privacy policy ValueError('No JSON object could be decoded',)
+Can't pull trends for seed: privacy policy facebook, ref: facebook app privacy policy
+No trend data for: gmail privacy policy ValueError('No JSON object could be decoded',)
+Can't pull trends for seed: privacy policy gmail, ref: gmail privacy policy
+No trend data for: instagram privacy policy ValueError('No JSON object could be decoded',)
+Can't pull trends for seed: privacy policy instagram, ref: instagram privacy policy
+No trend data for: privacy policy pokemongo ValueError('No JSON object could be decoded',)
+Can't pull trends for seed: privacy policy pokemongo, ref: privacy policy pokemongo
+No trend data for: twitter privacy policy ValueError('No JSON object could be decoded',)
+Can't pull trends for seed: privacy policy twitter, ref: twitter privacy policy
+No trend data for: privacy policy uber ValueError('No JSON object could be decoded',)
+Can't pull trends for seed: privacy policy uber, ref: privacy policy uber
+No trend data for: privacy policy youtube ValueError('No JSON object could be decoded',)
+Can't pull trends for seed: privacy policy youtube, ref: privacy policy youtube
+No trend data for: facebook delete friends ValueError('No JSON object could be decoded',)
+Can't pull trends for seed: remove social media connection facebook, ref: facebook delete friends
+No trend data for: how to unfollow on Instagram ValueError('No JSON object could be decoded',)
+Can't pull trends for seed: remove social media connection instagram, ref: how to unfollow on Instagram
+No trend data for: remove snapchat friends ValueError('No JSON object could be decoded',)
+Can't pull trends for seed: remove social media connection snapchat, ref: remove snapchat friends
+No trend data for: how to unfollow on twitter ValueError('No JSON object could be decoded',)
+Can't pull trends for seed: remove social media connection twitter, ref: how to unfollow on twitter
+No trend data for: how to encrypt emails ValueError('No JSON object could be decoded',)
+Can't pull trends for seed: tool to encrypt email, ref: how to encrypt emails
+No trend data for: google hangouts encryption ValueError('No JSON object could be decoded',)
+Can't pull trends for seed: tool to encrypt google hangouts, ref: google hangouts encryption
+No trend data for: Encrypt phone calls ValueError('No JSON object could be decoded',)
+Can't pull trends for seed: tool to encrypt phone calls, ref: Encrypt phone calls
+No trend data for: skype encryption ValueError('No JSON object could be decoded',)
+Can't pull trends for seed: tool to encrypt skype, ref: skype encryption
+No trend data for: how to encrypt text messages ValueError('No JSON object could be decoded',)
+Can't pull trends for seed: tool to encrypt text messages, ref: how to encrypt text messages
+No trend data for: how to encrypt whatsapp ValueError('No JSON object could be decoded',)
+Can't pull trends for seed: tool to encrypt whatsapp, ref: how to encrypt whatsapp
