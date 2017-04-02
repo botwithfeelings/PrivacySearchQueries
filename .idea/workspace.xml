@@ -1,49 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="aa1e3105-5a2a-4354-9a44-08b834c4bc2b" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/surveyQueries/grouped_by_seed/Users:shaowns:Documents:Pri.textClipping" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/surveyQueries/grouped_by_seed/search_without_history_approved_approved.csv" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/buildindex.sh" afterPath="$PROJECT_DIR$/buildindex.sh" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/google_related_queries.py" afterPath="$PROJECT_DIR$/google_related_queries.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/how to browse anonymously comp/how to browse anonymously no trends data.txt" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/how to browse anonymously comp/how to browse anonymously no trends data.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/how to browse without being tracked comp/how to browse without being tracked no trends data.txt" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/how to browse without being tracked comp/how to browse without being tracked no trends data.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/how to change facebook privacy settings comp/how to change facebook privacy settings no trends data.txt" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/how to change facebook privacy settings comp/how to change facebook privacy settings no trends data.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/how to change instagram privacy settings comp/how to change instagram privacy settings no trends data.txt" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/how to change instagram privacy settings comp/how to change instagram privacy settings no trends data.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/how to change snapchat privacy settings comp/how to change snapchat privacy settings no trends data.txt" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/how to change snapchat privacy settings comp/how to change snapchat privacy settings no trends data.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/how to change twitter privacy settings comp/how to change twitter privacy settings no trends data.txt" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/how to change twitter privacy settings comp/how to change twitter privacy settings no trends data.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/how to change youtube privacy settings comp/how to change youtube privacy settings no trends data.txt" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/how to change youtube privacy settings comp/how to change youtube privacy settings no trends data.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/how to search anonymously comp/how to search anonymously no trends data.txt" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/how to search anonymously comp/how to search anonymously no trends data.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/how to search without being tracked comp/how to search without being tracked no trends data.txt" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/how to search without being tracked comp/how to search without being tracked no trends data.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/Find a fully private search engine..csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/Find a fully private search engine..csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/Find a secure search engine..csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/Find a secure search engine..csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/Find an anonymous search engine..csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/Find an anonymous search engine..csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/How can i search with no tracking..csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/How can i search with no tracking..csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/Private search engines.csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/Private search engines.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/Search sites with no history tracking.csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/Search sites with no history tracking.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/Where can U search with no history tracking..csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/Where can U search with no history tracking..csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/Which search engine doesn't track search histories..csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/Which search engine doesn't track search histories..csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/anonymous search engines.csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/anonymous search engines.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/are there any search engines that do not track search histories.csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/are there any search engines that do not track search histories.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/cloaked search.csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/cloaked search.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/default search engine tor uses.csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/default search engine tor uses.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/no trace private search engine.csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/no trace private search engine.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/private no track search engine.csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/private no track search engine.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/search don't save.csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/search don't save.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/search engine no history tracking.csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/search engine no history tracking.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/search engine no tracking.csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/search engine no tracking.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/search engine recommended by edward snowden.csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/search engine recommended by edward snowden.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/search engine that doesn't track history.csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/search engine that doesn't track history.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/search engine that doesn't track results.csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/search engine that doesn't track results.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/search engine that doesn't track you.csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/search engine that doesn't track you.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/search engine without tracking.csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/search engine without tracking.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/search engines that don't track history.csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/search engines that don't track history.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/search engines that respect privacy.csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/search engines that respect privacy.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/search with no history.csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/search with no history.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/what is the best search engine that also does not track search histories.csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/what is the best search engine that also does not track search histories.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/what search engines offer private browsing?.csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/what search engines offer private browsing?.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/﻿search engine no tracking.csv" afterPath="$PROJECT_DIR$/gtrends/with_seed_cmp_amt/search without history comp/﻿search engine no tracking.csv" />
-    </list>
+    <list default="true" id="aa1e3105-5a2a-4354-9a44-08b834c4bc2b" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -60,8 +18,8 @@
       <file leaf-file-name="google_related_queries.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/google_related_queries.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-597">
-              <caret line="284" column="17" lean-forward="true" selection-start-line="284" selection-start-column="17" selection-end-line="284" selection-end-column="17" />
+            <state relative-caret-position="-279">
+              <caret line="284" column="17" lean-forward="false" selection-start-line="284" selection-start-column="17" selection-end-line="284" selection-end-column="17" />
               <folding>
                 <element signature="e#1689#1720#0" expanded="true" />
               </folding>
@@ -85,8 +43,24 @@
         <entry file="file://$PROJECT_DIR$/google_trends.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="395">
-              <caret line="113" column="14" lean-forward="true" selection-start-line="112" selection-start-column="4" selection-end-line="113" selection-end-column="14" />
-              <folding />
+              <caret line="113" column="14" lean-forward="false" selection-start-line="112" selection-start-column="4" selection-end-line="113" selection-end-column="14" />
+              <folding>
+                <marker date="1491126883000" expanded="true" signature="8585:12199" ph="..." />
+                <marker date="1491126883000" expanded="true" signature="10152:11973" ph="..." />
+                <marker date="1491126883000" expanded="true" signature="10174:10281" ph="..." />
+                <marker date="1491126883000" expanded="true" signature="10651:10741" ph="..." />
+                <marker date="1491126883000" expanded="true" signature="10811:10874" ph="..." />
+                <marker date="1491126883000" expanded="true" signature="11123:11206" ph="..." />
+                <marker date="1491126883000" expanded="true" signature="11295:11546" ph="..." />
+                <marker date="1491126883000" expanded="true" signature="11599:11662" ph="..." />
+                <marker date="1491126883000" expanded="true" signature="11700:11973" ph="..." />
+                <marker date="1491126883000" expanded="true" signature="11742:11973" ph="..." />
+                <marker date="1491126883000" expanded="true" signature="12271:13478" ph="..." />
+                <marker date="1491126883000" expanded="true" signature="12276:12844" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+                <marker date="1491126883000" expanded="true" signature="13229:13399" ph="..." />
+                <marker date="1491126883000" expanded="true" signature="13491:14396" ph="..." />
+                <marker date="1491126883000" expanded="true" signature="13729:13854" ph="'...'" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -247,7 +221,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1920" y="23" width="1920" height="988" extended-state="6" />
+    <frame x="-1920" y="23" width="1920" height="988" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1640625" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -299,15 +273,31 @@
     <entry file="file://$PROJECT_DIR$/google_trends.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="395">
-          <caret line="113" column="14" lean-forward="true" selection-start-line="112" selection-start-column="4" selection-end-line="113" selection-end-column="14" />
-          <folding />
+          <caret line="113" column="14" lean-forward="false" selection-start-line="112" selection-start-column="4" selection-end-line="113" selection-end-column="14" />
+          <folding>
+            <marker date="1491126883000" expanded="true" signature="8585:12199" ph="..." />
+            <marker date="1491126883000" expanded="true" signature="10152:11973" ph="..." />
+            <marker date="1491126883000" expanded="true" signature="10174:10281" ph="..." />
+            <marker date="1491126883000" expanded="true" signature="10651:10741" ph="..." />
+            <marker date="1491126883000" expanded="true" signature="10811:10874" ph="..." />
+            <marker date="1491126883000" expanded="true" signature="11123:11206" ph="..." />
+            <marker date="1491126883000" expanded="true" signature="11295:11546" ph="..." />
+            <marker date="1491126883000" expanded="true" signature="11599:11662" ph="..." />
+            <marker date="1491126883000" expanded="true" signature="11700:11973" ph="..." />
+            <marker date="1491126883000" expanded="true" signature="11742:11973" ph="..." />
+            <marker date="1491126883000" expanded="true" signature="12271:13478" ph="..." />
+            <marker date="1491126883000" expanded="true" signature="12276:12844" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1491126883000" expanded="true" signature="13229:13399" ph="..." />
+            <marker date="1491126883000" expanded="true" signature="13491:14396" ph="..." />
+            <marker date="1491126883000" expanded="true" signature="13729:13854" ph="'...'" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/google_related_queries.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-597">
-          <caret line="284" column="17" lean-forward="true" selection-start-line="284" selection-start-column="17" selection-end-line="284" selection-end-column="17" />
+        <state relative-caret-position="-279">
+          <caret line="284" column="17" lean-forward="false" selection-start-line="284" selection-start-column="17" selection-end-line="284" selection-end-column="17" />
           <folding>
             <element signature="e#1689#1720#0" expanded="true" />
           </folding>
