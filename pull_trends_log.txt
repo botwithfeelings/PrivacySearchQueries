@@ -1,8 +1,0 @@
-No trend data for: how to uninstall twitter KeyError(u'time',)
-Can't pull trends for seed: how to uninstall twitter, ref: how to uninstall twitter
-No trend data for: how to uninstall pokemongo KeyError(u'time',)
-Can't pull trends for seed: how to uninstall pokemongo, ref: how to uninstall pokemongo
-No trend data for: how to unfriend someone on twitter KeyError(u'time',)
-Can't pull trends for seed: how to unfriend someone on twitter, ref: how to unfriend someone on twitter
-No trend data for: privacy policy pokemongo KeyError(u'time',)
-Can't pull trends for seed: privacy policy pokemongo, ref: privacy policy pokemongo
