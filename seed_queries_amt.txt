@@ -1,8 +1,1 @@
-remove social media connection snapchat
-remove social media connection twitter
-tool to encrypt email
-tool to encrypt google hangouts
-tool to encrypt phone calls
-tool to encrypt skype
-tool to encrypt text messages
-tool to encrypt whatsapp
+info handled appropriately facebook
