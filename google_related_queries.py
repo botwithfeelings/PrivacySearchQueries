@@ -40,6 +40,8 @@ import numpy as np
 # local imports
 import google_query_similarity as gr
 
+INDEX_RECALL_DIR = "./indexrecall/"
+
 
 class ScrapeState:
     def __init__(self, seed):
@@ -54,16 +56,16 @@ class ScrapeState:
         self.candidates = list()
         self.next_candidates = list()
         self.threshold = 1.0
-        
+
     def pickle(self):
         """
         Save the object to a data file so we can resume where we left off
 
         :return: None
         """
-        name_suffix = './googledata/' + self.seed.replace(' ', '_') 
+        name_suffix = './googledata/' + self.seed.replace(' ', '_')
         with open(name_suffix, 'wb') as f:
-            pickle.dump(self.__dict__, f, pickle.HIGHEST_PROTOCOL)        
+            pickle.dump(self.__dict__, f, pickle.HIGHEST_PROTOCOL)
 
     def unpickle(self):
         """
@@ -71,12 +73,12 @@ class ScrapeState:
 
         :return: None
         """
-        name_suffix = './googledata/' + self.seed.replace(' ', '_') 
+        name_suffix = './googledata/' + self.seed.replace(' ', '_')
         if os.path.isfile(name_suffix):
             with open(name_suffix, 'rb') as f:
                 tmp = pickle.load(f)
                 self.__dict__.update(tmp)
-    
+
     def display(self):
         """
         Print the current state of the object. This can be used to check the progress after unpickling
@@ -103,11 +105,11 @@ def load_related_queries(seed):
     """
     approved = OrderedDict()
     rejected = OrderedDict()
-    
-    name_suffix = './googledata/' + seed.replace(' ', '_') + '_' 
+
+    name_suffix = './googledata/' + seed.replace(' ', '_') + '_'
     a_name = name_suffix + 'approved.csv'
     r_name = name_suffix + 'rejected.csv'
-    
+
     if os.path.isfile(a_name):
         with open(a_name, mode='r') as f:
             reader = csv.reader(f)
@@ -117,7 +119,7 @@ def load_related_queries(seed):
         with open(r_name, mode='r') as f:
             reader = csv.reader(f)
             rejected = OrderedDict((rows[0], (rows[1], rows[2])) for rows in reader)
-    
+
     return approved, rejected
 
 
@@ -135,7 +137,7 @@ def save_related_queries(seed, approved, rejected):
     :param rejected: Collection of rejected queries following structure described above
     :return: None
     """
-    name_suffix = './googledata/' + seed.replace(' ', '_') + '_' 
+    name_suffix = './googledata/' + seed.replace(' ', '_') + '_'
     a_name = name_suffix + 'approved.csv'
     r_name = name_suffix + 'rejected.csv'
 
@@ -186,18 +188,18 @@ def run_google_related_queries(seed, limit, keycnt):
     state = ScrapeState(seed)
     state.unpickle()
     state.display()
-    
+
     # Create space for iteration 0 if necessary.
     if state.iteration==0:
         iter0 = OrderedDict()
         iter0kvals = list()
-    
+
     try:
         # Expansion set and first iteration of  for the seed.
         seed_page = gr.get_query_html(seed, keycnt)
         seed_rs = gr.get_google_related_searches(seed_page)
         seed_es = gr.get_google_query_summary_set(seed_page)
-        
+
         # Add seed to the accepted set.
         approved[seed] = (seed, 1.0)
 
@@ -215,11 +217,11 @@ def run_google_related_queries(seed, limit, keycnt):
 
                 # Get the candidate's related searches and extended set.
                 can_page = gr.get_query_html(candidate, keycnt)
-                
+
                 try:
                     can_rs = gr.get_google_related_searches(can_page)
                     can_es = gr.get_google_query_summary_set(can_page)
-                    
+
                     # Retrieve the kernel value.
                     kval = gr.kval_es(seed_es, can_es)
                 except Exception as e:
@@ -236,12 +238,12 @@ def run_google_related_queries(seed, limit, keycnt):
                     iter0[candidate] = (parent, kval)
                     iter0kvals.append(kval)
                 else:
-                    # For further iteration, only accept if kernel 
+                    # For further iteration, only accept if kernel
                     # value is greater than the threshold.
                     if kval >= state.threshold:
                         approved[candidate] = (parent, kval)
                     else:
-                        rejected[candidate] = (parent, kval)              
+                        rejected[candidate] = (parent, kval)
 
                 # Add the candidate's related searches to the next_candidates.
                 for rs in can_rs:
@@ -251,14 +253,14 @@ def run_google_related_queries(seed, limit, keycnt):
             # and increase the iteration count.
             state.candidates.extend(state.next_candidates)
             state.next_candidates = list()
-            
-            # Before incrementing the iteration counter, process 
+
+            # Before incrementing the iteration counter, process
             # the first iteration if this is the first iteration.
             if state.iteration == 0:
                 q75, q25 = np.percentile(iter0kvals, [75, 25])
                 iqr = q75 - q25
                 state.threshold = q25 - (1.5 * iqr)
-                
+
                 # Process the iteration 0 candidates and later ones
                 # based on this threshold.
                 for (k, v) in iter0.iteritems():
@@ -266,7 +268,7 @@ def run_google_related_queries(seed, limit, keycnt):
                         approved[k] = v
                     else:
                         rejected[k] = v
-            
+
             state.iteration += 1
     except Exception as e:
         # We do not want to die unexpectedly without saving the current progress, so catch all errors.
@@ -282,10 +284,10 @@ def run_google_related_queries(seed, limit, keycnt):
 def comp_survey_index_similarity(seed, indfile, keycnt):
     """
     Computes and calculates the success rate of a given index, if the threshold is priorly calculated.
-    :param seed: 
-    :param indfile: 
-    :param keycnt: 
-    :return: 
+    :param seed:
+    :param indfile:
+    :param keycnt:
+    :return:
     """
 
     # If there is no such file for the given index just return
@@ -311,8 +313,9 @@ def comp_survey_index_similarity(seed, indfile, keycnt):
     seed_es = gr.get_google_query_summary_set(seed_page)
 
     # Start computing the k-values for each of the query in the index.
-    approved = 0
-    kvals = OrderedDict()
+    approved_cnt = 0
+    approved = OrderedDict()
+    rejected = OrderedDict()
     for q in ind_list:
 
         # Get the query's related searches and extended set.
@@ -328,24 +331,35 @@ def comp_survey_index_similarity(seed, indfile, keycnt):
             # Could not compute index, set to value so that it is rejected.
             kval = -1.0
 
-        # Add the result to the dictionary.
-        kvals[q] = kval
-
         # Check if this is above the threshold.
         if kval >= t:
-            approved += 1
+            approved[q] = kval
+            approved_cnt += 1
+        else:
+            rejected[q] = kval
 
     # Write out the kvals, and the success rate.
-    success_rate = (approved/len(ind_list)) * 100
+    success_rate = (approved_cnt/len(ind_list)) * 100
     print seed, success_rate
 
-    filename = './surveyQueries/kvals/' + seed.replace(' ', '_') + '.csv'
-    if any(kvals):
-        with open(filename, 'w') as f:
-            csv_writer = csv.writer(f, lineterminator='\n')
-            for (k, v) in approved.iteritems():
-                csv_writer.writerow([k, v])
-            csv_writer.writerow(['success rate', success_rate])
+    # Create the recall directory if needed.
+    if not os.path.exists(INDEX_RECALL_DIR):
+        os.makedirs(INDEX_RECALL_DIR)
+
+    def write_dict(fname, d):
+        if any(d):
+            with open(fname, 'w') as f:
+                csv_writer = csv.writer(f, lineterminator='\n')
+                for (k, v) in d.iteritems():
+                    csv_writer.writerow([k, v])
+        return
+
+    # Write out the decision sets.
+    fn_prefix = INDEX_RECALL_DIR + seed.replace(' ', '_')
+    a_name = fn_prefix + '_approved.csv'
+    r_name = fn_prefix + '_rejected.csv'
+    write_dict(a_name, approved)
+    write_dict(r_name, rejected)
     return
 
 
