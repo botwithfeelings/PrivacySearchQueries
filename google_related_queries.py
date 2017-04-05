@@ -303,8 +303,6 @@ def comp_survey_index_similarity(seed, indfile, keycnt):
     state.unpickle()
     t = state.threshold
 
-    print seed, t
-
     # Retrieve the list of keywords to be fetched into a list.
     ind_list = list()
     with open(indfile, 'rU') as f:
@@ -344,7 +342,7 @@ def comp_survey_index_similarity(seed, indfile, keycnt):
 
     # Write out the kvals, and the success rate.
     success_rate = (approved_cnt/len(ind_list)) * 100
-    print seed, success_rate
+    print seed, success_rate, t
 
     def write_dict(fname, d):
         if any(d):
