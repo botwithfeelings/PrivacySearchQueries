@@ -294,6 +294,10 @@ def comp_survey_index_similarity(seed, indfile, keycnt):
     if not os.path.isfile(indfile):
         return
 
+    # Create the recall directory if needed.
+    if not os.path.exists(INDEX_RECALL_DIR):
+        os.makedirs(INDEX_RECALL_DIR)
+
     # Load the pickled state for the seed to find the threshold
     state = ScrapeState(seed)
     state.unpickle()
@@ -341,10 +345,6 @@ def comp_survey_index_similarity(seed, indfile, keycnt):
     # Write out the kvals, and the success rate.
     success_rate = (approved_cnt/len(ind_list)) * 100
     print seed, success_rate
-
-    # Create the recall directory if needed.
-    if not os.path.exists(INDEX_RECALL_DIR):
-        os.makedirs(INDEX_RECALL_DIR)
 
     def write_dict(fname, d):
         if any(d):
