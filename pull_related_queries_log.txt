@@ -5515,3 +5515,82 @@ candidates: []
 seed: tool to encrypt whatsapp
 iteration: 0
 next_candidates: []
+threshold: 1.0
+candidates: []
+seed: info handled appropriately facebook
+iteration: 0
+next_candidates: []
+Error retrieving google search results: AttributeError("'NoneType' object has no attribute 'findAll'",)
+next_candidates: []
+iteration: 0
+seed: info handled appropriately facebook
+candidates: []
+threshold: 1.0
+Error processing google search results: MemoryError()
+Candidate query: hiring manager added me on linkedin
+Error processing google search results: MemoryError()
+Candidate query: who should i connect with on linkedin
+Error processing google search results: MemoryError()
+Candidate query: should i connect with hr on linkedin
+Error processing google search results: MemoryError()
+Candidate query: should i accept a linkedin invitation from my boss
+Error processing google search results: MemoryError()
+Candidate query: if i unfriend someone on facebook will they know
+Error processing google search results: MemoryError()
+Candidate query: facebook unfriend notification
+Error processing google search results: MemoryError()
+Candidate query: top reasons for unfriending on facebook
+Error processing google search results: MemoryError()
+Candidate query: to unfriend or not to unfriend
+Error processing google search results: MemoryError()
+Candidate query: should i unfriend my ex best friend
+Error processing google search results: MemoryError()
+Candidate query: how to not be friends with someone anymore
+Error processing google search results: MemoryError()
+Candidate query: letter to unfriend someone
+Error processing google search results: MemoryError()
+Candidate query: how to unfriend someone at school
+Error processing google search results: MemoryError()
+Candidate query: how to unfriend someone without them knowing
+Error processing google search results: MemoryError()
+Candidate query: how to unfriend someone without hurting feelings
+Error processing google search results: MemoryError()
+Candidate query: how to unfriend someone on roblox
+Error processing google search results: MemoryError()
+Candidate query: how to unfriend someone on instagram
+Error processing google search results: MemoryError()
+Candidate query: how to unfriend someone on fb
+Error processing google search results: MemoryError()
+Candidate query: if i unfriend someone on facebook will they know
+Error processing google search results: MemoryError()
+Candidate query: if you unfriend someone on facebook can you undo it
+Error processing google search results: MemoryError()
+Candidate query: quotes about being unfriended on facebook
+Error processing google search results: MemoryError()
+Candidate query: unfriend me on facebook quotes
+Error processing google search results: MemoryError()
+Candidate query: unfriend me quotes
+Error processing google search results: MemoryError()
+Candidate query: unfriend quotes tagalog
+Error processing google search results: MemoryError()
+Candidate query: friend unfriend quotes
+Error processing google search results: MemoryError()
+Candidate query: quotes about unfriending someone
+Error processing google search results: MemoryError()
+Candidate query: being unfriended on facebook is like
+Error processing google search results: MemoryError()
+Candidate query: unfriend status
+Error processing google search results: MemoryError()
+Candidate query: why would a guy unfriend you on facebook
+Error processing google search results: MemoryError()
+Candidate query: my crush unfriended me on facebook
+Error processing google search results: MemoryError()
+Candidate query: accidentally unfriended facebook
+Error processing google search results: MemoryError()
+Candidate query: top reasons for unfriending on facebook
+Error processing google search results: MemoryError()
+Candidate query: is there a way to find out who unfriended you on facebook
+Error processing google search results: MemoryError()
+Candidate query: how to get back at someone who unfriended you on facebook
+Error processing google search results: MemoryError()
+Candidate query: can facebook unfriend someone accidentally
