@@ -8,8 +8,10 @@
 
 from argparse import ArgumentParser
 import csv
+from nltk import RegexpTokenizer
 import os
 import re
+import string
 
 QUERY_DIRECTORY = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                                 'googledata/pruned'))
@@ -28,6 +30,32 @@ def get_recall(recall_list, query_list):
     num = 0
     for q in recall_list:
         if q in query_list:
+            num += 1
+
+    return float(num)/float(len(recall_list))
+
+
+def get_recall_unordered(recall_list, query_list):
+    """
+    Determine the fraction of queries in the recall list that were captured by the query list without concern for
+    word order, capitalization, or punctuation. Differences in apostrophes (single quotes) will still be considered.
+
+    :param recall_list: list containing all queries from a recall data set
+    :param query_list: list containing all automatically generated queries
+    :return: fraction of recall queries captured
+    """
+    tokenizer = RegexpTokenizer(r'[a-zA-Z\']+')
+    query_token = []
+    for q in query_list:
+        l = tokenizer.tokenize(q.lower())
+        sorted(l, key=str.lower)
+        query_token.append(l)
+
+    num = 0
+    for q in recall_list:
+        l = tokenizer.tokenize(q.lower())
+        sorted(l, key=str.lower)
+        if l in query_token:
             num += 1
 
     return float(num)/float(len(recall_list))
@@ -55,7 +83,11 @@ def run_recall(recall_dir, query_dir):
                     recall_list = [re.sub(r'[^\x00-\x7f]',r'', row).lower() for row in f_recall.read().splitlines()]
                     query_list = [re.sub(r'[^\x00-\x7f]',r'', row).encode('ascii', errors='ignore').split(',')[0].strip().lower() for row in f_query.read().splitlines()]
 
-                    print '{}:'.format(os.path.splitext(candidate)[0]), get_recall(recall_list, query_list)
+                    print '{}\n\trecall:\t{:.3f}\t{:.3f}'.format(os.path.splitext(candidate)[0],
+                                               get_recall(recall_list, query_list),
+                                               get_recall_unordered(recall_list, query_list)),
+                    print '\tprecision:\t{:.3f}\t{:.3f}'.format(get_recall(query_list, recall_list),
+                                               get_recall_unordered(query_list, recall_list))
 
 
 def get_recall_arg_parse():
