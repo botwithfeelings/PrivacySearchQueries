@@ -1,0 +1,270 @@
+[1] "Overall"
+[1] "Index Mean: 71.7534246575343AMT mean: 81.8767123287671"
+[1] "-------------------------"
+[1] "H != L"
+
+	Wilcoxon rank sum test with continuity correction
+
+data:  indexParam and amtParam
+W = 1266.5, p-value = 4.425e-08
+alternative hypothesis: true location shift is not equal to 0
+
+[1] "-------------------------"
+[1] "H > L"
+
+	Wilcoxon rank sum test with continuity correction
+
+data:  indexParam and amtParam
+W = 1266.5, p-value = 1
+alternative hypothesis: true location shift is greater than 0
+
+[1] "-------------------------"
+[1] "H < L"
+
+	Wilcoxon rank sum test with continuity correction
+
+data:  indexParam and amtParam
+W = 1266.5, p-value = 2.213e-08
+alternative hypothesis: true location shift is less than 0
+
+[1] "-------------------------"
+[1] "Overall Equivalent"
+[1] "Index Mean: 71.7534246575343AMT mean: 72.3287671232877"
+[1] "-------------------------"
+[1] "H != L"
+
+	Wilcoxon rank sum test with continuity correction
+
+data:  indexParam and amtParam
+W = 2476.5, p-value = 0.4626
+alternative hypothesis: true location shift is not equal to 0
+
+[1] "-------------------------"
+[1] "H > L"
+
+	Wilcoxon rank sum test with continuity correction
+
+data:  indexParam and amtParam
+W = 2476.5, p-value = 0.7699
+alternative hypothesis: true location shift is greater than 0
+
+[1] "-------------------------"
+[1] "H < L"
+
+	Wilcoxon rank sum test with continuity correction
+
+data:  indexParam and amtParam
+W = 2476.5, p-value = 0.2313
+alternative hypothesis: true location shift is less than 0
+
+[1] "-------------------------"
+[1] "Apps and Privacy"
+[1] "Index Mean: 73.8356164383562AMT mean: 43.2739726027397"
+[1] "-------------------------"
+[1] "H != L"
+
+	Wilcoxon rank sum test with continuity correction
+
+data:  indexParam and amtParam
+W = 4747, p-value = 3.61e-16
+alternative hypothesis: true location shift is not equal to 0
+
+[1] "-------------------------"
+[1] "H > L"
+
+	Wilcoxon rank sum test with continuity correction
+
+data:  indexParam and amtParam
+W = 4747, p-value < 2.2e-16
+alternative hypothesis: true location shift is greater than 0
+
+[1] "-------------------------"
+[1] "H < L"
+
+	Wilcoxon rank sum test with continuity correction
+
+data:  indexParam and amtParam
+W = 4747, p-value = 1
+alternative hypothesis: true location shift is less than 0
+
+[1] "-------------------------"
+[1] "Communications Privacy"
+[1] "Index Mean: 58.1506849315069AMT mean: 46.7671232876712"
+[1] "-------------------------"
+[1] "H != L"
+
+	Wilcoxon rank sum test with continuity correction
+
+data:  indexParam and amtParam
+W = 3518, p-value = 0.0008389
+alternative hypothesis: true location shift is not equal to 0
+
+[1] "-------------------------"
+[1] "H > L"
+
+	Wilcoxon rank sum test with continuity correction
+
+data:  indexParam and amtParam
+W = 3518, p-value = 0.0004195
+alternative hypothesis: true location shift is greater than 0
+
+[1] "-------------------------"
+[1] "H < L"
+
+	Wilcoxon rank sum test with continuity correction
+
+data:  indexParam and amtParam
+W = 3518, p-value = 0.9996
+alternative hypothesis: true location shift is less than 0
+
+[1] "-------------------------"
+[1] "Deleting Apps"
+[1] "Index Mean: 71.7808219178082AMT mean: 81.1369863013699"
+[1] "-------------------------"
+[1] "H != L"
+
+	Wilcoxon rank sum test with continuity correction
+
+data:  indexParam and amtParam
+W = 1289.5, p-value = 7.248e-08
+alternative hypothesis: true location shift is not equal to 0
+
+[1] "-------------------------"
+[1] "H > L"
+
+	Wilcoxon rank sum test with continuity correction
+
+data:  indexParam and amtParam
+W = 1289.5, p-value = 1
+alternative hypothesis: true location shift is greater than 0
+
+[1] "-------------------------"
+[1] "H < L"
+
+	Wilcoxon rank sum test with continuity correction
+
+data:  indexParam and amtParam
+W = 1289.5, p-value = 3.624e-08
+alternative hypothesis: true location shift is less than 0
+
+[1] "-------------------------"
+[1] "Deleting Social Media Connections"
+[1] "Index Mean: 69.1780821917808AMT mean: 68.7123287671233"
+[1] "-------------------------"
+[1] "H != L"
+
+	Wilcoxon rank sum test with continuity correction
+
+data:  indexParam and amtParam
+W = 2382.5, p-value = 0.2704
+alternative hypothesis: true location shift is not equal to 0
+
+[1] "-------------------------"
+[1] "H > L"
+
+	Wilcoxon rank sum test with continuity correction
+
+data:  indexParam and amtParam
+W = 2382.5, p-value = 0.8657
+alternative hypothesis: true location shift is greater than 0
+
+[1] "-------------------------"
+[1] "H < L"
+
+	Wilcoxon rank sum test with continuity correction
+
+data:  indexParam and amtParam
+W = 2382.5, p-value = 0.1352
+alternative hypothesis: true location shift is less than 0
+
+[1] "-------------------------"
+[1] "Search Anonymity"
+[1] "Index Mean: 72.1780821917808AMT mean: 72.7945205479452"
+[1] "-------------------------"
+[1] "H != L"
+
+	Wilcoxon rank sum test with continuity correction
+
+data:  indexParam and amtParam
+W = 2904.5, p-value = 0.3484
+alternative hypothesis: true location shift is not equal to 0
+
+[1] "-------------------------"
+[1] "H > L"
+
+	Wilcoxon rank sum test with continuity correction
+
+data:  indexParam and amtParam
+W = 2904.5, p-value = 0.1742
+alternative hypothesis: true location shift is greater than 0
+
+[1] "-------------------------"
+[1] "H < L"
+
+	Wilcoxon rank sum test with continuity correction
+
+data:  indexParam and amtParam
+W = 2904.5, p-value = 0.8268
+alternative hypothesis: true location shift is less than 0
+
+[1] "-------------------------"
+[1] "Social Media Settings and Privacy"
+[1] "Index Mean: 73.3424657534247AMT mean: 58.8219178082192"
+[1] "-------------------------"
+[1] "H != L"
+
+	Wilcoxon rank sum test with continuity correction
+
+data:  indexParam and amtParam
+W = 4362, p-value = 3.002e-11
+alternative hypothesis: true location shift is not equal to 0
+
+[1] "-------------------------"
+[1] "H > L"
+
+	Wilcoxon rank sum test with continuity correction
+
+data:  indexParam and amtParam
+W = 4362, p-value = 1.501e-11
+alternative hypothesis: true location shift is greater than 0
+
+[1] "-------------------------"
+[1] "H < L"
+
+	Wilcoxon rank sum test with continuity correction
+
+data:  indexParam and amtParam
+W = 4362, p-value = 1
+alternative hypothesis: true location shift is less than 0
+
+[1] "-------------------------"
+[1] "Web Anonymity"
+[1] "Index Mean: 69.3287671232877AMT mean: 77.7671232876712"
+[1] "-------------------------"
+[1] "H != L"
+
+	Wilcoxon rank sum test with continuity correction
+
+data:  indexParam and amtParam
+W = 1951.5, p-value = 0.005278
+alternative hypothesis: true location shift is not equal to 0
+
+[1] "-------------------------"
+[1] "H > L"
+
+	Wilcoxon rank sum test with continuity correction
+
+data:  indexParam and amtParam
+W = 1951.5, p-value = 0.9974
+alternative hypothesis: true location shift is greater than 0
+
+[1] "-------------------------"
+[1] "H < L"
+
+	Wilcoxon rank sum test with continuity correction
+
+data:  indexParam and amtParam
+W = 1951.5, p-value = 0.002639
+alternative hypothesis: true location shift is less than 0
+
+[1] "-------------------------"
