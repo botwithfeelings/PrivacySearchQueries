@@ -8,7 +8,6 @@
 
 from argparse import ArgumentParser
 import os
-import sys
 
 from recall_simple import get_recall, get_recall_unordered
 
