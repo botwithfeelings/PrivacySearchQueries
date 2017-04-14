@@ -7,11 +7,9 @@
 #
 
 from argparse import ArgumentParser
-import csv
 from nltk import RegexpTokenizer
 import os
 import re
-import string
 
 QUERY_DIRECTORY = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                                 'googledata/pruned'))
