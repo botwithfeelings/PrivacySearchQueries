@@ -1,8 +1,8 @@
 #!/usr/bin/env python2.7
 #
 #
-# This script can be used to determine simple recall statistics for the query data set. It does a simple lookup to
-# determine what percent of the recall queries was captured by the automated query generation process.
+# This script can be used to determine simple recall statistics for the query data set with trend data. It does a simple
+# lookup to determine what percent of the recall queries was captured by the automated query generation process.
 #
 #
 
