@@ -1,0 +1,10 @@
+search without history,search without history,1.0
+private search google,search without history,0.69109143986413601
+private browsing chrome,search without history,0.80151118536356236
+incognito mode safari,private search google,0.67033642061317711
+incognito mode firefox,private search google,0.6910571905900833
+incognito chrome,private search google,0.69337850004654633
+incognito mode chrome,private browsing chrome,0.74994568320526112
+private browsing chrome mac,private browsing chrome,0.7685913677892352
+private browsing google,incognito mode safari,0.82472575925521419
+open incognito tab,incognito chrome,0.70616289391515663
