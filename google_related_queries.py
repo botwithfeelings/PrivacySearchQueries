@@ -33,9 +33,11 @@ import csv
 import os
 import pickle
 import traceback
+import string
 
 # third party imports
 import numpy as np
+import pandas as pd
 
 # local imports
 import google_query_similarity as gr
@@ -361,6 +363,76 @@ def comp_survey_index_similarity(seed, indfile, keycnt):
     return
 
 
+def do_pairwise(seed, keycnt):
+    """
+    Computes the pairwise k-values between the coded index queries and the corresponding
+    survey queries for the given seed.
+    :param seed:
+    :param keycnt:
+    """
+    CODED_DIR = "./gtrends/coded/"
+    SURVEY_QUERY_DIR = "./surveyQueries/grouped_by_seed/"
+
+    coded_file = CODED_DIR + seed.replace(' ', '_') + ".csv"
+    survey_file = SURVEY_QUERY_DIR + seed.replace(' ', '_') + "_approved.csv"
+
+    # If the trends file is from AMT then treat it as a text file due to
+    # MAC csv formatting issues.
+    survey_queries = list()
+    with open(survey_file, 'rU') as f:
+        def clean_entry(s):
+            return s.strip().lower().translate(None, string.punctuation)
+        survey_queries = list(map(clean_entry, f.readlines()))
+
+    coded_list = list()
+    with open(coded_file, 'rU') as f:
+        reader = csv.reader(f)
+        for row in reader:
+            coded_list.append(row[0])
+
+    # For each of the coded query bring in their search results page and cache it.
+    coded_ex_sets = dict()
+    for q in coded_list:
+        # Expansion set of for the query.
+        query_page = gr.get_query_html(q, keycnt)
+        query_es = gr.get_google_query_summary_set(query_page)
+        coded_ex_sets[q] = query_es
+
+    # Now we bring in the survey query expansion set, and do pairwise k-value computation.
+    results = dict()
+    for s in survey_queries:
+        squery_page = gr.get_query_html(s, keycnt)
+        squery_es = gr.get_google_query_summary_set(squery_page)
+
+        kvals = dict()
+        for q in coded_list:
+            coded_es = coded_ex_sets[q]
+            kval = 0.0
+            try:
+                # Retrieve the kernel value.
+                kval = gr.kval_es(squery_es, coded_es)
+            except Exception as e:
+                # Could not compute index, set to value so that it is rejected.
+                kval = -1.0
+
+            kvals[q] = kval
+
+        results[s] = kvals
+
+    # Create the directory if needed.
+    directory = './pairwise'
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+
+    # Write out the dictionary values.
+    fname = os.path.join(directory, seed.replace(' ', '_') + ".csv")
+    if any(results):
+        df = pd.DataFrame(results)
+        df.to_csv(fname)
+
+    return
+
+
 def main():
     ap = argparse.ArgumentParser(description='Use the script to pull google related search queries.')
     ap.add_argument('-s', '-seed', help='Seed word', required=True)
@@ -369,13 +441,16 @@ def main():
     ap.add_argument('-c', '-comp', help='compute the k-value for the survey index, overrides the iteration '
                                         'limit parameter if given', action='store_true')
     ap.add_argument('-f', '-file', help='file containing the index for computing k-values')
+    ap.add_argument('-p', '-pairwise', help='Do pairwise k-value computation for given seed',       action='store_true')
 
     args = ap.parse_args()
 
-    seed, limit, keycnt, comp, indfile = args.s, int(args.i), int(args.k), bool(args.c), args.f
+    seed, limit, keycnt, comp, indfile, pairwise = args.s, int(args.i), int(args.k), bool(args.c), args.f, bool(args.p)
 
     if comp:
         comp_survey_index_similarity(seed, indfile, keycnt)
+    elif pairwise:
+        do_pairwise(seed, keycnt)
     else:
         run_google_related_queries(seed, limit, keycnt)
 
