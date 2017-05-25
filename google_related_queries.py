@@ -381,7 +381,7 @@ def do_pairwise(seed, keycnt):
     survey_queries = list()
     with open(survey_file, 'rU') as f:
         def clean_entry(s):
-            return s.strip().lower().translate(None, string.punctuation)
+            return filter(lambda x: x in set(string.printable), s.strip().lower().translate(None, string.punctuation))
         survey_queries = list(map(clean_entry, f.readlines()))
 
     coded_list = list()
