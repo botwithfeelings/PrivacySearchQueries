@@ -12,9 +12,9 @@ import os
 from recall_simple import get_recall, get_recall_unordered
 
 FILTERED_QUERY_DIR = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                                   'gtrends/without_seed_cmp'))
+                                                   'indextrends/index'))
 FILTERED_RECALL_DIR = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                                    'gtrends/without_seed_cmp_amt'))
+                                                    'indextrends/amt'))
 
 
 def run_recall_with_trend(recall_dir, query_dir):
@@ -25,20 +25,34 @@ def run_recall_with_trend(recall_dir, query_dir):
     :param query_dir: directory containing all automatically generated queries
     :return: None, prints statistics to stdout
     """
-    for candidate in os.listdir(recall_dir):
-        recall_candidate = os.path.join(recall_dir, candidate)
-        if os.path.isdir(recall_candidate):
-            query_candidate = os.path.join(query_dir, candidate)
-            if os.path.exists(query_candidate):
-                # we have a directory that exists in both, let us determine the recall score
-                recall_list = [os.path.splitext(q.lower())[0] for q in os.listdir(recall_candidate)]
-                query_list = [os.path.splitext(q.lower())[0] for q in os.listdir(query_candidate)]
+    total = 0
+    for category in os.listdir(recall_dir):
+        cat_recall = os.path.join(recall_dir, category)
+        cat_query = os.path.join(query_dir, category)
+        if os.path.isdir(cat_recall):
+            for candidate in os.listdir(cat_recall):
+                if candidate != 'combined.xlsx':
+                    recall_file = os.path.join(cat_recall, candidate)
+                    query_file = os.path.join(cat_query, candidate)
+                    if os.path.exists(query_file):
+                        # we have a directory that exists in both, let us determine the recall score
+                        with open(recall_file, 'r') as f_recall, open(query_file, 'r') as f_query:
+                            recall_list = f_recall.readline().lower().split(',')[1:-1]
+                            query_list = f_query.readline().lower().split(',')[1:-1]
+                            frac1, num1 = get_recall(recall_list, query_list)
+                            frac2, num2 = get_recall_unordered(recall_list, query_list)
+                            frac3, num3 = get_recall(query_list, recall_list)
+                            frac4, num4 = get_recall_unordered(query_list, recall_list)
 
-                print '{}\n\trecall:\t{:.3f}\t{:.3f}'.format(candidate,
-                                           get_recall(recall_list, query_list),
-                                           get_recall_unordered(recall_list, query_list)),
-                print '\tprecision:\t{:.3f}\t{:.3f}'.format(get_recall(query_list, recall_list),
-                                           get_recall_unordered(query_list, recall_list))
+
+                            print '{}\n{}\t{}\n\trecall:\t{:.3f}\t{:.3f}'.format(candidate.split('.')[0], len(recall_list), len(query_list),
+                                                       frac1,
+                                                       frac2),
+                            print '\tprecision:\t{:.3f}\t{:.3f}'.format(frac3,
+                                                       frac4)
+                            print '{}\t{}'.format(num1, num2)
+                            total += len(recall_list) - num2
+    print total
 
 
 def get_recall_trend_arg_parse():
