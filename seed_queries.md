@@ -32,14 +32,12 @@
   - how to delete youtube
   - how to delete snapchat
   - how to delete instagram
-  - how to delete pokemongo
   - how to uninstall facebook
   - how to uninstall gmail
   - how to uninstall twitter
   - how to uninstall youtube
   - how to uninstall snapchat
   - how to uninstall instagram
-  - how to uninstall pokemongo
 
 - Removing social media connections
   - how to unfollow someone on facebook
