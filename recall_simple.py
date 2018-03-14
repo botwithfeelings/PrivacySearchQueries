@@ -30,7 +30,9 @@ def get_recall(recall_list, query_list):
         if q in query_list:
             num += 1
 
-    return float(num)/float(len(recall_list))
+    if len(recall_list) == 0:
+        return 0, 0
+    return float(num)/float(len(recall_list)), num
 
 
 def get_recall_unordered(recall_list, query_list):
@@ -56,7 +58,9 @@ def get_recall_unordered(recall_list, query_list):
         if l in query_token:
             num += 1
 
-    return float(num)/float(len(recall_list))
+    if len(recall_list) == 0:
+        return 0, 0
+    return float(num)/float(len(recall_list)), num
 
 def run_recall(recall_dir, query_dir):
     """
@@ -66,6 +70,7 @@ def run_recall(recall_dir, query_dir):
     :param query_dir: directory containing all automatically generated queries
     :return: None, prints statistics to stdout
     """
+    #total=0
     for candidate in os.listdir(recall_dir):
         recall_file = os.path.join(recall_dir, candidate)
         if os.path.isfile(recall_file):
@@ -80,12 +85,27 @@ def run_recall(recall_dir, query_dir):
 
                     recall_list = [re.sub(r'[^\x00-\x7f]',r'', row).lower() for row in f_recall.read().splitlines()]
                     query_list = [re.sub(r'[^\x00-\x7f]',r'', row).encode('ascii', errors='ignore').split(',')[0].strip().lower() for row in f_query.read().splitlines()]
+                    frac1, num1 = get_recall(recall_list, query_list)
+                    frac2, num2 = get_recall_unordered(recall_list, query_list)
+                    frac3, num3 = get_recall(query_list, recall_list)
+                    frac4, num4 = get_recall_unordered(query_list, recall_list)
+                    print '\n{}'.format(candidate.split('.')[0])
+                    print '\tmetric\t\tordered comparison\t\tunordered comparison'
+                    print '\t------\t\t------------------\t\t--------------------'
+                    print '\trecall\t\t{:.3f}\t\t{:.3f}'.format(frac1, frac2)
+                    print '\tprecision\t\t{:.3f}\t\t{:.3f}'.format(frac3, frac4)
 
-                    print '{}\n\trecall:\t{:.3f}\t{:.3f}'.format(os.path.splitext(candidate)[0],
-                                               get_recall(recall_list, query_list),
-                                               get_recall_unordered(recall_list, query_list)),
-                    print '\tprecision:\t{:.3f}\t{:.3f}'.format(get_recall(query_list, recall_list),
-                                               get_recall_unordered(query_list, recall_list))
+                    print '\n\tnumber of queries in generated set:\t{}\n\tnumber of queries in AMT set:\t{}'.format(len(query_list), len(recall_list))
+                    print '\tnumber matching in ordered recall:\t{}\n\tnumber matching in unordered recall:\t{}'.format(num1, num2)
+                    print '\tnumber matching in ordered precision:\t{}\n\tnumber matching in unordered precision:\t{}'.format(num3, num4)
+                    #total += len(recall_list) - num2
+
+                    # print '{}\n\trecall:\t{:.3f}\t{:.3f}'.format(os.path.splitext(candidate)[0],
+                    #                            get_recall(recall_list, query_list),
+                    #                            get_recall_unordered(recall_list, query_list)),
+                    # print '\tprecision:\t{:.3f}\t{:.3f}'.format(get_recall(query_list, recall_list),
+                    #                            get_recall_unordered(query_list, recall_list))
+    #print total
 
 
 def get_recall_arg_parse():
